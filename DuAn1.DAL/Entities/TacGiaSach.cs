@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DuAnOne.DAL.Entities
+﻿namespace DuAnOne.DAL.Entities
 {
     public partial class TacGiaSach
     {
@@ -16,6 +13,6 @@ namespace DuAnOne.DAL.Entities
         public DateTime? DeleteTime { get; set; }
 
         public virtual Sach IdSachNavigation { get; set; } = null!;
-        public virtual TacGium IdTacGiaNavigation { get; set; } = null!;
+        public virtual TacGia IdTacGiaNavigation { get; set; } = null!;
     }
 }

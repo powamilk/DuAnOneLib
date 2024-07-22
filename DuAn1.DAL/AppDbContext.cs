@@ -23,7 +23,7 @@ namespace DuAnOne.DAL
         public virtual DbSet<PhieuMuon> PhieuMuons { get; set; } = null!;
         public virtual DbSet<Sach> Saches { get; set; } = null!;
         public virtual DbSet<TacGiaSach> TacGiaSaches { get; set; } = null!;
-        public virtual DbSet<TacGium> TacGia { get; set; } = null!;
+        public virtual DbSet<TacGia> TacGia { get; set; } = null!;
         public virtual DbSet<TaiKhoan> TaiKhoans { get; set; } = null!;
         public virtual DbSet<TheThuVien> TheThuViens { get; set; } = null!;
 
@@ -210,7 +210,7 @@ namespace DuAnOne.DAL
                     .HasConstraintName("FK__TacGiaSac__IdTac__412EB0B6");
             });
 
-            modelBuilder.Entity<TacGium>(entity =>
+            modelBuilder.Entity<TacGia>(entity =>
             {
                 entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
 

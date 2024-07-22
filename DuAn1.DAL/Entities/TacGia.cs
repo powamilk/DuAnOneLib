@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DuAnOne.DAL.Entities
+﻿namespace DuAnOne.DAL.Entities
 {
-    public partial class TacGium
+    public partial class TacGia
     {
-        public TacGium()
+        public TacGia()
         {
             TacGiaSaches = new HashSet<TacGiaSach>();
         }

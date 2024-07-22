@@ -24,6 +24,7 @@ namespace DuAnOne.DAL.Entities
         public DateTime? ModifyTime { get; set; }
         public Guid? DeleteBy { get; set; }
         public DateTime? DeleteTime { get; set; }
+        public int GiaTien { get; set; }
 
         public virtual ICollection<ChiTietPhieuMuon> ChiTietPhieuMuons { get; set; }
         public virtual ICollection<TacGiaSach> TacGiaSaches { get; set; }
