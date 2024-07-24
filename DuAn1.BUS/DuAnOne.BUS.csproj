@@ -7,9 +7,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Implement\" />
-    <Folder Include="Interface\" />
-    <Folder Include="ViewModel\" />
     <Folder Include="Utils\" />
   </ItemGroup>
 

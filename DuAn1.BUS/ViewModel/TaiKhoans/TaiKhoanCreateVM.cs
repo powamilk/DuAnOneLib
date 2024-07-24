@@ -1,13 +1,7 @@
-﻿namespace DuAnOne.DAL.Entities
+﻿namespace DuAnOne.BUS.ViewModel.TaiKhoans
 {
-    public partial class TaiKhoan
+    public class TaiKhoanCreateVM
     {
-        public TaiKhoan()
-        {
-            PhieuMuons = new HashSet<PhieuMuon>();
-        }
-
-        public Guid Id { get; set; }
         public string HoVaTen { get; set; } = null!;
         public DateTime NgaySinh { get; set; }
         public string DiaChi { get; set; } = null!;
@@ -20,11 +14,5 @@
         public int Status { get; set; }
         public Guid CreateBy { get; set; }
         public DateTime CreateTime { get; set; }
-        public Guid? ModifyBy { get; set; }
-        public DateTime? ModifyTime { get; set; }
-        public Guid? DeleteBy { get; set; }
-        public DateTime? DeleteTime { get; set; }
-
-        public virtual ICollection<PhieuMuon> PhieuMuons { get; set; }
     }
 }

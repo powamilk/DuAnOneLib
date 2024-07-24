@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using DuAnOne.DAL.Entities;
+﻿using DuAnOne.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace DuAnOne.DAL
 {
@@ -19,11 +16,8 @@ namespace DuAnOne.DAL
 
         public virtual DbSet<ChiTietPhieuMuon> ChiTietPhieuMuons { get; set; } = null!;
         public virtual DbSet<ChuThe> ChuThes { get; set; } = null!;
-        public virtual DbSet<NhanVien> NhanViens { get; set; } = null!;
         public virtual DbSet<PhieuMuon> PhieuMuons { get; set; } = null!;
         public virtual DbSet<Sach> Saches { get; set; } = null!;
-        public virtual DbSet<TacGiaSach> TacGiaSaches { get; set; } = null!;
-        public virtual DbSet<TacGia> TacGia { get; set; } = null!;
         public virtual DbSet<TaiKhoan> TaiKhoans { get; set; } = null!;
         public virtual DbSet<TheThuVien> TheThuViens { get; set; } = null!;
 
@@ -32,7 +26,7 @@ namespace DuAnOne.DAL
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=POWWA;Database=DuAn12Nhom8;Trusted_Connection=True;TrustServerCertificate=True");
+                optionsBuilder.UseSqlServer("Server=POWWA;Database=DuAn1;Trusted_Connection=True;TrustServerCertificate=True");
             }
         }
 
@@ -41,7 +35,7 @@ namespace DuAnOne.DAL
             modelBuilder.Entity<ChiTietPhieuMuon>(entity =>
             {
                 entity.HasKey(e => new { e.IdPhieuMuon, e.IdSach })
-                    .HasName("PK__ChiTietP__311855532766B746");
+                    .HasName("PK__ChiTietP__311855534E0844DC");
 
                 entity.ToTable("ChiTietPhieuMuon");
 
@@ -57,13 +51,13 @@ namespace DuAnOne.DAL
                     .WithMany(p => p.ChiTietPhieuMuons)
                     .HasForeignKey(d => d.IdPhieuMuon)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ChiTietPh__IdPhi__4F7CD00D");
+                    .HasConstraintName("FK__ChiTietPh__IdPhi__4CA06362");
 
                 entity.HasOne(d => d.IdSachNavigation)
                     .WithMany(p => p.ChiTietPhieuMuons)
                     .HasForeignKey(d => d.IdSach)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ChiTietPh__IdSac__5070F446");
+                    .HasConstraintName("FK__ChiTietPh__IdSac__4D94879B");
             });
 
             modelBuilder.Entity<ChuThe>(entity =>
@@ -94,38 +88,6 @@ namespace DuAnOne.DAL
                 entity.Property(e => e.NgheNghiep).HasMaxLength(100);
 
                 entity.Property(e => e.NoiLamViec).HasMaxLength(200);
-
-                entity.Property(e => e.QuocTich).HasMaxLength(50);
-            });
-
-            modelBuilder.Entity<NhanVien>(entity =>
-            {
-                entity.ToTable("NhanVien");
-
-                entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
-
-                entity.Property(e => e.CreateTime).HasColumnType("datetime");
-
-                entity.Property(e => e.DeleteTime).HasColumnType("datetime");
-
-                entity.Property(e => e.DiaChi).HasMaxLength(200);
-
-                entity.Property(e => e.Email)
-                    .HasMaxLength(100)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.HoVaTen).HasMaxLength(100);
-
-                entity.Property(e => e.MaNhanVien).HasMaxLength(50);
-
-                entity.Property(e => e.ModifyTime).HasColumnType("datetime");
-
-                entity.Property(e => e.NgaySinh).HasColumnType("datetime");
-
-                entity.Property(e => e.Sdt)
-                    .HasMaxLength(15)
-                    .IsUnicode(false)
-                    .HasColumnName("SDT");
             });
 
             modelBuilder.Entity<PhieuMuon>(entity =>
@@ -148,17 +110,19 @@ namespace DuAnOne.DAL
 
                 entity.Property(e => e.NgayTra).HasColumnType("datetime");
 
-                entity.HasOne(d => d.IdNhanVienNavigation)
+                entity.Property(e => e.NgayTraThucTe).HasColumnType("datetime");
+
+                entity.HasOne(d => d.IdTaiKhoanNavigation)
                     .WithMany(p => p.PhieuMuons)
-                    .HasForeignKey(d => d.IdNhanVien)
+                    .HasForeignKey(d => d.IdTaiKhoan)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__PhieuMuon__IdNha__4BAC3F29");
+                    .HasConstraintName("FK__PhieuMuon__IdTai__48CFD27E");
 
                 entity.HasOne(d => d.IdTheNavigation)
                     .WithMany(p => p.PhieuMuons)
                     .HasForeignKey(d => d.IdThe)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__PhieuMuon__IdThe__4CA06362");
+                    .HasConstraintName("FK__PhieuMuon__IdThe__49C3F6B7");
             });
 
             modelBuilder.Entity<Sach>(entity =>
@@ -172,85 +136,58 @@ namespace DuAnOne.DAL
                 entity.Property(e => e.DeleteTime).HasColumnType("datetime");
 
                 entity.Property(e => e.MaSach)
-                    .HasMaxLength(20)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
 
                 entity.Property(e => e.ModifyTime).HasColumnType("datetime");
+
+                entity.Property(e => e.TacGia).HasMaxLength(100);
 
                 entity.Property(e => e.TenSach).HasMaxLength(100);
 
                 entity.Property(e => e.TheLoai)
-                    .HasMaxLength(20)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
             });
 
-            modelBuilder.Entity<TacGiaSach>(entity =>
+            modelBuilder.Entity<TaiKhoan>(entity =>
             {
-                entity.HasKey(e => new { e.IdSach, e.IdTacGia })
-                    .HasName("PK__TacGiaSa__CE7F4FD023E765A6");
+                entity.ToTable("TaiKhoan");
 
-                entity.ToTable("TacGiaSach");
-
-                entity.Property(e => e.CreateTime).HasColumnType("datetime");
-
-                entity.Property(e => e.DeleteTime).HasColumnType("datetime");
-
-                entity.Property(e => e.ModifyTime).HasColumnType("datetime");
-
-                entity.HasOne(d => d.IdSachNavigation)
-                    .WithMany(p => p.TacGiaSaches)
-                    .HasForeignKey(d => d.IdSach)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__TacGiaSac__IdSac__403A8C7D");
-
-                entity.HasOne(d => d.IdTacGiaNavigation)
-                    .WithMany(p => p.TacGiaSaches)
-                    .HasForeignKey(d => d.IdTacGia)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__TacGiaSac__IdTac__412EB0B6");
-            });
-
-            modelBuilder.Entity<TacGia>(entity =>
-            {
                 entity.Property(e => e.Id).HasDefaultValueSql("(newid())");
 
                 entity.Property(e => e.CreateTime).HasColumnType("datetime");
 
                 entity.Property(e => e.DeleteTime).HasColumnType("datetime");
 
-                entity.Property(e => e.ModifyTime).HasColumnType("datetime");
+                entity.Property(e => e.DiaChi).HasMaxLength(200);
 
-                entity.Property(e => e.TenTacGia).HasMaxLength(100);
-            });
+                entity.Property(e => e.Email)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
-            modelBuilder.Entity<TaiKhoan>(entity =>
-            {
-                entity.HasKey(e => e.IdNhanVien)
-                    .HasName("PK__TaiKhoan__B8294845C61EA9F1");
+                entity.Property(e => e.HoVaTen).HasMaxLength(100);
 
-                entity.ToTable("TaiKhoan");
-
-                entity.Property(e => e.IdNhanVien).ValueGeneratedNever();
-
-                entity.Property(e => e.CreateTime).HasColumnType("datetime");
-
-                entity.Property(e => e.DeleteTime).HasColumnType("datetime");
+                entity.Property(e => e.MaNhanVien)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.MatKhau)
-                    .HasMaxLength(20)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
 
                 entity.Property(e => e.ModifyTime).HasColumnType("datetime");
 
-                entity.Property(e => e.TenTaiKhoan)
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
+                entity.Property(e => e.NgaySinh).HasColumnType("datetime");
 
-                entity.HasOne(d => d.IdNhanVienNavigation)
-                    .WithOne(p => p.TaiKhoan)
-                    .HasForeignKey<TaiKhoan>(d => d.IdNhanVien)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__TaiKhoan__IdNhan__534D60F1");
+                entity.Property(e => e.Sdt)
+                    .HasMaxLength(15)
+                    .IsUnicode(false)
+                    .HasColumnName("SDT");
+
+                entity.Property(e => e.TenTaiKhoan)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<TheThuVien>(entity =>

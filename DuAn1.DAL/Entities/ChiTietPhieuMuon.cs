@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace DuAnOne.DAL.Entities
+﻿namespace DuAnOne.DAL.Entities
 {
     public partial class ChiTietPhieuMuon
     {
