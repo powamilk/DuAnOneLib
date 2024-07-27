@@ -3,7 +3,7 @@ using DuAnOne.DAL.Repositories.Interfaces;
 
 namespace DuAnOne.DAL.Repositories.Implement
 {
-    public class ChiTietPhieuMuonRepo : IChiTietPhieuMuonRepo
+    internal class ChiTietPhieuMuonRepo : IChiTietPhieuMuonRepo
     {
         private readonly AppDbContext _appDbContext;
 
@@ -17,17 +17,17 @@ namespace DuAnOne.DAL.Repositories.Implement
             return _appDbContext.ChiTietPhieuMuons.ToList();
         }
 
-        public ChiTietPhieuMuon GetById(Guid id)
+        public ChiTietPhieuMuon GetById(Guid idPhieuMuon, Guid idSach)
         {
             return _appDbContext.ChiTietPhieuMuons
-                .FirstOrDefault(ctpm => ctpm.IdPhieuMuon == id);
+                .FirstOrDefault(ctpm => ctpm.IdPhieuMuon == idPhieuMuon && ctpm.IdSach == idSach);
         }
 
-        public string Create(ChiTietPhieuMuon ctpm)
+        public string Create(ChiTietPhieuMuon entity)
         {
             try
             {
-                _appDbContext.ChiTietPhieuMuons.Add(ctpm);
+                _appDbContext.ChiTietPhieuMuons.Add(entity);
                 _appDbContext.SaveChanges();
                 return "Thêm chi tiết phiếu mượn thành công";
             }
@@ -37,29 +37,31 @@ namespace DuAnOne.DAL.Repositories.Implement
             }
         }
 
-        public string Update(ChiTietPhieuMuon ctpm)
+        public string Update(ChiTietPhieuMuon entity)
         {
             try
             {
-                var existingChiTiet = _appDbContext.ChiTietPhieuMuons
-                    .FirstOrDefault(ct => ct.IdPhieuMuon == ctpm.IdPhieuMuon
-                                        && ct.IdSach == ctpm.IdSach);
-
-                if (existingChiTiet != null)
+                var existingChiTietPhieuMuon = _appDbContext.ChiTietPhieuMuons
+                    .FirstOrDefault(ctpm => ctpm.IdPhieuMuon == entity.IdPhieuMuon && ctpm.IdSach == entity.IdSach);
+                if (existingChiTietPhieuMuon == null)
                 {
-                    existingChiTiet.SoLuongMuon = ctpm.SoLuongMuon;
-                    existingChiTiet.GhiChu = ctpm.GhiChu;
-                    existingChiTiet.Status = ctpm.Status;
-                    existingChiTiet.ModifyBy = ctpm.ModifyBy;
-                    existingChiTiet.ModifyTime = ctpm.ModifyTime;
-                    existingChiTiet.DeleteBy = ctpm.DeleteBy;
-                    existingChiTiet.DeleteTime = ctpm.DeleteTime;
-
-                    _appDbContext.ChiTietPhieuMuons.Update(existingChiTiet);
-                    _appDbContext.SaveChanges();
-                    return "Cập nhật chi tiết phiếu mượn thành công";
+                    return "Không tìm thấy chi tiết phiếu mượn cần cập nhật";
                 }
-                return "Không tìm thấy chi tiết phiếu mượn để cập nhật";
+
+                existingChiTietPhieuMuon.SoLuongMuon = entity.SoLuongMuon;
+                existingChiTietPhieuMuon.GhiChu = entity.GhiChu;
+                existingChiTietPhieuMuon.Status = entity.Status;
+                existingChiTietPhieuMuon.CreateBy = entity.CreateBy;
+                existingChiTietPhieuMuon.CreateTime = entity.CreateTime;
+                existingChiTietPhieuMuon.ModifyBy = entity.ModifyBy;
+                existingChiTietPhieuMuon.ModifyTime = entity.ModifyTime;
+                existingChiTietPhieuMuon.DeleteBy = entity.DeleteBy;
+                existingChiTietPhieuMuon.DeleteTime = entity.DeleteTime;
+
+                _appDbContext.ChiTietPhieuMuons.Update(existingChiTietPhieuMuon);
+                _appDbContext.SaveChanges();
+
+                return "Cập nhật chi tiết phiếu mượn thành công";
             }
             catch (Exception ex)
             {
@@ -67,21 +69,21 @@ namespace DuAnOne.DAL.Repositories.Implement
             }
         }
 
-        public string Delete(ChiTietPhieuMuon ctpm)
+        public string Delete(Guid idPhieuMuon, Guid idSach)
         {
             try
             {
-                var existingChiTiet = _appDbContext.ChiTietPhieuMuons
-                    .FirstOrDefault(ct => ct.IdPhieuMuon == ctpm.IdPhieuMuon
-                                        && ct.IdSach == ctpm.IdSach);
-
-                if (existingChiTiet != null)
+                var existingChiTietPhieuMuon = _appDbContext.ChiTietPhieuMuons
+                    .FirstOrDefault(ctpm => ctpm.IdPhieuMuon == idPhieuMuon && ctpm.IdSach == idSach);
+                if (existingChiTietPhieuMuon == null)
                 {
-                    _appDbContext.ChiTietPhieuMuons.Remove(existingChiTiet);
-                    _appDbContext.SaveChanges();
-                    return "Xóa chi tiết phiếu mượn thành công";
+                    return "Không tìm thấy chi tiết phiếu mượn cần xóa";
                 }
-                return "Không tìm thấy chi tiết phiếu mượn để xóa";
+
+                _appDbContext.ChiTietPhieuMuons.Remove(existingChiTietPhieuMuon);
+                _appDbContext.SaveChanges();
+
+                return "Xóa chi tiết phiếu mượn thành công";
             }
             catch (Exception ex)
             {

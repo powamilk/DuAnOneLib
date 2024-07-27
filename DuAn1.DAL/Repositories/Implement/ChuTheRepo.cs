@@ -14,86 +14,94 @@ namespace DuAnOne.DAL.Repositories.Implement
 
         public List<ChuThe> GetList()
         {
+            // Trả về danh sách tất cả các ChuThe
             return _appDbContext.ChuThes.ToList();
         }
 
         public ChuThe GetById(Guid id)
         {
+            // Trả về ChuThe theo Id, hoặc null nếu không tìm thấy
             return _appDbContext.ChuThes.FirstOrDefault(c => c.Id == id);
         }
 
-        public string Create(ChuThe ct)
+        public bool Create(ChuThe entity)
         {
             try
             {
-                _appDbContext.ChuThes.Add(ct);
+                // Thêm đối tượng ChuThe mới vào cơ sở dữ liệu
+                _appDbContext.ChuThes.Add(entity);
                 _appDbContext.SaveChanges();
-                return "Tạo mới thành công.";
+                return true; // Thành công
             }
             catch (Exception ex)
             {
-                return $"Đã xảy ra lỗi: {ex.Message}";
+                Console.WriteLine("Thêm thẻ thư viện thất bại\nLỗi: " + ex.Message);
+                return false; // Thất bại
             }
         }
 
-        public string Update(ChuThe ct)
+        public bool Update(ChuThe entity)
         {
             try
             {
-                var existingChuThe = _appDbContext.ChuThes.FirstOrDefault(c => c.Id == ct.Id);
+                // Tìm đối tượng ChuThe hiện tại trong cơ sở dữ liệu
+                var existingChuThe = _appDbContext.ChuThes.FirstOrDefault(c => c.Id == entity.Id);
                 if (existingChuThe == null)
                 {
-                    return "Không tìm thấy đối tượng cần cập nhật.";
+                    Console.WriteLine("Không tìm thấy thẻ thư viện cần cập nhật");
+                    return false; // Không tìm thấy đối tượng để cập nhật
                 }
 
-                existingChuThe.Cccd = ct.Cccd;
-                existingChuThe.HoVaTen = ct.HoVaTen;
-                existingChuThe.LoaiThe = ct.LoaiThe;
-                existingChuThe.DiaChi = ct.DiaChi;
-                existingChuThe.GioiTinh = ct.GioiTinh;
-                existingChuThe.NgheNghiep = ct.NgheNghiep;
-                existingChuThe.QuocTich = ct.QuocTich;
-                existingChuThe.LoaiBanDoc = ct.LoaiBanDoc;
-                existingChuThe.Email = ct.Email;
-                existingChuThe.NoiLamViec = ct.NoiLamViec;
-                existingChuThe.Status = ct.Status;
-                existingChuThe.CreateBy = ct.CreateBy;
-                existingChuThe.CreateTime = ct.CreateTime;
-                existingChuThe.ModifyBy = ct.ModifyBy;
-                existingChuThe.ModifyTime = ct.ModifyTime;
-                existingChuThe.DeleteBy = ct.DeleteBy;
-                existingChuThe.DeleteTime = ct.DeleteTime;
+                // Cập nhật các thuộc tính của đối tượng ChuThe
+                existingChuThe.Cccd = entity.Cccd;
+                existingChuThe.HoVaTen = entity.HoVaTen;
+                existingChuThe.LoaiThe = entity.LoaiThe;
+                existingChuThe.DiaChi = entity.DiaChi;
+                existingChuThe.GioiTinh = entity.GioiTinh;
+                existingChuThe.NgheNghiep = entity.NgheNghiep;
+                existingChuThe.QuocTich = entity.QuocTich;
+                existingChuThe.LoaiBanDoc = entity.LoaiBanDoc;
+                existingChuThe.Email = entity.Email;
+                existingChuThe.NoiLamViec = entity.NoiLamViec;
+                existingChuThe.Status = entity.Status;
+                existingChuThe.ModifyBy = entity.ModifyBy;
+                existingChuThe.ModifyTime = entity.ModifyTime;
+                existingChuThe.DeleteBy = entity.DeleteBy;
+                existingChuThe.DeleteTime = entity.DeleteTime;
 
+                // Cập nhật đối tượng ChuThe trong cơ sở dữ liệu
                 _appDbContext.ChuThes.Update(existingChuThe);
                 _appDbContext.SaveChanges();
-
-                return "Cập nhật thành công.";
+                return true; // Cập nhật thành công
             }
             catch (Exception ex)
             {
-                return $"Đã xảy ra lỗi: {ex.Message}";
+                Console.WriteLine("Cập nhật thẻ thư viện thất bại\nLỗi: " + ex.Message);
+                return false; // Thất bại
             }
         }
 
-
-        public string Delete(ChuThe ct)
+        public bool Delete(Guid id)
         {
             try
             {
-                var existingChuThe = _appDbContext.ChuThes.FirstOrDefault(c => c.Id == ct.Id);
+                // Tìm đối tượng ChuThe trong cơ sở dữ liệu theo Id
+                var existingChuThe = _appDbContext.ChuThes.FirstOrDefault(c => c.Id == id);
                 if (existingChuThe == null)
                 {
-                    return "Không tìm thấy đối tượng cần xóa.";
+                    Console.WriteLine("Không tìm thấy thẻ thư viện cần xóa");
+                    return false; // Không tìm thấy đối tượng để xóa
                 }
 
+                // Xóa đối tượng ChuThe khỏi cơ sở dữ liệu
                 _appDbContext.ChuThes.Remove(existingChuThe);
                 _appDbContext.SaveChanges();
-
-                return "Xóa thành công.";
+                return true; // Xóa thành công
             }
             catch (Exception ex)
             {
-                return $"Đã xảy ra lỗi: {ex.Message}";
+                Console.WriteLine("Xóa thẻ thư viện thất bại\nLỗi: " + ex.Message);
+                return false; // Thất bại
             }
         }
     }

@@ -3,9 +3,12 @@
     public class PhieuMuonUpdateVM
     {
         public Guid Id { get; set; }
-        public Guid? IdChuThe { get; set; }
+        public Guid? IdTaiKhoan { get; set; }
+        public Guid? IdThe { get; set; }
         public DateTime? NgayMuon { get; set; }
         public DateTime? NgayTra { get; set; }
+        public DateTime? NgayTraThucTe { get; set; }
+        public string? MaPhieu { get; set; }
         public int? Status { get; set; }
         public Guid? ModifyBy { get; set; }
         public DateTime? ModifyTime { get; set; }

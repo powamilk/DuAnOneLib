@@ -12,5 +12,9 @@
         public DateTime CreateTime { get; set; }
         public Guid? ModifyBy { get; set; }
         public DateTime? ModifyTime { get; set; }
+
+        // Thêm các thuộc tính sau nếu cần
+        public Guid? DeleteBy { get; set; }
+        public DateTime? DeleteTime { get; set; }
     }
 }

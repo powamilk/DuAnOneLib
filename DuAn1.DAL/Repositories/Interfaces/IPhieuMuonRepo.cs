@@ -4,10 +4,10 @@ namespace DuAnOne.DAL.Repositories.Interfaces
 {
     public interface IPhieuMuonRepo
     {
-        List<PhieuMuon> GetList();
         PhieuMuon GetById(Guid id);
-        string Create(PhieuMuon pm);
-        string Update(PhieuMuon pm);
-        string Delete(PhieuMuon pm);
+        List<PhieuMuon> GetList();
+        bool Create(PhieuMuon entity);
+        bool Update(PhieuMuon entity);
+        bool Delete(Guid id);
     }
 }

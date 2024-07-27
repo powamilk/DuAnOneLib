@@ -6,8 +6,8 @@ namespace DuAnOne.BUS.Interface
     {
         PhieuMuonVM GetById(Guid id);
         List<PhieuMuonVM> GetList();
-        string Create(PhieuMuonVM createVM);
-        bool Update(PhieuMuonVM updateVM);
-        bool Delete(Guid id);
+        string Create(PhieuMuonCreateVM createVM);
+        string Update(PhieuMuonUpdateVM updateVM);
+        string Delete(Guid id);
     }
 }

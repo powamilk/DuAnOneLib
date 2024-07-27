@@ -4,10 +4,10 @@ namespace DuAnOne.DAL.Repositories.Interfaces
 {
     public interface ITaiKhoanRepo
     {
-        List<TaiKhoan> GetList();
         TaiKhoan GetById(Guid id);
-        string Create(TaiKhoan tk);
-        string Update(TaiKhoan tk);
-        string Delete(TaiKhoan tk);
+        List<TaiKhoan> GetList();
+        bool Create(TaiKhoan entity);
+        bool Update(TaiKhoan entity);
+        bool Delete(Guid id);
     }
 }

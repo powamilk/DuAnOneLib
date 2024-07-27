@@ -3,7 +3,7 @@ using DuAnOne.DAL.Repositories.Interfaces;
 
 namespace DuAnOne.DAL.Repositories.Implement
 {
-    internal class PhieuMuonRepo : IPhieuMuonRepo
+    public class PhieuMuonRepo : IPhieuMuonRepo
     {
         private readonly AppDbContext _appDbContext;
 
@@ -12,83 +12,86 @@ namespace DuAnOne.DAL.Repositories.Implement
             _appDbContext = appDbContext;
         }
 
-        public List<PhieuMuon> GetList()
-        {
-            return _appDbContext.PhieuMuons.ToList();
-        }
-
         public PhieuMuon GetById(Guid id)
         {
             return _appDbContext.PhieuMuons.FirstOrDefault(pm => pm.Id == id);
         }
 
-        public string Create(PhieuMuon pm)
+        public List<PhieuMuon> GetList()
+        {
+            return _appDbContext.PhieuMuons.ToList();
+        }
+
+        public bool Create(PhieuMuon entity)
         {
             try
             {
-                _appDbContext.PhieuMuons.Add(pm);
+                _appDbContext.PhieuMuons.Add(entity);
                 _appDbContext.SaveChanges();
-                return "Tạo mới thành công.";
+                return true;
             }
             catch (Exception ex)
             {
-                return $"Đã xảy ra lỗi: {ex.Message}";
+                // Log the exception
+                return false;
             }
         }
 
-        public string Update(PhieuMuon pm)
+        public bool Update(PhieuMuon entity)
         {
             try
             {
-                var existingPhieuMuon = _appDbContext.PhieuMuons.FirstOrDefault(pm => pm.Id == pm.Id);
+                var existingPhieuMuon = _appDbContext.PhieuMuons.FirstOrDefault(pm => pm.Id == entity.Id);
                 if (existingPhieuMuon == null)
                 {
-                    return "Không tìm thấy đối tượng cần cập nhật.";
+                    return false;
                 }
 
-                existingPhieuMuon.IdTaiKhoan = pm.IdTaiKhoan;
-                existingPhieuMuon.IdThe = pm.IdThe;
-                existingPhieuMuon.NgayMuon = pm.NgayMuon;
-                existingPhieuMuon.NgayTra = pm.NgayTra;
-                existingPhieuMuon.NgayTraThucTe = pm.NgayTraThucTe;
-                existingPhieuMuon.MaPhieu = pm.MaPhieu;
-                existingPhieuMuon.Status = pm.Status;
-                existingPhieuMuon.CreateBy = pm.CreateBy;
-                existingPhieuMuon.CreateTime = pm.CreateTime;
-                existingPhieuMuon.ModifyBy = pm.ModifyBy;
-                existingPhieuMuon.ModifyTime = pm.ModifyTime;
-                existingPhieuMuon.DeleteBy = pm.DeleteBy;
-                existingPhieuMuon.DeleteTime = pm.DeleteTime;
+                existingPhieuMuon.IdTaiKhoan = entity.IdTaiKhoan;
+                existingPhieuMuon.IdThe = entity.IdThe;
+                existingPhieuMuon.NgayMuon = entity.NgayMuon;
+                existingPhieuMuon.NgayTra = entity.NgayTra;
+                existingPhieuMuon.NgayTraThucTe = entity.NgayTraThucTe;
+                existingPhieuMuon.MaPhieu = entity.MaPhieu;
+                existingPhieuMuon.Status = entity.Status;
+                existingPhieuMuon.CreateBy = entity.CreateBy;
+                existingPhieuMuon.CreateTime = entity.CreateTime;
+                existingPhieuMuon.ModifyBy = entity.ModifyBy;
+                existingPhieuMuon.ModifyTime = entity.ModifyTime;
+                existingPhieuMuon.DeleteBy = entity.DeleteBy;
+                existingPhieuMuon.DeleteTime = entity.DeleteTime;
 
                 _appDbContext.PhieuMuons.Update(existingPhieuMuon);
                 _appDbContext.SaveChanges();
 
-                return "Cập nhật thành công.";
+                return true;
             }
             catch (Exception ex)
             {
-                return $"Đã xảy ra lỗi: {ex.Message}";
+                // Log the exception
+                return false;
             }
         }
 
-        public string Delete(PhieuMuon pm)
+        public bool Delete(Guid id)
         {
             try
             {
-                var existingPhieuMuon = _appDbContext.PhieuMuons.FirstOrDefault(pm => pm.Id == pm.Id);
+                var existingPhieuMuon = _appDbContext.PhieuMuons.FirstOrDefault(pm => pm.Id == id);
                 if (existingPhieuMuon == null)
                 {
-                    return "Không tìm thấy đối tượng cần xóa.";
+                    return false;
                 }
 
                 _appDbContext.PhieuMuons.Remove(existingPhieuMuon);
                 _appDbContext.SaveChanges();
 
-                return "Xóa thành công.";
+                return true;
             }
             catch (Exception ex)
             {
-                return $"Đã xảy ra lỗi: {ex.Message}";
+                // Log the exception
+                return false;
             }
         }
     }
