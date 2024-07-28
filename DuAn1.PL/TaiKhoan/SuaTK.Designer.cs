@@ -222,6 +222,7 @@
             btn_sua.TabIndex = 22;
             btn_sua.Text = "Xác Nhận Sửa";
             btn_sua.UseVisualStyleBackColor = true;
+            btn_sua.Click += btn_sua_Click;
             // 
             // btn_huy
             // 
@@ -231,6 +232,7 @@
             btn_huy.TabIndex = 23;
             btn_huy.Text = "Hủy";
             btn_huy.UseVisualStyleBackColor = true;
+            btn_huy.Click += btn_huy_Click;
             // 
             // SuaTK
             // 

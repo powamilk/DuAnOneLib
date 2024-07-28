@@ -34,24 +34,118 @@ namespace DuAnOne.PL
         private SuaTK _suaTK;
         private ThemTaiKhoan _themTaiKhoan;
 
-        public void ShowSuaTK()
+        private void ShowSuaTK()
         {
-            _suaTK = new SuaTK();
-            _suaTK.Show();
+            if (_suaTK == null)
+            {
+                _suaTK = new SuaTK();
+                _suaTK.FormClosed += SuaTK_FormClosed;
+            }
 
+            this.Enabled = false; // Vô hiệu hóa form chính
+            _suaTK.SendData(_maTKChon, _hoVaTenChon, _ngaySinhChon, _diaChiChon, _emailChon, _sdtChon, _maNhanVienChon, _tenTaiKhoanChon, _matKhauChon, _chucVuChon, _statusChon);
+            _suaTK.Show(); // Hiển thị form mới
+        }
+
+
+        private void OpenSuaTKForm(Guid id)
+        {
+            if (_suaTK == null)
+            {
+                _suaTK = new SuaTK();
+                _suaTK.FormClosed += SuaTK_FormClosed;
+            }
+            _suaTK.SendData(id,
+                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.HoVaTen ?? string.Empty,
+                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.NgaySinh ?? DateTime.Now,
+                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.DiaChi ?? string.Empty,
+                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.Email ?? string.Empty,
+                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.Sdt ?? string.Empty,
+                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.MaNhanVien ?? string.Empty,
+                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.TenTaiKhoan ?? string.Empty,
+                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.MatKhau ?? string.Empty,
+                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.ChucVu ?? 0,
+                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.Status ?? 0);
+            _suaTK.Show();
+        }
+
+        private void SuaTK_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.Enabled = true; // Kích hoạt lại form chính
+            LoadGridData();
+        }
+
+
+        private void LoadData()
+        {
+            List<TaiKhoanVM> taiKhoans = _taiKhoanService.GetList();
+            dgv_taikhoan.DataSource = taiKhoans;
         }
 
         public void ShowThemTK()
         {
-            _themTaiKhoan = new ThemTaiKhoan();
-            _themTaiKhoan.DataAdded += LoadGridData;
-            _themTaiKhoan.Show();
+            if (_themTaiKhoan == null)
+            {
+                _themTaiKhoan = new ThemTaiKhoan();
+                _themTaiKhoan.DataAdded += LoadGridData;
+                _themTaiKhoan.FormClosed += ThemTaiKhoan_FormClosed;
+            }
+
+            this.Enabled = false; // Vô hiệu hóa form chính
+            _themTaiKhoan.Show(); // Hiển thị form mới
         }
+
+
+        private void ThemTaiKhoan_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            this.Enabled = true; // Kích hoạt lại form chính
+        }
+
+
 
         private void UpdateDataToSuaTK()
         {
-            _suaTK.SendData(_maTKChon, _hoVaTenChon, _ngaySinhChon, _sdtChon, _emailChon, _maNhanVienChon, _tenTaiKhoanChon, _maNhanVienChon, _chucVuChon, _statusChon);
+            // Kiểm tra nếu _maTKChon là Guid.Empty hoặc giá trị khác không hợp lệ
+            if (_maTKChon == Guid.Empty)
+            {
+                MessageBox.Show("Chưa chọn tài khoản để sửa.");
+                return;
+            }
+
+            // Tìm tài khoản đã chọn trong danh sách _taiKhoans
+            var taiKhoanChon = _taiKhoans.FirstOrDefault(tk => tk.Id == _maTKChon);
+
+            if (taiKhoanChon != null)
+            {
+                // Gán các giá trị từ tài khoản chọn vào biến tương ứng
+                if (_suaTK != null)
+                {
+                    _suaTK.SendData(
+                        _maTKChon,
+                        taiKhoanChon.HoVaTen,
+                        taiKhoanChon.NgaySinh,
+                        taiKhoanChon.DiaChi,
+                        taiKhoanChon.Email,
+                        taiKhoanChon.Sdt,
+                        taiKhoanChon.MaNhanVien,
+                        taiKhoanChon.TenTaiKhoan,
+                        taiKhoanChon.MatKhau,
+                        taiKhoanChon.ChucVu,
+                        taiKhoanChon.Status
+                    );
+                    _suaTK.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Form sửa tài khoản chưa được khởi tạo.");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Tài khoản không tồn tại trong danh sách.");
+            }
         }
+
 
         public TabForm()
         {
