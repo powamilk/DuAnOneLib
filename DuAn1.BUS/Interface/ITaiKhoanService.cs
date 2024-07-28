@@ -8,6 +8,7 @@ namespace DuAnOne.BUS.Interface
         List<TaiKhoanVM> GetList();
         string Create(TaiKhoanCreateVM createVM);
         string Update(TaiKhoanUpdateVM updateVM);
-        string Delete(Guid id);
+        bool Delete(Guid id);
+        List<TaiKhoanVM> GetAll();
     }
 }

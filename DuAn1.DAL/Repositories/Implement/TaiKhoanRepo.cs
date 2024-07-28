@@ -93,5 +93,11 @@ namespace DuAnOne.DAL.Repositories.Implement
                 return false; // Failure
             }
         }
+
+        public List<TaiKhoan> GetAll()
+        {
+            // Trả về tất cả các tài khoản từ cơ sở dữ liệu
+            return _appDbContext.TaiKhoans.ToList();
+        }
     }
 }

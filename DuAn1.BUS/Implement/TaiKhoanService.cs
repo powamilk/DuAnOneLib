@@ -59,17 +59,15 @@ namespace DuAnOne.BUS.Implement
             }
         }
 
-        public string Delete(Guid id)
+        public bool Delete(Guid id)
         {
-            try
-            {
-                bool result = _repo.Delete(id);
-                return result ? "Xóa tài khoản thành công." : "Xóa tài khoản thất bại.";
-            }
-            catch (Exception ex)
-            {
-                return $"Xóa tài khoản thất bại. Lỗi: {ex.Message}";
-            }
+            return _repo.Delete(id);
+        }
+
+        public List<TaiKhoanVM> GetAll()
+        {
+            List<TaiKhoan> entities = _repo.GetAll(); // Giả sử có phương thức GetAll trong repo
+            return entities.Select(e => TaiKhoanMapping.MapEntityToVM(e)).ToList();
         }
     }
 }

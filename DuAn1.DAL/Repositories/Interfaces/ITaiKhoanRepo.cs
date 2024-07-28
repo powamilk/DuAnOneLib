@@ -9,5 +9,6 @@ namespace DuAnOne.DAL.Repositories.Interfaces
         bool Create(TaiKhoan entity);
         bool Update(TaiKhoan entity);
         bool Delete(Guid id);
+        List<TaiKhoan> GetAll();
     }
 }
