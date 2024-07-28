@@ -1,6 +1,7 @@
 ﻿using DuAnOne.BUS.Implement;
 using DuAnOne.BUS.Interface;
 using DuAnOne.BUS.ViewModel.TaiKhoans;
+using DuAnOne.PL.Extensions;
 
 namespace DuAn1.PL
 {
@@ -9,6 +10,8 @@ namespace DuAn1.PL
         List<TaiKhoanVM> _taiKhoans;
         ITaiKhoanService _taiKhoanService;
         private Guid _id;
+
+        public event Action DataUpdated;
 
         public SuaTK()
         {
@@ -49,49 +52,76 @@ namespace DuAn1.PL
 
         private void btn_sua_Click(object sender, EventArgs e)
         {
-            DateTime ngaySinh;
-            if (!DateTime.TryParse(txt_ngaysinh.Text, out ngaySinh))
+            // Hiển thị hộp thoại xác nhận việc sửa dữ liệu
+            if (MessageBoxExtension.Confirm("Bạn có chắc chắn muốn sửa tài khoản?"))
             {
-                MessageBox.Show("Ngày sinh không hợp lệ.", "Lỗi");
-                return;
-            }
+                // Xác thực dữ liệu đầu vào từ các ô nhập liệu
+                DateTime ngaySinh;
+                if (!DateTime.TryParse(txt_ngaysinh.Text, out ngaySinh))
+                {
+                    MessageBoxExtension.Notification("Lỗi", "Ngày sinh không hợp lệ.");
+                    return;
+                }
 
-            int chucVu;
-            if (!int.TryParse(cbx_chucvu.Text, out chucVu))
-            {
-                MessageBox.Show("Chức vụ không hợp lệ.", "Lỗi");
-                return;
-            }
+                int chucVu;
+                string chucVuText = cbx_chucvu.Text.Trim();
+                if (string.IsNullOrEmpty(chucVuText) || !int.TryParse(chucVuText, out chucVu))
+                {
+                    MessageBoxExtension.Notification("Lỗi", "Chức vụ không hợp lệ.");
+                    return;
+                }
 
-            int status;
-            if (!int.TryParse(cbx_status.Text, out status))
-            {
-                MessageBox.Show("Trạng thái không hợp lệ.", "Lỗi");
-                return;
-            }
+                int status;
+                string statusText = cbx_status.Text.Trim();
+                if (string.IsNullOrEmpty(statusText) || !int.TryParse(statusText, out status))
+                {
+                    MessageBoxExtension.Notification("Lỗi", "Status không hợp lệ.");
+                    return;
+                }
 
-            var tkUpdate = new TaiKhoanUpdateVM()
-            {
-                Id = _id, // Biến này nên chứa ID tài khoản cần cập nhật
-                HoVaTen = txt_hovaten.Text,
-                NgaySinh = ngaySinh,
-                DiaChi = txt_diachi.Text,
-                Email = txt_email.Text,
-                Sdt = txt_sodienthoai.Text,
-                MaNhanVien = txt_manhanvien.Text,
-                TenTaiKhoan = txt_taikhoan.Text,
-                MatKhau = txt_matkhau.Text,
-                ChucVu = chucVu,
-                Status = status
-            };
-            var result = _taiKhoanService.Update(tkUpdate);
-            MessageBox.Show(result, "CHỈNH SỬA");
-            this.Close();
+                // Tạo đối tượng cập nhật tài khoản
+                var tkUpdate = new TaiKhoanUpdateVM
+                {
+                    Id = _id, // Biến _id chứa ID tài khoản cần cập nhật
+                    HoVaTen = txt_hovaten.Text,
+                    NgaySinh = ngaySinh,
+                    DiaChi = txt_diachi.Text,
+                    Email = txt_email.Text,
+                    Sdt = txt_sodienthoai.Text,
+                    MaNhanVien = txt_manhanvien.Text,
+                    TenTaiKhoan = txt_taikhoan.Text,
+                    MatKhau = txt_matkhau.Text,
+                    ChucVu = chucVu,
+                    Status = status
+                };
+
+                // Gọi phương thức Update của service
+                var result = _taiKhoanService.Update(tkUpdate);
+                bool isSuccess = result.Equals("Tài khoản đã được cập nhật thành công.", StringComparison.OrdinalIgnoreCase);
+
+                // Hiển thị thông báo kết quả
+                MessageBoxExtension.Notification("SỬA", result);
+
+                if (isSuccess)
+                {
+                    // Nếu cần, gọi phương thức để làm mới dữ liệu trong giao diện
+                    DataUpdated?.Invoke();
+
+                    // Đóng form sau khi sửa thành công
+                    this.Close();
+                }
+            }
         }
+
 
         private void btn_huy_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void SuaTK_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
