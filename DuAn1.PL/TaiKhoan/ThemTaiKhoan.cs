@@ -121,5 +121,10 @@ namespace DuAnOne.PL.TaiKhoan
                 }
             }
         }
+
+        private void btn_huy_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
     }
 }

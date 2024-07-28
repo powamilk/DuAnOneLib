@@ -60,6 +60,7 @@
             btn_huy.TabIndex = 45;
             btn_huy.Text = "Hủy";
             btn_huy.UseVisualStyleBackColor = true;
+            btn_huy.Click += btn_huy_Click;
             // 
             // btn_them
             // 

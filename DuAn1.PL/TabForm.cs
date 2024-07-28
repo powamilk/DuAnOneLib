@@ -4,6 +4,7 @@ using DuAnOne.BUS.Interface;
 using DuAnOne.BUS.ViewModel.TaiKhoans;
 using DuAnOne.PL.Extensions;
 using DuAnOne.PL.TaiKhoan;
+using System.Diagnostics;
 
 namespace DuAnOne.PL
 {
@@ -91,6 +92,8 @@ namespace DuAnOne.PL
         {
             dgv_taikhoan.Rows.Clear(); // Xóa các dòng hiện có
             _taiKhoans = _taiKhoanService.GetList(); // Lấy danh sách tài khoản mới
+
+            Debug.WriteLine($"Số lượng tài khoản: {_taiKhoans.Count}");
 
             foreach (var tk in _taiKhoans)
             {
