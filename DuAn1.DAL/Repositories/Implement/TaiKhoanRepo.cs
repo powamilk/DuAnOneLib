@@ -22,71 +22,82 @@ namespace DuAnOne.DAL.Repositories.Implement
             return _appDbContext.TaiKhoans.FirstOrDefault(tk => tk.Id == id);
         }
 
-        public string Create(TaiKhoan tk)
+        public bool Create(TaiKhoan entity)
         {
             try
             {
-                _appDbContext.TaiKhoans.Add(tk);
+                _appDbContext.TaiKhoans.Add(entity);
                 _appDbContext.SaveChanges();
-                return "Thêm tài khoản thành công";
+                return true; // Success
             }
             catch (Exception ex)
             {
-                return "Thêm tài khoản thất bại\nLỗi: " + ex.Message;
+                Console.WriteLine("Thêm tài khoản thất bại\nLỗi: " + ex.Message);
+                return false; // Failure
             }
         }
 
-        public string Update(TaiKhoan tk)
+        public bool Update(TaiKhoan entity)
         {
             try
             {
-                var existingTaiKhoan = _appDbContext.TaiKhoans.FirstOrDefault(tk => tk.Id == tk.Id);
+                var existingTaiKhoan = _appDbContext.TaiKhoans.FirstOrDefault(tk => tk.Id == entity.Id);
                 if (existingTaiKhoan != null)
                 {
-                    existingTaiKhoan.HoVaTen = tk.HoVaTen;
-                    existingTaiKhoan.NgaySinh = tk.NgaySinh;
-                    existingTaiKhoan.DiaChi = tk.DiaChi;
-                    existingTaiKhoan.Sdt = tk.Sdt;
-                    existingTaiKhoan.Email = tk.Email;
-                    existingTaiKhoan.MaNhanVien = tk.MaNhanVien;
-                    existingTaiKhoan.TenTaiKhoan = tk.TenTaiKhoan;
-                    existingTaiKhoan.MatKhau = tk.MatKhau;
-                    existingTaiKhoan.ChucVu = tk.ChucVu;
-                    existingTaiKhoan.Status = tk.Status;
-                    existingTaiKhoan.ModifyBy = tk.ModifyBy;
-                    existingTaiKhoan.ModifyTime = tk.ModifyTime;
-                    existingTaiKhoan.DeleteBy = tk.DeleteBy;
-                    existingTaiKhoan.DeleteTime = tk.DeleteTime;
+                    existingTaiKhoan.HoVaTen = entity.HoVaTen;
+                    existingTaiKhoan.NgaySinh = entity.NgaySinh;
+                    existingTaiKhoan.DiaChi = entity.DiaChi;
+                    existingTaiKhoan.Sdt = entity.Sdt;
+                    existingTaiKhoan.Email = entity.Email;
+                    existingTaiKhoan.MaNhanVien = entity.MaNhanVien;
+                    existingTaiKhoan.TenTaiKhoan = entity.TenTaiKhoan;
+                    existingTaiKhoan.MatKhau = entity.MatKhau;
+                    existingTaiKhoan.ChucVu = entity.ChucVu;
+                    existingTaiKhoan.Status = entity.Status;
+                    existingTaiKhoan.ModifyBy = entity.ModifyBy;
+                    existingTaiKhoan.ModifyTime = entity.ModifyTime;
+                    existingTaiKhoan.DeleteBy = entity.DeleteBy;
+                    existingTaiKhoan.DeleteTime = entity.DeleteTime;
 
                     _appDbContext.TaiKhoans.Update(existingTaiKhoan);
                     _appDbContext.SaveChanges();
-                    return "Cập nhật tài khoản thành công";
+                    return true; // Success
                 }
-                return "Không tìm thấy tài khoản cần cập nhật";
+                Console.WriteLine("Không tìm thấy tài khoản cần cập nhật");
+                return false; // Not found
             }
             catch (Exception ex)
             {
-                return "Cập nhật tài khoản thất bại\nLỗi: " + ex.Message;
+                Console.WriteLine("Cập nhật tài khoản thất bại\nLỗi: " + ex.Message);
+                return false; // Failure
             }
         }
 
-        public string Delete(TaiKhoan tk)
+        public bool Delete(Guid id)
         {
             try
             {
-                var existingTaiKhoan = _appDbContext.TaiKhoans.FirstOrDefault(tk => tk.Id == tk.Id);
+                var existingTaiKhoan = _appDbContext.TaiKhoans.FirstOrDefault(tk => tk.Id == id);
                 if (existingTaiKhoan != null)
                 {
                     _appDbContext.TaiKhoans.Remove(existingTaiKhoan);
                     _appDbContext.SaveChanges();
-                    return "Xóa tài khoản thành công";
+                    return true; // Success
                 }
-                return "Không tìm thấy tài khoản cần xóa";
+                Console.WriteLine("Không tìm thấy tài khoản cần xóa");
+                return false; // Not found
             }
             catch (Exception ex)
             {
-                return "Xóa tài khoản thất bại\nLỗi: " + ex.Message;
+                Console.WriteLine("Xóa tài khoản thất bại\nLỗi: " + ex.Message);
+                return false; // Failure
             }
+        }
+
+        public List<TaiKhoan> GetAll()
+        {
+            // Trả về tất cả các tài khoản từ cơ sở dữ liệu
+            return _appDbContext.TaiKhoans.ToList();
         }
     }
 }

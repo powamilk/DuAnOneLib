@@ -6,8 +6,8 @@ namespace DuAnOne.DAL.Repositories.Interfaces
     {
         List<TheThuVien> GetList();
         TheThuVien GetById(Guid id);
-        string Create(TheThuVien ttv);
-        string Update(TheThuVien ttv);
-        string Delete(TheThuVien ttv);
+        bool Create(TheThuVien entity);
+        bool Update(TheThuVien entity);
+        bool Delete(Guid id);
     }
 }

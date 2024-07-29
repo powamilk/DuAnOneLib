@@ -18,33 +18,59 @@ namespace DuAnOne.BUS.Implement
         public ChuTheVM GetById(Guid id)
         {
             ChuThe entity = _repo.GetById(id);
-            ChuTheVM vm = MappingExtension.MapEntityToVM(entity);
+            ChuTheVM vm = ChuTheMapping.MapEntityToVM(entity);
             return vm;
         }
 
         public List<ChuTheVM> GetList()
         {
             List<ChuThe> entities = _repo.GetList();
-            var vms = entities.Select(e => MappingExtension.MapEntityToVM(e)).ToList();
+            var vms = entities.Select(e => ChuTheMapping.MapEntityToVM(e)).ToList();
             return vms;
         }
 
         public string Create(ChuTheCreateVM createVM)
         {
-            throw new NotImplementedException();
+            try
+            {
+                ChuThe entity = ChuTheMapping.MapCreateVMToEntity(createVM);
+                _repo.Create(entity);
+                return "Tạo thẻ thư viện thành công";
+            }
+            catch (Exception ex)
+            {
+                // Log exception
+                return $"Lỗi: {ex.Message}";
+            }
         }
 
         public string Update(ChuTheUpdateVM updateVM)
         {
-            throw new NotImplementedException();
+            try
+            {
+                ChuThe entity = ChuTheMapping.MapUpdateVMToEntity(updateVM);
+                bool isSuccess = _repo.Update(entity);
+                return isSuccess ? "Cập nhật thẻ thư viện thành công" : "Cập nhật thẻ thư viện không thành công";
+            }
+            catch (Exception ex)
+            {
+                // Log exception
+                return $"Lỗi: {ex.Message}";
+            }
         }
 
         public string Delete(Guid id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                bool isSuccess = _repo.Delete(id);
+                return isSuccess ? "Xóa thẻ thư viện thành công" : "Xóa thẻ thư viện không thành công";
+            }
+            catch (Exception ex)
+            {
+                // Log exception
+                return $"Lỗi: {ex.Message}";
+            }
         }
-
-
-
     }
 }

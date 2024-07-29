@@ -22,68 +22,68 @@ namespace DuAnOne.DAL.Repositories.Implement
             return _appDbContext.Saches.FirstOrDefault(s => s.Id == id);
         }
 
-        public string Create(Sach sach)
+        public string Create(Sach entity)
         {
             try
             {
-                _appDbContext.Saches.Add(sach);
+                _appDbContext.Saches.Add(entity);
                 _appDbContext.SaveChanges();
-                return "Thêm sách thành công";
+                return "Thêm sách thành công.";
             }
             catch (Exception ex)
             {
-                return "Thêm sách thất bại\nLỗi: " + ex.Message;
+                return $"Thêm sách thất bại. Lỗi: {ex.Message}";
             }
         }
 
-        public string Update(Sach sach)
+        public string Update(Sach entity)
         {
             try
             {
-                var existingSach = _appDbContext.Saches.FirstOrDefault(s => s.Id == sach.Id);
+                var existingSach = _appDbContext.Saches.FirstOrDefault(s => s.Id == entity.Id);
                 if (existingSach != null)
                 {
-                    existingSach.TenSach = sach.TenSach;
-                    existingSach.NamXuatBan = sach.NamXuatBan;
-                    existingSach.SoLuong = sach.SoLuong;
-                    existingSach.TheLoai = sach.TheLoai;
-                    existingSach.MaSach = sach.MaSach;
-                    existingSach.GiaTien = sach.GiaTien;
-                    existingSach.TacGia = sach.TacGia;
-                    existingSach.Status = sach.Status;
-                    existingSach.ModifyBy = sach.ModifyBy;
-                    existingSach.ModifyTime = sach.ModifyTime;
-                    existingSach.DeleteBy = sach.DeleteBy;
-                    existingSach.DeleteTime = sach.DeleteTime;
+                    existingSach.TenSach = entity.TenSach;
+                    existingSach.NamXuatBan = entity.NamXuatBan;
+                    existingSach.SoLuong = entity.SoLuong;
+                    existingSach.TheLoai = entity.TheLoai;
+                    existingSach.MaSach = entity.MaSach;
+                    existingSach.GiaTien = entity.GiaTien;
+                    existingSach.TacGia = entity.TacGia;
+                    existingSach.Status = entity.Status;
+                    existingSach.ModifyBy = entity.ModifyBy;
+                    existingSach.ModifyTime = entity.ModifyTime;
+                    existingSach.DeleteBy = entity.DeleteBy;
+                    existingSach.DeleteTime = entity.DeleteTime;
 
                     _appDbContext.Saches.Update(existingSach);
                     _appDbContext.SaveChanges();
-                    return "Cập nhật sách thành công";
+                    return "Cập nhật sách thành công.";
                 }
-                return "Không tìm thấy sách cần cập nhật";
+                return "Sách không tìm thấy.";
             }
             catch (Exception ex)
             {
-                return "Cập nhật sách thất bại\nLỗi: " + ex.Message;
+                return $"Cập nhật sách thất bại. Lỗi: {ex.Message}";
             }
         }
 
-        public string Delete(Sach sach)
+        public string Delete(Guid id)
         {
             try
             {
-                var existingSach = _appDbContext.Saches.FirstOrDefault(s => s.Id == sach.Id);
+                var existingSach = _appDbContext.Saches.FirstOrDefault(s => s.Id == id);
                 if (existingSach != null)
                 {
                     _appDbContext.Saches.Remove(existingSach);
                     _appDbContext.SaveChanges();
-                    return "Xóa sách thành công";
+                    return "Xóa sách thành công.";
                 }
-                return "Không tìm thấy sách cần xóa";
+                return "Sách không tìm thấy.";
             }
             catch (Exception ex)
             {
-                return "Xóa sách thất bại\nLỗi: " + ex.Message;
+                return $"Xóa sách thất bại. Lỗi: {ex.Message}";
             }
         }
     }

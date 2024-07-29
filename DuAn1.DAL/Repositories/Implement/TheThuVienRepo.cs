@@ -22,65 +22,70 @@ namespace DuAnOne.DAL.Repositories.Implement
             return _appDbContext.TheThuViens.FirstOrDefault(ttv => ttv.Id == id);
         }
 
-        public string Create(TheThuVien ttv)
+        public bool Create(TheThuVien entity)
         {
             try
             {
-                _appDbContext.TheThuViens.Add(ttv);
+                _appDbContext.TheThuViens.Add(entity);
                 _appDbContext.SaveChanges();
-                return "Thêm thẻ thư viện thành công";
+                return true; // Success
             }
             catch (Exception ex)
             {
-                return "Thêm thẻ thư viện thất bại\nLỗi: " + ex.Message;
+                Console.WriteLine("Thêm thẻ thư viện thất bại\nLỗi: " + ex.Message);
+                return false; // Failure
             }
         }
 
-        public string Update(TheThuVien ttv)
+        public bool Update(TheThuVien entity)
         {
             try
             {
-                var existingTheThuVien = _appDbContext.TheThuViens.FirstOrDefault(ttv => ttv.Id == ttv.Id);
+                var existingTheThuVien = _appDbContext.TheThuViens.FirstOrDefault(ttv => ttv.Id == entity.Id);
                 if (existingTheThuVien != null)
                 {
-                    existingTheThuVien.IdChuThe = ttv.IdChuThe;
-                    existingTheThuVien.NgayCap = ttv.NgayCap;
-                    existingTheThuVien.NgayHetHan = ttv.NgayHetHan;
-                    existingTheThuVien.MaThe = ttv.MaThe;
-                    existingTheThuVien.Status = ttv.Status;
-                    existingTheThuVien.ModifyBy = ttv.ModifyBy;
-                    existingTheThuVien.ModifyTime = ttv.ModifyTime;
-                    existingTheThuVien.DeleteBy = ttv.DeleteBy;
-                    existingTheThuVien.DeleteTime = ttv.DeleteTime;
+                    existingTheThuVien.IdChuThe = entity.IdChuThe;
+                    existingTheThuVien.NgayCap = entity.NgayCap;
+                    existingTheThuVien.NgayHetHan = entity.NgayHetHan;
+                    existingTheThuVien.MaThe = entity.MaThe;
+                    existingTheThuVien.Status = entity.Status;
+                    existingTheThuVien.ModifyBy = entity.ModifyBy;
+                    existingTheThuVien.ModifyTime = entity.ModifyTime;
+                    existingTheThuVien.DeleteBy = entity.DeleteBy;
+                    existingTheThuVien.DeleteTime = entity.DeleteTime;
 
                     _appDbContext.TheThuViens.Update(existingTheThuVien);
                     _appDbContext.SaveChanges();
-                    return "Cập nhật thẻ thư viện thành công";
+                    return true; // Success
                 }
-                return "Không tìm thấy thẻ thư viện cần cập nhật";
+                Console.WriteLine("Không tìm thấy thẻ thư viện cần cập nhật");
+                return false; // Not found
             }
             catch (Exception ex)
             {
-                return "Cập nhật thẻ thư viện thất bại\nLỗi: " + ex.Message;
+                Console.WriteLine("Cập nhật thẻ thư viện thất bại\nLỗi: " + ex.Message);
+                return false; // Failure
             }
         }
 
-        public string Delete(TheThuVien ttv)
+        public bool Delete(Guid id)
         {
             try
             {
-                var existingTheThuVien = _appDbContext.TheThuViens.FirstOrDefault(ttv => ttv.Id == ttv.Id);
+                var existingTheThuVien = _appDbContext.TheThuViens.FirstOrDefault(ttv => ttv.Id == id);
                 if (existingTheThuVien != null)
                 {
                     _appDbContext.TheThuViens.Remove(existingTheThuVien);
                     _appDbContext.SaveChanges();
-                    return "Xóa thẻ thư viện thành công";
+                    return true; // Success
                 }
-                return "Không tìm thấy thẻ thư viện cần xóa";
+                Console.WriteLine("Không tìm thấy thẻ thư viện cần xóa");
+                return false; // Not found
             }
             catch (Exception ex)
             {
-                return "Xóa thẻ thư viện thất bại\nLỗi: " + ex.Message;
+                Console.WriteLine("Xóa thẻ thư viện thất bại\nLỗi: " + ex.Message);
+                return false; // Failure
             }
         }
     }
