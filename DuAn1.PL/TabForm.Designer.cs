@@ -30,9 +30,7 @@
         {
             tabDuAn = new TabControl();
             tab_taikhoan = new TabPage();
-            pln_them = new Panel();
             btn_them = new Button();
-            pln_suaxoa = new Panel();
             btn_sua = new Button();
             btn_xoa = new Button();
             txt_hienthichon = new TextBox();
@@ -40,14 +38,30 @@
             txt_search = new TextBox();
             dgv_taikhoan = new DataGridView();
             tab_chuthe = new TabPage();
+            btn_themchuthe = new Button();
+            btn_suachuthe = new Button();
+            btn_xoachuthe = new Button();
+            txt_hienthichonchuthe = new TextBox();
+            label2 = new Label();
+            txt_searchchuthe = new TextBox();
+            dgv_chuthe = new DataGridView();
             tab_thethuvien = new TabPage();
+            btn_themthethuvien = new Button();
+            btn_suathethuvien = new Button();
+            btn_xoathethuvien = new Button();
+            txt_hienthichonthethuvien = new TextBox();
+            lbl_hienthichonthethuvien = new Label();
+            txt_searchthethuvien = new TextBox();
+            dgv_thethuvien = new DataGridView();
             tab_sach = new TabPage();
             tab_phieumuon = new TabPage();
             tabDuAn.SuspendLayout();
             tab_taikhoan.SuspendLayout();
-            pln_them.SuspendLayout();
-            pln_suaxoa.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgv_taikhoan).BeginInit();
+            tab_chuthe.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgv_chuthe).BeginInit();
+            tab_thethuvien.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgv_thethuvien).BeginInit();
             SuspendLayout();
             // 
             // tabDuAn
@@ -66,8 +80,9 @@
             // 
             // tab_taikhoan
             // 
-            tab_taikhoan.Controls.Add(pln_them);
-            tab_taikhoan.Controls.Add(pln_suaxoa);
+            tab_taikhoan.Controls.Add(btn_them);
+            tab_taikhoan.Controls.Add(btn_sua);
+            tab_taikhoan.Controls.Add(btn_xoa);
             tab_taikhoan.Controls.Add(txt_hienthichon);
             tab_taikhoan.Controls.Add(lb_bandangchon);
             tab_taikhoan.Controls.Add(txt_search);
@@ -79,81 +94,58 @@
             tab_taikhoan.TabIndex = 0;
             tab_taikhoan.Text = "Tài Khoản";
             tab_taikhoan.UseVisualStyleBackColor = true;
-            tab_taikhoan.Click += tabPage1_Click;
-            // 
-            // pln_them
-            // 
-            pln_them.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pln_them.Controls.Add(btn_them);
-            pln_them.Location = new Point(1208, 58);
-            pln_them.Name = "pln_them";
-            pln_them.Size = new Size(132, 67);
-            pln_them.TabIndex = 42;
             // 
             // btn_them
             // 
-            btn_them.Location = new Point(18, 16);
+            btn_them.Location = new Point(1165, 97);
             btn_them.Name = "btn_them";
-            btn_them.Size = new Size(102, 39);
-            btn_them.TabIndex = 44;
+            btn_them.Size = new Size(149, 60);
+            btn_them.TabIndex = 50;
             btn_them.Text = "Thêm";
             btn_them.UseVisualStyleBackColor = true;
-            btn_them.Click += btn_them_Click;
-            // 
-            // pln_suaxoa
-            // 
-            pln_suaxoa.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            pln_suaxoa.Controls.Add(btn_sua);
-            pln_suaxoa.Controls.Add(btn_xoa);
-            pln_suaxoa.Location = new Point(397, 58);
-            pln_suaxoa.Name = "pln_suaxoa";
-            pln_suaxoa.Size = new Size(229, 66);
-            pln_suaxoa.TabIndex = 41;
+            btn_them.Click += btn_them_Click_1;
             // 
             // btn_sua
             // 
-            btn_sua.Location = new Point(9, 11);
+            btn_sua.Location = new Point(532, 97);
             btn_sua.Name = "btn_sua";
-            btn_sua.Size = new Size(102, 39);
-            btn_sua.TabIndex = 43;
+            btn_sua.Size = new Size(149, 60);
+            btn_sua.TabIndex = 48;
             btn_sua.Text = "Sửa";
             btn_sua.UseVisualStyleBackColor = true;
-            btn_sua.Click += btn_sua_Click;
             // 
             // btn_xoa
             // 
-            btn_xoa.Location = new Point(117, 11);
+            btn_xoa.Location = new Point(730, 97);
             btn_xoa.Name = "btn_xoa";
-            btn_xoa.Size = new Size(102, 39);
-            btn_xoa.TabIndex = 42;
+            btn_xoa.Size = new Size(149, 60);
+            btn_xoa.TabIndex = 47;
             btn_xoa.Text = "Xóa";
             btn_xoa.UseVisualStyleBackColor = true;
-            btn_xoa.Click += btn_xoa_Click;
             // 
             // txt_hienthichon
             // 
-            txt_hienthichon.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            txt_hienthichon.Location = new Point(110, 78);
+            txt_hienthichon.Location = new Point(151, 106);
             txt_hienthichon.Name = "txt_hienthichon";
-            txt_hienthichon.Size = new Size(256, 23);
-            txt_hienthichon.TabIndex = 40;
+            txt_hienthichon.Size = new Size(173, 23);
+            txt_hienthichon.TabIndex = 53;
             // 
             // lb_bandangchon
             // 
             lb_bandangchon.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             lb_bandangchon.AutoSize = true;
-            lb_bandangchon.Location = new Point(14, 81);
+            lb_bandangchon.Location = new Point(55, 109);
             lb_bandangchon.Name = "lb_bandangchon";
             lb_bandangchon.Size = new Size(90, 15);
-            lb_bandangchon.TabIndex = 39;
+            lb_bandangchon.TabIndex = 52;
             lb_bandangchon.Text = "Bạn Đang Chọn";
             // 
             // txt_search
             // 
-            txt_search.Location = new Point(12, 21);
+            txt_search.Location = new Point(48, 29);
             txt_search.Name = "txt_search";
-            txt_search.Size = new Size(464, 23);
-            txt_search.TabIndex = 35;
+            txt_search.Size = new Size(330, 23);
+            txt_search.TabIndex = 51;
             txt_search.Text = "Search";
             // 
             // dgv_taikhoan
@@ -161,15 +153,21 @@
             dgv_taikhoan.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             dgv_taikhoan.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgv_taikhoan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgv_taikhoan.Location = new Point(14, 130);
+            dgv_taikhoan.Location = new Point(37, 193);
             dgv_taikhoan.Name = "dgv_taikhoan";
             dgv_taikhoan.RowTemplate.Height = 25;
-            dgv_taikhoan.Size = new Size(1326, 460);
-            dgv_taikhoan.TabIndex = 34;
-            dgv_taikhoan.CellContentClick += dgv_taikhoan_CellContentClick;
+            dgv_taikhoan.Size = new Size(1297, 395);
+            dgv_taikhoan.TabIndex = 49;
             // 
             // tab_chuthe
             // 
+            tab_chuthe.Controls.Add(btn_themchuthe);
+            tab_chuthe.Controls.Add(btn_suachuthe);
+            tab_chuthe.Controls.Add(btn_xoachuthe);
+            tab_chuthe.Controls.Add(txt_hienthichonchuthe);
+            tab_chuthe.Controls.Add(label2);
+            tab_chuthe.Controls.Add(txt_searchchuthe);
+            tab_chuthe.Controls.Add(dgv_chuthe);
             tab_chuthe.Location = new Point(4, 24);
             tab_chuthe.Name = "tab_chuthe";
             tab_chuthe.Padding = new Padding(3);
@@ -178,8 +176,78 @@
             tab_chuthe.Text = "Chủ Thẻ";
             tab_chuthe.UseVisualStyleBackColor = true;
             // 
+            // btn_themchuthe
+            // 
+            btn_themchuthe.Location = new Point(1158, 94);
+            btn_themchuthe.Name = "btn_themchuthe";
+            btn_themchuthe.Size = new Size(149, 60);
+            btn_themchuthe.TabIndex = 57;
+            btn_themchuthe.Text = "Thêm";
+            btn_themchuthe.UseVisualStyleBackColor = true;
+            // 
+            // btn_suachuthe
+            // 
+            btn_suachuthe.Location = new Point(525, 94);
+            btn_suachuthe.Name = "btn_suachuthe";
+            btn_suachuthe.Size = new Size(149, 60);
+            btn_suachuthe.TabIndex = 55;
+            btn_suachuthe.Text = "Sửa";
+            btn_suachuthe.UseVisualStyleBackColor = true;
+            // 
+            // btn_xoachuthe
+            // 
+            btn_xoachuthe.Location = new Point(723, 94);
+            btn_xoachuthe.Name = "btn_xoachuthe";
+            btn_xoachuthe.Size = new Size(149, 60);
+            btn_xoachuthe.TabIndex = 54;
+            btn_xoachuthe.Text = "Xóa";
+            btn_xoachuthe.UseVisualStyleBackColor = true;
+            // 
+            // txt_hienthichonchuthe
+            // 
+            txt_hienthichonchuthe.Location = new Point(144, 103);
+            txt_hienthichonchuthe.Name = "txt_hienthichonchuthe";
+            txt_hienthichonchuthe.Size = new Size(173, 23);
+            txt_hienthichonchuthe.TabIndex = 60;
+            // 
+            // label2
+            // 
+            label2.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            label2.AutoSize = true;
+            label2.Location = new Point(48, 106);
+            label2.Name = "label2";
+            label2.Size = new Size(90, 15);
+            label2.TabIndex = 59;
+            label2.Text = "Bạn Đang Chọn";
+            // 
+            // txt_searchchuthe
+            // 
+            txt_searchchuthe.Location = new Point(41, 26);
+            txt_searchchuthe.Name = "txt_searchchuthe";
+            txt_searchchuthe.Size = new Size(330, 23);
+            txt_searchchuthe.TabIndex = 58;
+            txt_searchchuthe.Text = "Search";
+            // 
+            // dgv_chuthe
+            // 
+            dgv_chuthe.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgv_chuthe.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgv_chuthe.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgv_chuthe.Location = new Point(30, 190);
+            dgv_chuthe.Name = "dgv_chuthe";
+            dgv_chuthe.RowTemplate.Height = 25;
+            dgv_chuthe.Size = new Size(1297, 395);
+            dgv_chuthe.TabIndex = 56;
+            // 
             // tab_thethuvien
             // 
+            tab_thethuvien.Controls.Add(btn_themthethuvien);
+            tab_thethuvien.Controls.Add(btn_suathethuvien);
+            tab_thethuvien.Controls.Add(btn_xoathethuvien);
+            tab_thethuvien.Controls.Add(txt_hienthichonthethuvien);
+            tab_thethuvien.Controls.Add(lbl_hienthichonthethuvien);
+            tab_thethuvien.Controls.Add(txt_searchthethuvien);
+            tab_thethuvien.Controls.Add(dgv_thethuvien);
             tab_thethuvien.Location = new Point(4, 24);
             tab_thethuvien.Name = "tab_thethuvien";
             tab_thethuvien.Padding = new Padding(3);
@@ -187,6 +255,69 @@
             tab_thethuvien.TabIndex = 2;
             tab_thethuvien.Text = "Thẻ Thư Viện";
             tab_thethuvien.UseVisualStyleBackColor = true;
+            // 
+            // btn_themthethuvien
+            // 
+            btn_themthethuvien.Location = new Point(1158, 94);
+            btn_themthethuvien.Name = "btn_themthethuvien";
+            btn_themthethuvien.Size = new Size(149, 60);
+            btn_themthethuvien.TabIndex = 64;
+            btn_themthethuvien.Text = "Thêm";
+            btn_themthethuvien.UseVisualStyleBackColor = true;
+            // 
+            // btn_suathethuvien
+            // 
+            btn_suathethuvien.Location = new Point(525, 94);
+            btn_suathethuvien.Name = "btn_suathethuvien";
+            btn_suathethuvien.Size = new Size(149, 60);
+            btn_suathethuvien.TabIndex = 62;
+            btn_suathethuvien.Text = "Sửa";
+            btn_suathethuvien.UseVisualStyleBackColor = true;
+            // 
+            // btn_xoathethuvien
+            // 
+            btn_xoathethuvien.Location = new Point(723, 94);
+            btn_xoathethuvien.Name = "btn_xoathethuvien";
+            btn_xoathethuvien.Size = new Size(149, 60);
+            btn_xoathethuvien.TabIndex = 61;
+            btn_xoathethuvien.Text = "Xóa";
+            btn_xoathethuvien.UseVisualStyleBackColor = true;
+            // 
+            // txt_hienthichonthethuvien
+            // 
+            txt_hienthichonthethuvien.Location = new Point(144, 103);
+            txt_hienthichonthethuvien.Name = "txt_hienthichonthethuvien";
+            txt_hienthichonthethuvien.Size = new Size(173, 23);
+            txt_hienthichonthethuvien.TabIndex = 67;
+            // 
+            // lbl_hienthichonthethuvien
+            // 
+            lbl_hienthichonthethuvien.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            lbl_hienthichonthethuvien.AutoSize = true;
+            lbl_hienthichonthethuvien.Location = new Point(48, 106);
+            lbl_hienthichonthethuvien.Name = "lbl_hienthichonthethuvien";
+            lbl_hienthichonthethuvien.Size = new Size(90, 15);
+            lbl_hienthichonthethuvien.TabIndex = 66;
+            lbl_hienthichonthethuvien.Text = "Bạn Đang Chọn";
+            // 
+            // txt_searchthethuvien
+            // 
+            txt_searchthethuvien.Location = new Point(41, 26);
+            txt_searchthethuvien.Name = "txt_searchthethuvien";
+            txt_searchthethuvien.Size = new Size(330, 23);
+            txt_searchthethuvien.TabIndex = 65;
+            txt_searchthethuvien.Text = "Search";
+            // 
+            // dgv_thethuvien
+            // 
+            dgv_thethuvien.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgv_thethuvien.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgv_thethuvien.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgv_thethuvien.Location = new Point(30, 190);
+            dgv_thethuvien.Name = "dgv_thethuvien";
+            dgv_thethuvien.RowTemplate.Height = 25;
+            dgv_thethuvien.Size = new Size(1297, 395);
+            dgv_thethuvien.TabIndex = 63;
             // 
             // tab_sach
             // 
@@ -220,9 +351,13 @@
             tabDuAn.ResumeLayout(false);
             tab_taikhoan.ResumeLayout(false);
             tab_taikhoan.PerformLayout();
-            pln_them.ResumeLayout(false);
-            pln_suaxoa.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dgv_taikhoan).EndInit();
+            tab_chuthe.ResumeLayout(false);
+            tab_chuthe.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgv_chuthe).EndInit();
+            tab_thethuvien.ResumeLayout(false);
+            tab_thethuvien.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgv_thethuvien).EndInit();
             ResumeLayout(false);
         }
 
@@ -234,14 +369,26 @@
         private TabPage tab_thethuvien;
         private TabPage tab_sach;
         private TabPage tab_phieumuon;
-        private TextBox txt_hienthichon;
-        private Label lb_bandangchon;
         private Button btn_them;
-        private TextBox txt_search;
-        private DataGridView dgv_taikhoan;
-        private Panel pln_them;
-        private Panel pln_suaxoa;
         private Button btn_sua;
         private Button btn_xoa;
+        private TextBox txt_hienthichon;
+        private Label lb_bandangchon;
+        private TextBox txt_search;
+        private DataGridView dgv_taikhoan;
+        private Button btn_themchuthe;
+        private Button btn_suachuthe;
+        private Button btn_xoachuthe;
+        private TextBox txt_hienthichonchuthe;
+        private Label label2;
+        private TextBox txt_searchchuthe;
+        private DataGridView dgv_chuthe;
+        private Button btn_themthethuvien;
+        private Button btn_suathethuvien;
+        private Button btn_xoathethuvien;
+        private TextBox txt_hienthichonthethuvien;
+        private Label lbl_hienthichonthethuvien;
+        private TextBox txt_searchthethuvien;
+        private DataGridView dgv_thethuvien;
     }
 }

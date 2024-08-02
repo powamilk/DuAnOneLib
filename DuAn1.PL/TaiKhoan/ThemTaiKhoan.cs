@@ -10,34 +10,27 @@ namespace DuAnOne.PL.TaiKhoan
     {
         List<TaiKhoanVM> _taiKhoans;
         ITaiKhoanService _taiKhoanService;
+        private readonly Action _onDataAdded;
 
-        public event Action DataAdded;
-
-        public ThemTaiKhoan()
+        public ThemTaiKhoan(Action onDataAdded)
         {
             InitializeComponent();
             _taiKhoanService = new TaiKhoanService();
-            _taiKhoans = _taiKhoanService.GetAll();
+            _onDataAdded = onDataAdded;
             LoadFormData();
         }
 
         private void LoadFormData()
         {
+            cbx_chucvu.Items.Clear();
             cbx_chucvu.Items.Add("1");
             cbx_chucvu.Items.Add("2");
             cbx_chucvu.Items.Add("3");
 
+            cbx_status.Items.Clear();
             cbx_status.Items.Add("1");
             cbx_status.Items.Add("2");
             cbx_status.Items.Add("3");
-
-            // Tải các giá trị ChucVu và Status duy nhất từ danh sách _taiKhoans
-            var chucVuValues = _taiKhoans.Select(tk => tk.ChucVu).Distinct().ToList();
-            var statusValues = _taiKhoans.Select(tk => tk.Status).Distinct().ToList();
-
-            // Điền dữ liệu vào các điều khiển ComboBox
-            cbx_chucvu.Items.AddRange(chucVuValues.Select(cv => cv.ToString()).ToArray());
-            cbx_status.Items.AddRange(statusValues.Select(s => s.ToString()).ToArray());
 
         }
 
@@ -61,7 +54,6 @@ namespace DuAnOne.PL.TaiKhoan
         {
             if (MessageBoxExtension.Confirm("them"))
             {
-
                 DateTime ngaySinh;
                 if (!DateTime.TryParse(txt_ngaysinh.Text, out ngaySinh))
                 {
@@ -110,7 +102,7 @@ namespace DuAnOne.PL.TaiKhoan
 
                     if (isSuccess)
                     {
-                        DataAdded?.Invoke();
+                        _onDataAdded?.Invoke(); // Gọi hàm callback
                     }
 
                     this.Close(); // Đóng form sau khi thêm thành công

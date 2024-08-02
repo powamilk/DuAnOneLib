@@ -1,10 +1,8 @@
-﻿using DuAn1.PL;
-using DuAnOne.BUS.Implement;
+﻿using DuAnOne.BUS.Implement;
 using DuAnOne.BUS.Interface;
 using DuAnOne.BUS.ViewModel.TaiKhoans;
 using DuAnOne.PL.Extensions;
 using DuAnOne.PL.TaiKhoan;
-using System.Diagnostics;
 
 namespace DuAnOne.PL
 {
@@ -29,52 +27,7 @@ namespace DuAnOne.PL
         DateTime? _modifyTimeChon;
         Guid? _deleteByChon;
         DateTime? _deleteTimeChon;
-
-
-        private SuaTK _suaTK;
         private ThemTaiKhoan _themTaiKhoan;
-
-        private void ShowSuaTK()
-        {
-            if (_suaTK == null)
-            {
-                _suaTK = new SuaTK();
-                _suaTK.FormClosed += SuaTK_FormClosed;
-            }
-
-            this.Enabled = false; // Vô hiệu hóa form chính
-            _suaTK.SendData(_maTKChon, _hoVaTenChon, _ngaySinhChon, _diaChiChon, _emailChon, _sdtChon, _maNhanVienChon, _tenTaiKhoanChon, _matKhauChon, _chucVuChon, _statusChon);
-            _suaTK.Show(); // Hiển thị form mới
-        }
-
-
-        private void OpenSuaTKForm(Guid id)
-        {
-            if (_suaTK == null)
-            {
-                _suaTK = new SuaTK();
-                _suaTK.FormClosed += SuaTK_FormClosed;
-            }
-            _suaTK.SendData(id,
-                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.HoVaTen ?? string.Empty,
-                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.NgaySinh ?? DateTime.Now,
-                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.DiaChi ?? string.Empty,
-                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.Email ?? string.Empty,
-                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.Sdt ?? string.Empty,
-                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.MaNhanVien ?? string.Empty,
-                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.TenTaiKhoan ?? string.Empty,
-                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.MatKhau ?? string.Empty,
-                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.ChucVu ?? 0,
-                _taiKhoans.FirstOrDefault(tk => tk.Id == id)?.Status ?? 0);
-            _suaTK.Show();
-        }
-
-        private void SuaTK_FormClosed(object sender, FormClosedEventArgs e)
-        {
-            this.Enabled = true; // Kích hoạt lại form chính
-            LoadGridData();
-        }
-
 
         private void LoadData()
         {
@@ -82,70 +35,19 @@ namespace DuAnOne.PL
             dgv_taikhoan.DataSource = taiKhoans;
         }
 
+
         public void ShowThemTK()
         {
-            if (_themTaiKhoan == null)
-            {
-                _themTaiKhoan = new ThemTaiKhoan();
-                _themTaiKhoan.DataAdded += LoadGridData;
-                _themTaiKhoan.FormClosed += ThemTaiKhoan_FormClosed;
-            }
-
+            var form = new ThemTaiKhoan(LoadGridData);
             this.Enabled = false; // Vô hiệu hóa form chính
-            _themTaiKhoan.Show(); // Hiển thị form mới
+            form.Show(); // Hiển thị form mới
+            form.FormClosed += (s, e) => this.Enabled = true;
         }
-
 
         private void ThemTaiKhoan_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.Enabled = true; // Kích hoạt lại form chính
         }
-
-
-
-        private void UpdateDataToSuaTK()
-        {
-            // Kiểm tra nếu _maTKChon là Guid.Empty hoặc giá trị khác không hợp lệ
-            if (_maTKChon == Guid.Empty)
-            {
-                MessageBox.Show("Chưa chọn tài khoản để sửa.");
-                return;
-            }
-
-            // Tìm tài khoản đã chọn trong danh sách _taiKhoans
-            var taiKhoanChon = _taiKhoans.FirstOrDefault(tk => tk.Id == _maTKChon);
-
-            if (taiKhoanChon != null)
-            {
-                // Gán các giá trị từ tài khoản chọn vào biến tương ứng
-                if (_suaTK != null)
-                {
-                    _suaTK.SendData(
-                        _maTKChon,
-                        taiKhoanChon.HoVaTen,
-                        taiKhoanChon.NgaySinh,
-                        taiKhoanChon.DiaChi,
-                        taiKhoanChon.Email,
-                        taiKhoanChon.Sdt,
-                        taiKhoanChon.MaNhanVien,
-                        taiKhoanChon.TenTaiKhoan,
-                        taiKhoanChon.MatKhau,
-                        taiKhoanChon.ChucVu,
-                        taiKhoanChon.Status
-                    );
-                    _suaTK.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Form sửa tài khoản chưa được khởi tạo.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Tài khoản không tồn tại trong danh sách.");
-            }
-        }
-
 
         public TabForm()
         {
@@ -180,16 +82,12 @@ namespace DuAnOne.PL
 
         }
 
-
-
         private void LoadGridData()
         {
+            // Code để tải lại dữ liệu cho DataGridView
             dgv_taikhoan.Rows.Clear(); // Xóa các dòng hiện có
-            _taiKhoans = _taiKhoanService.GetList(); // Lấy danh sách tài khoản mới
-
-            Debug.WriteLine($"Số lượng tài khoản: {_taiKhoans.Count}");
-
-            foreach (var tk in _taiKhoans)
+            List<TaiKhoanVM> taiKhoans = _taiKhoanService.GetAll(); // Lấy danh sách tài khoản mới
+            foreach (var tk in taiKhoans)
             {
                 dgv_taikhoan.Rows.Add(
                     (_taiKhoans.IndexOf(tk) + 1),
@@ -206,12 +104,6 @@ namespace DuAnOne.PL
             }
         }
 
-        private void btn_sua_Click(object sender, EventArgs e)
-        {
-            ShowSuaTK();
-            UpdateDataToSuaTK();
-        }
-
         private void btn_xoa_Click(object sender, EventArgs e)
         {
             if (MessageBoxExtension.Confirm("xóa"))
@@ -223,12 +115,6 @@ namespace DuAnOne.PL
 
                 LoadGridData();
             }
-        }
-
-
-        private void btn_them_Click(object sender, EventArgs e)
-        {
-            ShowThemTK();
         }
 
         private void dgv_taikhoan_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -244,6 +130,11 @@ namespace DuAnOne.PL
             var tkChon = _taiKhoans.ElementAt(index);
             _maTKChon = tkChon.Id;
             txt_hienthichon.Text = tkChon.Id.ToString();
+        }
+
+        private void btn_them_Click_1(object sender, EventArgs e)
+        {
+            ShowThemTK();
         }
     }
 }
