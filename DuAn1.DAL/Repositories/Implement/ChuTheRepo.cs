@@ -3,7 +3,7 @@ using DuAnOne.DAL.Repositories.Interfaces;
 
 namespace DuAnOne.DAL.Repositories.Implement
 {
-    internal class ChuTheRepo : IChuTheRepo
+    public class ChuTheRepo : IChuTheRepo
     {
         private readonly AppDbContext _appDbContext;
 
