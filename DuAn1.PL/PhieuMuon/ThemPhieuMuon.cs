@@ -36,18 +36,18 @@ namespace DuAnOne.PL.PhieuMuon
             cb_status.Items.Add("4");
         }
 
-        public void SendData(Guid id, Guid idTaiKhoan, Guid idThe, DateTime ngayMuon, DateTime ngayTra, DateTime ngayTraThucTe, string maPhieu, int status)
+        public void SendData(Guid id, Guid idTaiKhoan, Guid idThe, DateTime ngayMuon, DateTime ngayTra, DateTime? ngayTraThucTe, string maPhieu, int status)
         {
             _id = id;
             txt_idtaikhoan.Text = idTaiKhoan.ToString();
             txt_idthe.Text = idThe.ToString();
-            txt_ngaymuon.Text = ngayMuon.ToString();
-            txt_ngaytra.Text = ngayTra.ToString();
-            txt_ngaytrathucte.Text = ngayTraThucTe.ToString();
+            txt_ngaymuon.Text = ngayMuon.ToString("dd/MM/yyyy");
+            txt_ngaytra.Text = ngayTra.ToString("dd/MM/yyyy");
+            txt_ngaytrathucte.Text = ngayTraThucTe.HasValue ? ngayTraThucTe.Value.ToString("dd/MM/yyyy") : string.Empty;
             txt_maphieu.Text = maPhieu;
-            cb_status.SelectedIndex = status;
-
+            cb_status.SelectedIndex = status - 1;
         }
+
 
         private void btn_xacnhan_Click(object sender, EventArgs e)
         {
