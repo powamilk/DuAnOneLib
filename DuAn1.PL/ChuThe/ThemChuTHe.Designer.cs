@@ -72,6 +72,7 @@
             btn_huy.TabIndex = 68;
             btn_huy.Text = "Hủy";
             btn_huy.UseVisualStyleBackColor = true;
+            btn_huy.Click += btn_huy_Click;
             // 
             // btn_xacnhan
             // 
@@ -81,6 +82,7 @@
             btn_xacnhan.TabIndex = 67;
             btn_xacnhan.Text = "Xác Nhận Thêm";
             btn_xacnhan.UseVisualStyleBackColor = true;
+            btn_xacnhan.Click += btn_xacnhan_Click;
             // 
             // cb_status
             // 

@@ -24,7 +24,23 @@ namespace DuAnOne.BUS.Implement
 
         public List<ChuTheVM> GetList()
         {
+            // Kiểm tra nếu _repo là null
+            if (_repo == null)
+            {
+                throw new InvalidOperationException("Repository chưa được khởi tạo.");
+            }
+
+            // Lấy danh sách các thực thể từ repository
             List<ChuThe> entities = _repo.GetList();
+
+            // Kiểm tra nếu entities là null
+            if (entities == null)
+            {
+                // Trả về danh sách rỗng nếu entities là null
+                return new List<ChuTheVM>();
+            }
+
+            // Ánh xạ các thực thể thành view models
             var vms = entities.Select(e => ChuTheMapping.MapEntityToVM(e)).ToList();
             return vms;
         }
