@@ -62,6 +62,13 @@
             tb_searchSach = new TextBox();
             dgv_sach = new DataGridView();
             tab_phieumuon = new TabPage();
+            button1 = new Button();
+            button2 = new Button();
+            button3 = new Button();
+            textBox1 = new TextBox();
+            label3 = new Label();
+            textBox2 = new TextBox();
+            dgv_phieumuon = new DataGridView();
             tabDuAn.SuspendLayout();
             tab_taikhoan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgv_taikhoan).BeginInit();
@@ -71,6 +78,8 @@
             ((System.ComponentModel.ISupportInitialize)dgv_thethuvien).BeginInit();
             tab_sach.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgv_sach).BeginInit();
+            tab_phieumuon.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgv_phieumuon).BeginInit();
             SuspendLayout();
             // 
             // tabDuAn
@@ -427,6 +436,13 @@
             // 
             // tab_phieumuon
             // 
+            tab_phieumuon.Controls.Add(button1);
+            tab_phieumuon.Controls.Add(button2);
+            tab_phieumuon.Controls.Add(button3);
+            tab_phieumuon.Controls.Add(textBox1);
+            tab_phieumuon.Controls.Add(label3);
+            tab_phieumuon.Controls.Add(textBox2);
+            tab_phieumuon.Controls.Add(dgv_phieumuon);
             tab_phieumuon.Location = new Point(4, 24);
             tab_phieumuon.Name = "tab_phieumuon";
             tab_phieumuon.Padding = new Padding(3);
@@ -434,6 +450,70 @@
             tab_phieumuon.TabIndex = 4;
             tab_phieumuon.Text = "Phiếu Mượn";
             tab_phieumuon.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            button1.Location = new Point(1145, 111);
+            button1.Name = "button1";
+            button1.Size = new Size(149, 60);
+            button1.TabIndex = 78;
+            button1.Text = "Thêm";
+            button1.UseVisualStyleBackColor = true;
+            // 
+            // button2
+            // 
+            button2.Location = new Point(512, 111);
+            button2.Name = "button2";
+            button2.Size = new Size(149, 60);
+            button2.TabIndex = 76;
+            button2.Text = "Sửa";
+            button2.UseVisualStyleBackColor = true;
+            // 
+            // button3
+            // 
+            button3.Location = new Point(710, 111);
+            button3.Name = "button3";
+            button3.Size = new Size(149, 60);
+            button3.TabIndex = 75;
+            button3.Text = "Xóa";
+            button3.UseVisualStyleBackColor = true;
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(131, 120);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(173, 23);
+            textBox1.TabIndex = 81;
+            // 
+            // label3
+            // 
+            label3.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            label3.AutoSize = true;
+            label3.Location = new Point(35, 123);
+            label3.Name = "label3";
+            label3.Size = new Size(90, 15);
+            label3.TabIndex = 80;
+            label3.Text = "Bạn Đang Chọn";
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(28, 43);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(330, 23);
+            textBox2.TabIndex = 79;
+            textBox2.Text = "Search";
+            // 
+            // dgv_phieumuon
+            // 
+            dgv_phieumuon.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgv_phieumuon.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgv_phieumuon.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgv_phieumuon.Location = new Point(17, 207);
+            dgv_phieumuon.Name = "dgv_phieumuon";
+            dgv_phieumuon.RowHeadersWidth = 51;
+            dgv_phieumuon.RowTemplate.Height = 25;
+            dgv_phieumuon.Size = new Size(1297, 395);
+            dgv_phieumuon.TabIndex = 77;
             // 
             // TabForm
             // 
@@ -457,6 +537,9 @@
             tab_sach.ResumeLayout(false);
             tab_sach.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgv_sach).EndInit();
+            tab_phieumuon.ResumeLayout(false);
+            tab_phieumuon.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgv_phieumuon).EndInit();
             ResumeLayout(false);
         }
 
@@ -496,5 +579,12 @@
         private Label label1;
         private TextBox tb_searchSach;
         private DataGridView dgv_sach;
+        private Button button1;
+        private Button button2;
+        private Button button3;
+        private TextBox textBox1;
+        private Label label3;
+        private TextBox textBox2;
+        private DataGridView dgv_phieumuon;
     }
 }

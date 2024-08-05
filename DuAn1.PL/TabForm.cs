@@ -13,6 +13,10 @@ using DuAnOne.BUS.ViewModel.TheThuViens;
 using DuAnOne.PL.TheThuVien;
 using DuAnOne.BUS.ViewModel.Sachs;
 using DuAnOne.PL.Sach;
+using DuAnOne.BUS.ViewModel.PhieuMuons;
+using System.Drawing.Printing;
+using DuAnOne.PL.PhieuMuon;
+using System;
 
 namespace DuAnOne.PL
 {
@@ -616,7 +620,6 @@ namespace DuAnOne.PL
         }
         #endregion
 
-
         #region LoadGridDataSach
         private void LoadGridDataSach()
         {
@@ -804,5 +807,181 @@ namespace DuAnOne.PL
             ShowThemSach();
         }
         #endregion
+
+
+        #region Khai Báo Phiếu Mượn
+        List<PhieuMuonVM> _phieuMuons;
+        IPhieuMuonService _phieuMuonService;
+        Guid _idPhieuMuon;
+        Guid _idTaiKhoanChon;
+        Guid _idTheChon;
+        DateTime _ngayMuonChon;
+        DateTime _ngayTraChon;
+        DateTime _ngayTraThucTeChon;
+        string _maPhieuChon;
+        int _statusPhieuMuonChon;
+
+        private SuaPhieuMuon _suaPhieuMuon;
+        private ThemPhieuMuon _themPhieuMuon;
+        #endregion
+
+        #region Show Sửa Phiếu Mượn
+         private void ShowSuaPhieuMuon()
+        {
+            if(_suaPhieuMuon == null)
+            {
+                _suaPhieuMuon = new SuaPhieuMuon();
+                _suaPhieuMuon.FormClosed += SuaPhieuMuon_FormClosed;
+            }
+            this.Enabled = false;
+            _suaPhieuMuon.SendData(_idPhieuMuon, _idTaiKhoanChon, _idTheChon, _ngayMuonChon, _ngayTraChon, _ngayTraThucTeChon, _maPhieuChon, _statusPhieuMuonChon);
+            _suaPhieuMuon.Show();
+        }
+        #endregion
+
+        #region Open Sửa Sửa Phiếu Mượn Form
+        private void OpenSuaPhieuMuonForm(Guid id)
+        {
+            if (_suaPhieuMuon == null)
+            {
+                _suaPhieuMuon = new SuaPhieuMuon();
+                _suaPhieuMuon.FormClosed += SuaPhieuMuon_FormClosed;
+            }
+
+            var phieuMuonChon = _phieuMuons.FirstOrDefault(pm => pm.Id == id);
+
+            if (phieuMuonChon != null)
+            {
+                _suaPhieuMuon.SendData(
+                    id,
+                    phieuMuonChon.IdTaiKhoan,
+                    phieuMuonChon.IdThe,
+                    phieuMuonChon.NgayMuon,
+                    phieuMuonChon.NgayTra,
+                    phieuMuonChon.NgayTraThucTe,
+                    phieuMuonChon.MaPhieu,
+                    phieuMuonChon.Status
+                );
+                _suaPhieuMuon.Show();
+            }
+            else
+            {
+                MessageBox.Show("Phiếu Mượn không tồn tại trong danh sách.");
+            }
+        }
+
+        #endregion
+
+        #region Sửa Phiếu Mượn FormCLosed
+        private void SuaPhieuMuon_FormClosed( object sender, EventArgs e )
+            {
+                this.Enabled = true;
+                LoadGridDataPhieuMuon();
+            }
+        #endregion
+
+        #region Load Data 
+            private void LoadDataPhieuMuon()
+            {
+                List<PhieuMuonVM> phieuMuons = _phieuMuonService.GetList();
+                dgv_phieumuon.DataSource = phieuMuons;
+            }
+        #endregion
+
+        #region ShowThemPhieuMuon
+        public void ShowThemPhieuMuon()
+        {
+            if (_themPhieuMuon ==  null)
+            {
+                _themPhieuMuon = new ThemPhieuMuon();
+                _themPhieuMuon.DataAdded += LoadGridDataPhieuMuon;
+                _themPhieuMuon.FormClosed += ThemPhieuMuon_FormClosed;
+            }
+
+            this.Enabled = false;
+            _themPhieuMuon.Show();
+        }
+        #endregion 
+
+        private void ThemPhieuMuon_FormClosed(object sender, EventArgs e)
+        {
+            this.Enabled = true;
+            LoadGridDataPhieuMuon();
+        }
+
+        private void UpdateDataToSuaPhieuMuon()
+        {
+            if(_idPhieuMuon== Guid.Empty)
+            {
+                MessageBox.Show("Chưa chọn Phiếu Mượn để Sửa.");
+                return;
+            }   
+            
+            var phieuMuonChon = _phieuMuons.FirstOrDefault(pm => pm.Id == _idPhieuMuon);
+
+            if (phieuMuonChon != null)
+            {
+                if (_suaPhieuMuon != null)
+                {
+                    DateTime ngayTraThucTe = phieuMuonChon.NgayTraThucTe ?? DateTime.MinValue;
+                    _suaPhieuMuon.SendData(
+                          _idPhieuMuon,
+                          phieuMuonChon.IdTaiKhoan,
+                          phieuMuonChon.IdThe,
+                          phieuMuonChon.NgayMuon,
+                          phieuMuonChon.NgayTra,
+                          ngayTraThucTe,
+                          phieuMuonChon.MaPhieu,
+                          phieuMuonChon.Status
+                        );
+                    _suaPhieuMuon.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Form Sửa Phiếu mượn chưa đc khởi tạo");
+                }
+            }
+            else
+            {
+                MessageBox.Show("Phiếu Mượn ko tồn tại trong danh Sách");
+            }    
+        }
+
+
+
+        private void LoadFormDataPhieuMuon()
+        {
+            dgv_phieumuon.Columns.Clear();
+            dgv_phieumuon.Columns.Add("clm1", "STT");
+            dgv_phieumuon.Columns.Add("clm2", "Id Tài Khoản");
+            dgv_phieumuon.Columns.Add("clm3", "Id Thẻ");
+            dgv_phieumuon.Columns.Add("clm4", "Ngày Mượn");
+            dgv_phieumuon.Columns.Add("clm5", "Ngày Trả");
+            dgv_phieumuon.Columns.Add("clm6", "Ngày Trả Thực Tế");
+            dgv_phieumuon.Columns.Add("clm7", "Mã Phiếu");
+            dgv_phieumuon.Columns.Add("clm8", "Status");
+        }
+
+        private void LoadGridDataPhieuMuon()
+        {
+            dgv_phieumuon.Rows.Clear();
+            _phieuMuons = _phieuMuonService.GetList();
+
+            foreach (var pm in _phieuMuons)
+            {
+                dgv_phieumuon.Rows.Add(
+                    (_phieuMuons.IndexOf(pm) + 1),
+                    pm.IdTaiKhoan,
+                    pm.IdThe,
+                    pm.NgayMuon,
+                    pm.NgayTra,
+                    pm.NgayTraThucTe,
+                    pm.MaPhieu,
+                    pm.Status
+                    );
+            }    
+        }
+
+
     }
 }
