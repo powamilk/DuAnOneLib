@@ -1,5 +1,6 @@
 ﻿using DuAnOne.DAL.Entities;
 using DuAnOne.DAL.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DuAnOne.DAL.Repositories.Implement
 {
@@ -15,7 +16,7 @@ namespace DuAnOne.DAL.Repositories.Implement
         public List<ChuThe> GetList()
         {
             // Trả về danh sách tất cả các ChuThe
-            return _appDbContext.ChuThes.ToList();
+            return _appDbContext.ChuThes.AsQueryable().AsNoTracking().ToList(); ;
         }
 
         public ChuThe GetById(Guid id)

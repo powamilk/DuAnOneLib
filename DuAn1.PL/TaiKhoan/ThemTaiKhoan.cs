@@ -3,6 +3,7 @@ using DuAnOne.BUS.Interface;
 using DuAnOne.BUS.Utils.Validation;
 using DuAnOne.BUS.ViewModel.TaiKhoans;
 using DuAnOne.PL.Extensions;
+using System.Security.Cryptography;
 
 namespace DuAnOne.PL.TaiKhoan
 {
@@ -11,6 +12,7 @@ namespace DuAnOne.PL.TaiKhoan
         List<TaiKhoanVM> _taiKhoans;
         ITaiKhoanService _taiKhoanService;
         private readonly Action _onDataAdded;
+        private Guid _idTaiKhoanDN;
 
         public ThemTaiKhoan(Action onDataAdded)
         {
@@ -36,18 +38,9 @@ namespace DuAnOne.PL.TaiKhoan
 
 
 
-        public void SendData(Guid id, string hoVaTen, DateTime ngaySinh, string diaChi, string email, string maNhanVien, string tenTaiKhoan, string matKhau, int chucVu, int status)
+        public void SendCurrentUserId(Guid CurrentUserId)
         {
-            txt_hovaten.Text = hoVaTen;
-            txt_ngaysinh.Text = ngaySinh.ToString();
-            txt_diachi.Text = diaChi;
-            txt_email.Text = email;
-            txt_manhanvien.Text = maNhanVien;
-            txt_matkhau.Text = matKhau;
-            txt_taikhoan.Text = tenTaiKhoan;
-            cbx_chucvu.Text = chucVu.ToString();
-            cbx_status.Text = status.ToString();
-
+            _idTaiKhoanDN = CurrentUserId;
         }
 
         private void btn_them_Click(object sender, EventArgs e)
@@ -89,6 +82,7 @@ namespace DuAnOne.PL.TaiKhoan
                     MatKhau = txt_matkhau.Text,
                     ChucVu = chucVu,
                     Status = status,
+                    CreateBy = _idTaiKhoanDN,
                 };
 
                 var validResult = TaiKhoanValidation.ValidateCreatVM(tkCreate);

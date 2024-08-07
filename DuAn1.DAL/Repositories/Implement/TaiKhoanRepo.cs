@@ -1,5 +1,6 @@
 ﻿using DuAnOne.DAL.Entities;
 using DuAnOne.DAL.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DuAnOne.DAL.Repositories.Implement
 {
@@ -23,7 +24,8 @@ namespace DuAnOne.DAL.Repositories.Implement
         }
 
         public bool Create(TaiKhoan entity)
-        {
+        {   
+            entity.CreateTime = DateTime.Now;   
             try
             {
                 _appDbContext.TaiKhoans.Add(entity);
@@ -32,7 +34,7 @@ namespace DuAnOne.DAL.Repositories.Implement
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Thêm tài khoản thất bại\nLỗi: " + ex.Message);
+                Console.WriteLine("Thêm tài khoản thất bại\n Lỗi: " + ex.Message);
                 return false; // Failure
             }
         }
@@ -97,7 +99,7 @@ namespace DuAnOne.DAL.Repositories.Implement
         public List<TaiKhoan> GetAll()
         {
             // Trả về tất cả các tài khoản từ cơ sở dữ liệu
-            return _appDbContext.TaiKhoans.ToList();
+            return _appDbContext.TaiKhoans.AsQueryable().AsNoTracking().ToList();
         }
     }
 }

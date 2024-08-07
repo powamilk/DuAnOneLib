@@ -14,5 +14,7 @@
         public DateTime? ModifyTime { get; set; }
         public Guid? DeleteBy { get; set; }
         public DateTime? DeleteTime { get; set; }
+        public Guid CreateBy { get; set; } // Thêm thuộc tính này
+        public DateTime CreateTime { get; set; }
     }
 }

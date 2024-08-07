@@ -4,10 +4,10 @@ namespace DuAnOne.DAL.Repositories.Interfaces
 {
     public interface IChiTietPhieuMuonRepo
     {
-        List<ChiTietPhieuMuon> GetList();
+        void Add(ChiTietPhieuMuon chiTiet);
+        void Update(ChiTietPhieuMuon chiTiet);
+        void Delete(Guid idPhieuMuon, Guid idSach);
         ChiTietPhieuMuon GetById(Guid idPhieuMuon, Guid idSach);
-        string Create(ChiTietPhieuMuon entity);
-        string Update(ChiTietPhieuMuon entity);
-        string Delete(Guid idPhieuMuon, Guid idSach);
+        List<ChiTietPhieuMuon> GetByIdPhieuMuon(Guid idPhieuMuon);
     }
 }

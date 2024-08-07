@@ -9,11 +9,11 @@ namespace DuAnOne.BUS.Utils
         {
             return new PhieuMuon
             {
-                IdTaiKhoan = createVM.IdTaiKhoan,
-                IdThe = createVM.IdThe,
-                NgayMuon = createVM.NgayMuon,
-                NgayTra = createVM.NgayTra,
-                Status = createVM.Status,
+                IdTaiKhoan = createVM.IdTaiKhoan ?? Guid.Empty, // Cung cấp giá trị Guid.Empty nếu null
+                IdThe = createVM.IdThe ?? Guid.Empty,           // Cung cấp giá trị Guid.Empty nếu null
+                NgayMuon = createVM.NgayMuon ?? DateTime.MinValue, // Cung cấp giá trị mặc định nếu null
+                NgayTra = createVM.NgayTra ?? DateTime.MinValue,   // Cung cấp giá trị mặc định nếu null
+                Status = createVM.Status ?? 0, // Cung cấp giá trị mặc định nếu null
                 CreateBy = createVM.CreateBy,
                 CreateTime = createVM.CreateTime
             };

@@ -11,13 +11,14 @@ namespace DuAn1.PL
         ITaiKhoanService _taiKhoanService;
         private Guid _id;
 
-        public event Action DataUpdated;
+        public event Action _onDataUpdated;
 
-        public SuaTK()
+        public SuaTK(Action onDataUpdated)
         {
             InitializeComponent();
-            LoadFormData();
             _taiKhoanService = new TaiKhoanService();
+            _onDataUpdated = onDataUpdated;
+            LoadFormData();
         }
 
         private void LoadFormData()
@@ -49,6 +50,8 @@ namespace DuAn1.PL
             cbx_status.Text = status.ToString();
 
         }
+
+        
 
         private void btn_sua_Click(object sender, EventArgs e)
         {
@@ -92,12 +95,12 @@ namespace DuAn1.PL
                     TenTaiKhoan = txt_taikhoan.Text,
                     MatKhau = txt_matkhau.Text,
                     ChucVu = chucVu,
-                    Status = status
+                    Status = status         
                 };
 
                 // Gọi phương thức Update của service
                 var result = _taiKhoanService.Update(tkUpdate);
-                bool isSuccess = result.Equals("Tài khoản đã được cập nhật thành công.", StringComparison.OrdinalIgnoreCase);
+                bool isSuccess = result.Equals("Cập nhật tài khoản thành công.", StringComparison.OrdinalIgnoreCase);
 
                 // Hiển thị thông báo kết quả
                 MessageBoxExtension.Notification("SỬA", result);
@@ -105,7 +108,7 @@ namespace DuAn1.PL
                 if (isSuccess)
                 {
                     // Nếu cần, gọi phương thức để làm mới dữ liệu trong giao diện
-                    DataUpdated?.Invoke();
+                    _onDataUpdated?.Invoke();
 
                     // Đóng form sau khi sửa thành công
                     this.Close();

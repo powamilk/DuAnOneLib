@@ -141,6 +141,7 @@
             btn_xoa.TabIndex = 47;
             btn_xoa.Text = "Xóa";
             btn_xoa.UseVisualStyleBackColor = true;
+            btn_xoa.Click += btn_xoa_Click_1;
             // 
             // txt_hienthichon
             // 
@@ -178,6 +179,7 @@
             dgv_taikhoan.RowTemplate.Height = 25;
             dgv_taikhoan.Size = new Size(1297, 395);
             dgv_taikhoan.TabIndex = 49;
+            dgv_taikhoan.CellClick += dgv_taikhoan_CellClick_1;
             // 
             // tab_chuthe
             // 

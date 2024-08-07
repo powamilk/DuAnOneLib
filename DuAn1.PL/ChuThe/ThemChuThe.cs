@@ -44,34 +44,29 @@ namespace DuAnOne.PL.ChuThe
         }
         private void LoadFormData()
         {
-            // Thêm các giá trị vào ComboBox
-            cb_loaithe.Items.Add("Thường");
-            cb_loaithe.Items.Add("Plus");
-            cb_loaithe.Items.Add("VVIP");
+            cb_loaithe.Items.Clear();
+            cb_loaithe.Items.AddRange(new[] { "1", "2", "3" }); // 1: Thường, 2: Plus, 3: VVIP
 
-            cb_status.Items.Add("Hoạt động");
-            cb_status.Items.Add("Ngừng hoạt động");
+            cb_status.Items.Clear();
+            cb_status.Items.AddRange(new[] { "1", "2" }); // 1: Hoạt động, 2: Ngừng hoạt động
 
-            cb_quoctich.Items.Add("Việt Nam");
-            cb_quoctich.Items.Add("Ngoại quốc");
+            cb_loaibandoc.Items.Clear();
+            cb_loaibandoc.Items.AddRange(new[] { "1", "2", "3" }); // 1: Hoc Sinh, 2: Sinh Vien, 3: Khac
 
-            cb_gioitinh.Items.Add("Nam");
-            cb_gioitinh.Items.Add("Nữ");
+            cb_quoctich.Items.Clear();
+            cb_quoctich.Items.AddRange(new[] { "1", "2" }); // 1: Việt Nam, 2: Ngoại quốc
 
-            var loaiTheValues = _chuThes.Select(ct => ct.LoaiThe).Distinct().ToList();
-            var statusValues = _chuThes.Select(ct => ct.Status).Distinct().ToList();
-
-            cb_loaithe.Items.AddRange(loaiTheValues.Select(lt => lt.ToString()).ToArray());
-            cb_status.Items.AddRange(statusValues.Select(s => s.ToString()).ToArray());
+            cb_gioitinh.Items.Clear();
+            cb_gioitinh.Items.AddRange(new[] { "1", "2" }); // 1: Nam, 2: Nữ
         }
 
-        public void SendData(Guid id, string cmnd, string hoVaTen, string diaChi, int loaiThe, int gioiTinh, string ngheNghiep, int quocTich, int loaiBanDoc, string email, string noiLamViec)
+        public void SendData(Guid id, string cccd, string hoVaTen, string diaChi, int loaiThe, int gioiTinh, string ngheNghiep, int quocTich, int loaiBanDoc, string email, string noiLamViec)
         {
-            txt_cccd.Text = cmnd;
+            txt_cccd.Text = cccd;
             txt_hovaten.Text = hoVaTen;
             txt_diachi.Text = diaChi;
             cb_loaithe.SelectedIndex = cb_loaithe.Items.IndexOf(loaiThe.ToString());
-            cb_gioitinh.SelectedIndex = cb_gioitinh.Items.IndexOf(gioiTinh == 1 ? "Nam" : "Nữ");
+            cb_gioitinh.SelectedIndex = cb_gioitinh.Items.IndexOf(gioiTinh.ToString());
             txt_nghenghiep.Text = ngheNghiep;
             cb_quoctich.SelectedIndex = cb_quoctich.Items.IndexOf(quocTich.ToString());
             cb_loaibandoc.SelectedIndex = cb_loaibandoc.Items.IndexOf(loaiBanDoc.ToString());
