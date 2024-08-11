@@ -1,5 +1,6 @@
 ﻿using DuAnOne.BUS.Implement;
 using DuAnOne.BUS.Interface;
+using DuAnOne.BUS.Utils.Validation;
 using DuAnOne.BUS.ViewModel.Sachs;
 using DuAnOne.PL.Extensions;
 using System;
@@ -19,40 +20,28 @@ namespace DuAnOne.PL.Sach
         List<SachVM> _sachs;
         ISachService _sachService;
         private Guid _id;
+        public event Action _onDataAdded;
 
-        public event Action DataAdded;
-        public ThemSach()
+        public ThemSach(Action onDataAdded)
         {
-            LoadFormData();
+           
             InitializeComponent();
             _sachService = new SachService();
-            _sachs = _sachService.GetList();
+            _onDataAdded = onDataAdded;
+            LoadFormData();
         }
 
         private void LoadFormData()
         {
-            cb_status.Items.Add("Het");
-            cb_status.Items.Add("Con");
-            cb_status.Items.Add("Rach");
-            cb_status.Items.Add("Thieu Trang");
-        }
-
-        public void SendData(Guid id, string tenSach, int namXuatBan, int soLuong, string theLoai, string maSach, double giaTien, string tacGia, int status)
-        {
-            _id = id;
-            txt_tensach.Text = tenSach;
-            nb_namxuatban.Text = namXuatBan.ToString();
-            nb_soluong.Text = soLuong.ToString();
-            txt_theloai.Text = theLoai;
-            txt_masach.Text = maSach;
-            nb_giatien.Text = giaTien.ToString();
-            txt_tacgia.Text = tacGia;
-            cb_status.Text = status.ToString();
+            cb_status.Items.Clear();
+            cb_status.Items.Add("1");
+            cb_status.Items.Add("2");
+            cb_status.Items.Add("3");
+            cb_status.Items.Add("4");
         }
 
         private void btn_xacnhan_Click(object sender, EventArgs e)
         {
-            // Hiển thị hộp thoại xác nhận việc thêm dữ liệu
             if (MessageBoxExtension.Confirm("Bạn có chắc chắn muốn thêm sách?"))
             {
                 // Xác thực dữ liệu đầu vào từ các ô nhập liệu
@@ -62,7 +51,7 @@ namespace DuAnOne.PL.Sach
                     return;
                 }
 
-                if (!int.TryParse(nb_namxuatban.Text, out int namXuatBan))
+                if (!int.TryParse(txt_namxuatban.Text, out int namXuatBan))
                 {
                     MessageBoxExtension.Notification("Lỗi", "Năm xuất bản không hợp lệ.");
                     return;
@@ -86,7 +75,7 @@ namespace DuAnOne.PL.Sach
                     return;
                 }
 
-                if (!double.TryParse(nb_giatien.Text, out double giaTien))
+                if (!double.TryParse(txt_giatien.Text, out double giaTien))
                 {
                     MessageBoxExtension.Notification("Lỗi", "Giá tiền không hợp lệ.");
                     return;
@@ -104,7 +93,6 @@ namespace DuAnOne.PL.Sach
                     return;
                 }
 
-                // Tạo đối tượng tạo sách
                 var sachCreate = new SachCreateVM
                 {
                     TenSach = txt_tensach.Text,
@@ -117,19 +105,18 @@ namespace DuAnOne.PL.Sach
                     Status = status
                 };
 
-                // Gọi phương thức Create của dịch vụ
-                var result = _sachService.Create(sachCreate);
-                bool isSuccess = result.Equals("Sách đã được tạo thành công.", StringComparison.OrdinalIgnoreCase);
+                var validResult = SachValidation.ValidateCreateVM(sachCreate);
 
-                // Hiển thị thông báo kết quả
-                MessageBoxExtension.Notification("THÊM", result);
+                if (string.IsNullOrEmpty(validResult))
+                {    
+                    var result = _sachService.Create(sachCreate);
+                    bool isSuccess = result.Equals("Thêm sách thành công.", StringComparison.OrdinalIgnoreCase);
+                    MessageBoxExtension.Notification("THÊM", result);
 
-                if (isSuccess)
-                {
-                    // Nếu cần, gọi phương thức để làm mới dữ liệu trong giao diện
-                    DataAdded?.Invoke();
-
-                    // Đóng form sau khi thêm thành công
+                    if (isSuccess)
+                    {
+                        _onDataAdded?.Invoke();                 
+                    }
                     this.Close();
                 }
             }

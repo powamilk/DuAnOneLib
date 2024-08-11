@@ -20,24 +20,25 @@ namespace DuAnOne.PL.Sach
         ISachService _sachService;
         private Guid _id;
 
-        public event Action DataUpdated;
+        public event Action _onDataUpdated;
 
-        public SuaSach()
+        public SuaSach(Action onDataUpdated)
         {
             InitializeComponent();
             LoadFormData();
             _sachService = new SachService();
+            _onDataUpdated = onDataUpdated;
         }
 
         private void LoadFormData()
         {
-            cb_status.Items.Add("Het");
-            cb_status.Items.Add("Con");
-            cb_status.Items.Add("Rach");
-            cb_status.Items.Add("Thieu Trang");
+            cb_status.Items.Add("1");
+            cb_status.Items.Add("2");
+            cb_status.Items.Add("3");
+            cb_status.Items.Add("4");
         }
 
-        public void SendData(Guid id, string tenSach, int namXuatBan, int soLuong, string theLoai, string maSach, double giaTien, string tacGia, int status)
+        public void SendDataToSach(Guid id, string tenSach, int namXuatBan, int soLuong, string theLoai, string maSach, double giaTien, string tacGia, int status)
         {
             _id = id;
             txt_tensach.Text = tenSach;
@@ -118,20 +119,17 @@ namespace DuAnOne.PL.Sach
                     Status = status
                 };
 
-                // Gọi phương thức Update của dịch vụ
-                bool isSuccess = _sachService.Update(sachUpdate);
+                var result = _sachService.Update(sachUpdate);
+                bool isSuccess = result.Equals("Sách đã được cập nhật thành công.", StringComparison.OrdinalIgnoreCase);
 
-                // Hiển thị thông báo kết quả
-                MessageBoxExtension.Notification("CẬP NHẬT", isSuccess ? "Sách đã được cập nhật thành công." : "Cập nhật sách thất bại.");
+                MessageBoxExtension.Notification("SỬA", result);
 
                 if (isSuccess)
                 {
                     // Nếu cần, gọi phương thức để làm mới dữ liệu trong giao diện
-                    DataUpdated?.Invoke();
-
-                    // Đóng form sau khi cập nhật thành công
-                    this.Close();
+                    _onDataUpdated?.Invoke();             
                 }
+                this.Close();
             }
         }
 

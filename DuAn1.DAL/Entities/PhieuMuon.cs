@@ -8,7 +8,6 @@
         }
 
         public Guid Id { get; set; }
-        public Guid IdTaiKhoan { get; set; }
         public Guid IdThe { get; set; }
         public DateTime NgayMuon { get; set; }
         public DateTime NgayTra { get; set; }

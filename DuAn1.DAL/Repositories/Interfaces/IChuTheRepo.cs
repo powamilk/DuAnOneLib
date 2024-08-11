@@ -9,5 +9,6 @@ namespace DuAnOne.DAL.Repositories.Interfaces
         bool Create(ChuThe entity);
         bool Update(ChuThe entity);
         bool Delete(Guid id);
+        List<ChuThe> GetAll();  
     }
 }

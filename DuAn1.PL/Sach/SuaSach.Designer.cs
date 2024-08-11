@@ -55,7 +55,7 @@
             // lb_contetx
             // 
             lb_contetx.AutoSize = true;
-            lb_contetx.Location = new Point(366, 48);
+            lb_contetx.Location = new Point(294, 21);
             lb_contetx.Name = "lb_contetx";
             lb_contetx.Size = new Size(54, 15);
             lb_contetx.TabIndex = 0;
@@ -64,7 +64,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(37, 208);
+            label2.Location = new Point(30, 170);
             label2.Name = "label2";
             label2.Size = new Size(57, 15);
             label2.TabIndex = 1;
@@ -73,7 +73,7 @@
             // lb_namxuatban
             // 
             lb_namxuatban.AutoSize = true;
-            lb_namxuatban.Location = new Point(12, 153);
+            lb_namxuatban.Location = new Point(5, 115);
             lb_namxuatban.Name = "lb_namxuatban";
             lb_namxuatban.Size = new Size(82, 15);
             lb_namxuatban.TabIndex = 2;
@@ -82,7 +82,7 @@
             // lb_sach
             // 
             lb_sach.AutoSize = true;
-            lb_sach.Location = new Point(42, 96);
+            lb_sach.Location = new Point(35, 58);
             lb_sach.Name = "lb_sach";
             lb_sach.Size = new Size(53, 15);
             lb_sach.TabIndex = 3;
@@ -90,21 +90,21 @@
             // 
             // txt_tensach
             // 
-            txt_tensach.Location = new Point(101, 93);
+            txt_tensach.Location = new Point(94, 55);
             txt_tensach.Name = "txt_tensach";
             txt_tensach.Size = new Size(198, 23);
             txt_tensach.TabIndex = 4;
             // 
             // txt_theloai
             // 
-            txt_theloai.Location = new Point(520, 93);
+            txt_theloai.Location = new Point(401, 55);
             txt_theloai.Name = "txt_theloai";
             txt_theloai.Size = new Size(198, 23);
             txt_theloai.TabIndex = 5;
             // 
             // txt_masach
             // 
-            txt_masach.Location = new Point(520, 145);
+            txt_masach.Location = new Point(401, 107);
             txt_masach.Name = "txt_masach";
             txt_masach.Size = new Size(198, 23);
             txt_masach.TabIndex = 6;
@@ -112,7 +112,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(463, 96);
+            label5.Location = new Point(344, 58);
             label5.Name = "label5";
             label5.Size = new Size(51, 15);
             label5.TabIndex = 10;
@@ -121,7 +121,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(465, 150);
+            label6.Location = new Point(346, 112);
             label6.Name = "label6";
             label6.Size = new Size(52, 15);
             label6.TabIndex = 11;
@@ -130,7 +130,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(465, 208);
+            label7.Location = new Point(346, 170);
             label7.Name = "label7";
             label7.Size = new Size(49, 15);
             label7.TabIndex = 12;
@@ -138,7 +138,7 @@
             // 
             // btn_xacnhan
             // 
-            btn_xacnhan.Location = new Point(204, 341);
+            btn_xacnhan.Location = new Point(344, 267);
             btn_xacnhan.Name = "btn_xacnhan";
             btn_xacnhan.Size = new Size(145, 50);
             btn_xacnhan.TabIndex = 15;
@@ -148,7 +148,7 @@
             // 
             // btn_huy
             // 
-            btn_huy.Location = new Point(412, 341);
+            btn_huy.Location = new Point(177, 267);
             btn_huy.Name = "btn_huy";
             btn_huy.Size = new Size(145, 50);
             btn_huy.TabIndex = 16;
@@ -158,21 +158,21 @@
             // 
             // nb_soluong
             // 
-            nb_soluong.Location = new Point(104, 208);
+            nb_soluong.Location = new Point(97, 170);
             nb_soluong.Name = "nb_soluong";
             nb_soluong.Size = new Size(195, 23);
             nb_soluong.TabIndex = 17;
             // 
             // nb_giatien
             // 
-            nb_giatien.Location = new Point(520, 206);
+            nb_giatien.Location = new Point(401, 168);
             nb_giatien.Name = "nb_giatien";
             nb_giatien.Size = new Size(195, 23);
             nb_giatien.TabIndex = 18;
             // 
             // txt_tacgia
             // 
-            txt_tacgia.Location = new Point(100, 257);
+            txt_tacgia.Location = new Point(93, 219);
             txt_tacgia.Name = "txt_tacgia";
             txt_tacgia.Size = new Size(199, 23);
             txt_tacgia.TabIndex = 20;
@@ -180,7 +180,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(41, 260);
+            label3.Location = new Point(34, 222);
             label3.Name = "label3";
             label3.Size = new Size(44, 15);
             label3.TabIndex = 19;
@@ -189,7 +189,7 @@
             // cb_status
             // 
             cb_status.FormattingEnabled = true;
-            cb_status.Location = new Point(520, 260);
+            cb_status.Location = new Point(401, 222);
             cb_status.Name = "cb_status";
             cb_status.Size = new Size(197, 23);
             cb_status.TabIndex = 22;
@@ -197,7 +197,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(475, 263);
+            label4.Location = new Point(356, 225);
             label4.Name = "label4";
             label4.Size = new Size(39, 15);
             label4.TabIndex = 21;
@@ -205,7 +205,7 @@
             // 
             // nb_namxuatban
             // 
-            nb_namxuatban.Location = new Point(101, 151);
+            nb_namxuatban.Location = new Point(94, 113);
             nb_namxuatban.Name = "nb_namxuatban";
             nb_namxuatban.Size = new Size(195, 23);
             nb_namxuatban.TabIndex = 43;
@@ -214,7 +214,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(651, 376);
             Controls.Add(nb_namxuatban);
             Controls.Add(cb_status);
             Controls.Add(label4);

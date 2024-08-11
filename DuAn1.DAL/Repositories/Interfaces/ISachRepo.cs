@@ -7,7 +7,8 @@ namespace DuAnOne.DAL.Repositories.Interfaces
         List<Sach> GetList();
         Sach GetById(Guid id);
         string Create(Sach entity);
-        string Update(Sach entity);
+        bool Update(Sach entity);
         string Delete(Guid id);
+        List<Sach> GetAll();
     }
 }

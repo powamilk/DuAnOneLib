@@ -16,13 +16,14 @@ namespace DuAnOne.PL.ChuThe
         private IChuTheService _chuTheService;
         private Guid _id;
         private ChuTheVM _chuTheData;
-        private event Action DataUpdated;
+        private event Action _onDataUpdated;
 
-        public SuaChuThe(IChuTheRepo chuTheRepo)
+        public SuaChuThe(Action onDataUpdated)
         {
             InitializeComponent();
             LoadFormData();
-            _chuTheService = new ChuTheService(chuTheRepo);
+            _onDataUpdated = onDataUpdated;
+            _chuTheService = new ChuTheService();
         }
 
         private void LoadFormData()
@@ -44,48 +45,77 @@ namespace DuAnOne.PL.ChuThe
             cb_quoctich.Items.Add("Ngoại quốc");
         }
 
-        public void SendDataToChuThe(ChuTheVM chuTheData)
+        public void SendDataToChuThe(Guid id,string cccd, string hoVaTen, int loaiThe, string diaChi, int gioiTinh, string ngheNghiep, int quocTich, int loaiBanDoc, string email, string noiLamViec, int status )
         {
-            _chuTheData = chuTheData;
-
-            if (_chuTheData != null)
-            {
-                txt_cccd.Text = _chuTheData.Cccd;
-                txt_hovaten.Text = _chuTheData.HoVaTen;
-                cb_loaithe.SelectedIndex = _chuTheData.LoaiThe >= 0 ? cb_loaithe.Items.IndexOf(_chuTheData.LoaiThe.ToString()) : -1;
-                txt_diachi.Text = _chuTheData.DiaChi;
-                cb_gioitinh.SelectedIndex = _chuTheData.GioiTinh == 1 ? 0 : 1;
-                txt_nghenghiep.Text = _chuTheData.NgheNghiep;
-                cb_quoctich.SelectedIndex = _chuTheData.QuocTich >= 0 ? cb_quoctich.Items.IndexOf(_chuTheData.QuocTich.ToString()) : -1;
-                cb_loaibandoc.SelectedIndex = _chuTheData.LoaiBanDoc >= 0 ? cb_loaibandoc.Items.IndexOf(_chuTheData.LoaiBanDoc.ToString()) : -1;
-                txt_email.Text = _chuTheData.Email;
-                txt_noilamviec.Text = _chuTheData.NoiLamViec;
-                cb_status.SelectedIndex = _chuTheData.Status == 1 ? 0 : 1;
-            }
+            _id = id;   
+            txt_cccd.Text = cccd;  
+            txt_hovaten.Text = hoVaTen;
+            cb_loaithe.Text = loaiThe.ToString();
+            txt_diachi.Text = diaChi;
+            cb_gioitinh.Text = gioiTinh.ToString();
+            txt_nghenghiep.Text = ngheNghiep;
+            cb_quoctich.Text = quocTich.ToString();
+            cb_loaibandoc.Text = loaiBanDoc.ToString();
+            txt_email.Text = email;
+            cb_status.Text = status.ToString();
         }
 
         private void btn_xacnhan_Click(object sender, EventArgs e)
         {
             if (MessageBoxExtension.Confirm("Bạn có chắc chắn muốn sửa thẻ thư viện?"))
             {
-                if (int.TryParse(cb_loaithe.Text, out int loaiThe) &&
-                    int.TryParse(cb_gioitinh.Text, out int gioiTinh) &&
-                    int.TryParse(cb_status.Text, out int status))
+                int loaiThe;
+                string loaiTheText = cb_loaithe.Text.Trim();
+                if (string.IsNullOrEmpty(loaiTheText) || !int.TryParse(loaiTheText, out loaiThe))
                 {
+                    MessageBoxExtension.Notification("Lỗi", "Loại thẻ không hợp lệ.");
+                    return;
+                }
+
+                int gioiTinh;
+                string gioiTinhText = cb_gioitinh.Text.Trim();
+                if (string.IsNullOrEmpty(gioiTinhText) || !int.TryParse(gioiTinhText, out gioiTinh))
+                {
+                    MessageBoxExtension.Notification("Lỗi", "Giới tính không hợp lệ.");
+                    return;
+                }
+
+                int quocTich;
+                string quocTichText = cb_quoctich.Text.Trim();
+                if (string.IsNullOrEmpty(quocTichText) || !int.TryParse(quocTichText, out quocTich))
+                {
+                    MessageBoxExtension.Notification("Lỗi", "Quốc tịch không hợp lệ.");
+                    return;
+                }
+
+                int loaiBanDoc;
+                string loaiBanDocText = cb_loaibandoc.Text.Trim();
+                if (string.IsNullOrEmpty(loaiBanDocText) || !int.TryParse(loaiBanDocText, out loaiBanDoc))
+                {
+                    MessageBoxExtension.Notification("Lỗi", "Loại bạn đọc không hợp lệ.");
+                    return;
+                }
+
+                int status;
+                string statusText = cb_status.Text.Trim();
+                if (string.IsNullOrEmpty(statusText) || !int.TryParse(statusText, out status))
+                {
+                    MessageBoxExtension.Notification("Lỗi", "Status không hợp lệ.");
+                    return;
+                }
                     var chuTheUpdate = new ChuTheUpdateVM
                     {
-                        Id = _id,
                         Cccd = txt_cccd.Text,
                         HoVaTen = txt_hovaten.Text,
-                        LoaiThe = loaiThe,
                         DiaChi = txt_diachi.Text,
+                        LoaiThe = loaiThe,
                         GioiTinh = gioiTinh,
                         NgheNghiep = txt_nghenghiep.Text,
-                        QuocTich = cb_quoctich.SelectedIndex >= 0 ? cb_quoctich.SelectedIndex : -1,
-                        LoaiBanDoc = cb_loaibandoc.SelectedIndex >= 0 ? cb_loaibandoc.SelectedIndex : -1,
+                        QuocTich = quocTich,
+                        LoaiBanDoc = loaiBanDoc,
                         Email = txt_email.Text,
                         NoiLamViec = txt_noilamviec.Text,
-                        Status = status
+                        Status = status,
                     };
 
                     var result = _chuTheService.Update(chuTheUpdate);
@@ -95,14 +125,10 @@ namespace DuAnOne.PL.ChuThe
 
                     if (isSuccess)
                     {
-                        DataUpdated?.Invoke();
+                        _onDataUpdated?.Invoke();
                         this.Close();
                     }
-                }
-                else
-                {
-                    MessageBoxExtension.Notification("Lỗi", "Dữ liệu nhập vào không hợp lệ.");
-                }
+              
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using DuAnOne.BUS.ViewModel.TheThuViens;
+using DuAnOne.DAL.Entities;
 
 namespace DuAnOne.BUS.Interface
 {
@@ -7,7 +8,8 @@ namespace DuAnOne.BUS.Interface
         TheThuVienVM GetById(Guid id);
         List<TheThuVienVM> GetList();
         string Create(TheThuVienCreateVM createVM);
-        bool Update(TheThuVienUpdateVM updateVM);
+        string Update(TheThuVienUpdateVM updateVM);
         bool Delete(Guid id);
+        List<TheThuVienVM> GetAll();
     }
 }

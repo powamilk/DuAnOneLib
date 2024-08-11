@@ -9,7 +9,7 @@ namespace DuAnOne.BUS.Utils.Validation
             string result = string.Empty;
 
             if (vm == null)
-                return "Yêu cầu nhập thông tin thẻ thư viện";
+                return "Yêu cầu nhập thông tin chủ thẻ";
 
             result += BaseValidation.CheckEmpty("CCCD", vm.Cccd);
             result += BaseValidation.CheckEmpty("Tên", vm.HoVaTen);

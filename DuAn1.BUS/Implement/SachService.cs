@@ -43,22 +43,17 @@ namespace DuAnOne.BUS.Implement
             }
         }
 
-        public bool Update(SachUpdateVM updateVM)
+        public string Update(SachUpdateVM updateVM)
         {
-            if (updateVM == null)
-            {
-                return false; // Dữ liệu không hợp lệ
-            }
-
             try
             {
                 Sach entity = SachMapping.MapUpdateVMToEntity(updateVM);
-                string result = _repo.Update(entity);
-                return result.Contains("Cập nhật sách thành công");
+                bool result = _repo.Update(entity);
+                return result ? "Sách đã được cập nhật thành công." : "Sách cập nhật thất bại";
             }
             catch (Exception ex)
             {
-                return false;
+                return $"Sách cập nhật thất bại. Lỗi: {ex.Message}";
             }
         }
 

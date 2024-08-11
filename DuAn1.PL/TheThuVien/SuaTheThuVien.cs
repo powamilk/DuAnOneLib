@@ -16,16 +16,17 @@ namespace DuAnOne.PL.TheThuVien
     public partial class SuaTheThuVien : Form
     {
         List<TheThuVienVM> _theThuViens;
-        ITheThuVienService _theThuVienService;
         private Guid _id;
+        ITheThuVienService _theThuVienService;
 
-        public Action DataUpdated;
+        public Action _onDataUpdated;
 
-        public SuaTheThuVien()
+        public SuaTheThuVien(Action onDataUpdated)
         {
             InitializeComponent();
             LoadFormData();
             _theThuVienService = new TheThuVienService();
+            _onDataUpdated = onDataUpdated; 
         }
 
         private void LoadFormData()
@@ -36,7 +37,7 @@ namespace DuAnOne.PL.TheThuVien
             cb_status.Items.Add("4");
         }
 
-        public void SendData(Guid id, Guid chuThe, DateTime ngayCap, DateTime ngayHetHan, String maThe, int status)
+        public void SendDataToTheThuVien(Guid id, Guid chuThe, DateTime ngayCap, DateTime ngayHetHan, String maThe, int status)
         {
             _id = id;
             txt_idchuthe.Text = chuThe.ToString();
@@ -76,10 +77,9 @@ namespace DuAnOne.PL.TheThuVien
                     return;
                 }
 
-                // Tạo ViewModel từ dữ liệu nhập vào
-                // Tạo ViewModel từ dữ liệu nhập vào
-                var theThuVienUpdateVM = new TheThuVienUpdateVM
+                var thethuvienUpdate = new TheThuVienUpdateVM
                 {
+                    Id = _id,
                     IdChuThe = Guid.Parse(txt_idchuthe.Text),
                     NgayCap = ngayCap,
                     NgayHetHan = ngayHetHan,
@@ -87,23 +87,18 @@ namespace DuAnOne.PL.TheThuVien
                     Status = status
                 };
 
-                // Gọi phương thức cập nhật của dịch vụ
-                bool isSuccess = _theThuVienService.Update(theThuVienUpdateVM);
-
-                // Thông báo kết quả cho người dùng
+                var result = _theThuVienService.Update(thethuvienUpdate);
+                bool isSuccess = result.Equals("Cập nhật thẻ thư viện thành công.", StringComparison.OrdinalIgnoreCase);
+                
                 if (isSuccess)
                 {
-                    MessageBox.Show("Cập nhật thẻ thư viện thành công.", "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    // Kích hoạt sự kiện DataUpdated nếu có
-                    DataUpdated?.Invoke();
+                    _onDataUpdated?.Invoke();
 
-                    this.Close(); // Đóng form sau khi cập nhật thành công
+                    
                 }
-                else
-                {
-                    MessageBox.Show("Cập nhật thẻ thư viện không thành công. Vui lòng thử lại.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                this.Close(); // Đóng form sau khi cập nhật thành công
+
             }
         }
 

@@ -7,7 +7,7 @@ namespace DuAnOne.BUS.Interface
         SachVM GetById(Guid id);
         List<SachVM> GetList();
         string Create(SachCreateVM createVM);
-        bool Update(SachUpdateVM updateVM);
+        string Update(SachUpdateVM updateVM);
         bool Delete(Guid id);
     }
 }

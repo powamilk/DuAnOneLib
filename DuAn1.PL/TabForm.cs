@@ -19,6 +19,7 @@ using DuAnOne.PL.PhieuMuon;
 using System;
 using DuAn1.PL;
 using System.Windows.Forms;
+using DuAnOne.BUS.Utils;
 
 namespace DuAnOne.PL
 {
@@ -29,8 +30,7 @@ namespace DuAnOne.PL
         ITheThuVienService _theThuVienService;
         Guid _idChuThe;
         Guid _id;
-        private SuaTheThuVien _suaTTV;
-        Guid _idChuTheChon;
+        Guid _maTTVChon;
         DateTime _ngayCapChon;
         DateTime _ngayHetHan;
         string _maTheChon;
@@ -55,7 +55,7 @@ namespace DuAnOne.PL
         int _statusChon;
         public Guid CurrentUserId { get; private set; } = Guid.NewGuid();
 
-        
+
         #endregion
 
         #region Load Data Tài Khoản
@@ -126,7 +126,7 @@ namespace DuAnOne.PL
         #region Thêm Tài Khoản Form Close
         private void ThemTaiKhoan_FormClosed(object sender, FormClosedEventArgs e)
         {
-            this.Enabled = true; // Kích hoạt lại form chính
+            this.Enabled = true;
         }
         #endregion
 
@@ -134,6 +134,9 @@ namespace DuAnOne.PL
         {
             InitializeComponent();
             _taiKhoanService = new TaiKhoanService();
+            _chuTheService = new ChuTheService();
+            _theThuVienService = new TheThuVienService();
+            _sachService = new SachService();
 
             LoadFormData();
             LoadGridData();
@@ -142,6 +145,7 @@ namespace DuAnOne.PL
             LoadFormDataTheThuVien();
             LoadFormDataTheThuVien();
             LoadFormDataSach();
+            LoadGridDataSach();
         }
 
         private void tabPage1_Click(object sender, EventArgs e)
@@ -187,7 +191,7 @@ namespace DuAnOne.PL
                     tk.TenTaiKhoan,
                     tk.MatKhau,
                     tk.ChucVu,
-                    tk.Status,
+                    StatusExtensions.GetStatusDescription(tk.Status),
                     tk.CreateTime);
             }
         }
@@ -232,53 +236,72 @@ namespace DuAnOne.PL
         }
         #endregion
 
-        #region Khai bái chủ thẻ
+        #region Khai báo chủ thẻ
         List<ChuTheVM> _chuThes;
         IChuTheService _chuTheService;
         string _cccdChon;
         Guid _chuTheIdChon;
+        Guid _maChuTheChon;
         private IChuTheRepo _chuTheRepo;
         private ThemChuTHe _theChuThe;
         private SuaChuThe _suaChuThe;
+        public event Action DataAdded;
+
 
         #endregion
 
         #region Load Data TO ChuThe
-        private void LoadDataToChuThe()
+        private void LoadDataChuThe()
         {
             List<ChuTheVM> chuThes = _chuTheService.GetList();
             dgv_chuthe.DataSource = chuThes;
         }
         #endregion
 
-        #region Show Thêm CHủ THẻ
-        public void ShowThemCT()
+        #region Show Sửa CHủ Thẻ
+        public void ShowFormSuaChuThe()
         {
-            var form = new ThemChuTHe();
+            if (_maChuTheChon == Guid.Empty)
+            {
+                MessageBox.Show("Bạn chư chọn chu the");
+                return;
+            }
+            var chuTheChon = _chuThes.FirstOrDefault(c => c.Id == _maChuTheChon);
+
+            if (chuTheChon == null)
+            {
+                MessageBox.Show("Form Sửa tài khoản chưa được khởi tạo");
+                return;
+            }
+
+            var form = new SuaChuThe(LoadGridDataChuThe);
             this.Enabled = false;
+            form.SendDataToChuThe(
+                _maChuTheChon,
+                chuTheChon.Cccd,
+                chuTheChon.HoVaTen,
+                chuTheChon.LoaiThe,
+                chuTheChon.DiaChi,
+                chuTheChon.GioiTinh,
+                chuTheChon.NgheNghiep,
+                chuTheChon.QuocTich,
+                chuTheChon.LoaiBanDoc,
+                chuTheChon.Email,
+                chuTheChon.NoiLamViec,
+                chuTheChon.Status
+                );
             form.Show();
             form.FormClosed += (s, e) => this.Enabled = true;
         }
         #endregion
 
-
-
-        #region Show Sửa CHủ Thẻ
-        private void ShowSuaChuThe()
+        #region Show Thêm CHủ THẻ
+        public void ShowThemCT()
         {
-            if (_suaChuThe == null)
-            {
-                // Khởi tạo AppDbContext và ChuTheRepo
-                var appDbContext = new AppDbContext();
-                _chuTheRepo = new ChuTheRepo(appDbContext);
-
-                // Khởi tạo SuaChuThe với ChuTheRepo
-                _suaChuThe = new SuaChuThe(_chuTheRepo);
-                _suaChuThe.FormClosed += SuaChuThe_FormClosed;
-            }
-
-            this.Enabled = false; // Vô hiệu hóa form chính
-            _suaChuThe.Show();  // Hiển thị form sửa
+            var form = new ThemChuTHe(LoadGridDataChuThe);
+            this.Enabled = false;
+            form.Show();
+            form.FormClosed += (s, e) => this.Enabled = true;
         }
         #endregion
 
@@ -290,55 +313,7 @@ namespace DuAnOne.PL
         }
         #endregion
 
-        #region UpdateDataToSuaChuThe
-        private void UpdateDataToSuaChuThe()
-        {
-            // Kiểm tra nếu _chuTheIdChon là Guid.Empty hoặc giá trị khác không hợp lệ
-            if (_chuTheIdChon == Guid.Empty)
-            {
-                MessageBox.Show("Chưa chọn chủ thẻ để sửa.");
-                return;
-            }
 
-            // Tìm chủ thẻ đã chọn trong danh sách _chuThes
-            var chuTheChon = _chuThes.FirstOrDefault(ct => ct.Id == _chuTheIdChon);
-
-            if (chuTheChon != null)
-            {
-                if (_suaChuThe != null)
-                {
-                    // Tạo đối tượng ChuTheVM từ dữ liệu chủ thẻ đã chọn
-                    var chuTheVM = new ChuTheVM
-                    {
-                        Id = chuTheChon.Id,
-                        Cccd = chuTheChon.Cccd,
-                        HoVaTen = chuTheChon.HoVaTen,
-                        LoaiThe = chuTheChon.LoaiThe,
-                        DiaChi = chuTheChon.DiaChi,
-                        GioiTinh = chuTheChon.GioiTinh,
-                        NgheNghiep = chuTheChon.NgheNghiep,
-                        QuocTich = chuTheChon.QuocTich,
-                        LoaiBanDoc = chuTheChon.LoaiBanDoc,
-                        Email = chuTheChon.Email,
-                        NoiLamViec = chuTheChon.NoiLamViec,
-                        Status = chuTheChon.Status
-                    };
-
-                    // Gọi phương thức SendDataToChuThe với đối tượng ChuTheVM
-                    _suaChuThe.SendDataToChuThe(chuTheVM);
-                    _suaChuThe.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Form sửa chủ thẻ chưa được khởi tạo.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Chủ thẻ không tồn tại trong danh sách.");
-            }
-        }
-        #endregion
 
         #region Load Form Data Chủ Thẻ
         private void LoadFormDataChuThe()
@@ -362,25 +337,13 @@ namespace DuAnOne.PL
         #region Load Grid Data Chủ Thẻ
         private void LoadGridDataChuThe()
         {
-            if (_chuTheService == null)
-            {
-                MessageBox.Show("Dịch vụ Chủ Thẻ chưa được khởi tạo.");
-                return;
-            }
+            dgv_chuthe.Rows.Clear(); // Xóa các dòng hiện có
+            _chuThes = _chuTheService.GetAll(); // Lấy danh sách chủ thẻ mới
 
-            dgv_chuthe.Rows.Clear();
-            List<ChuTheVM> chuThes = _chuTheService.GetList();
-
-            if (chuThes == null)
-            {
-                MessageBox.Show("Không thể lấy danh sách Chủ Thẻ.");
-                return;
-            }
-
-            foreach (var ct in chuThes)
+            foreach (var ct in _chuThes)
             {
                 dgv_chuthe.Rows.Add(
-                    (chuThes.IndexOf(ct) + 1),
+                    (_chuThes.IndexOf(ct) + 1),
                     ct.Cccd,
                     ct.HoVaTen,
                     ct.LoaiThe,
@@ -409,7 +372,7 @@ namespace DuAnOne.PL
             }
 
             var ctChon = _chuThes.ElementAt(index);
-            _cccdChon = ctChon.Cccd;
+            _maChuTheChon = ctChon.Id;
             txt_hienthichonchuthe.Text = ctChon.Id.ToString();
         }
         #endregion
@@ -425,12 +388,12 @@ namespace DuAnOne.PL
             if (MessageBoxExtension.Confirm("xóa"))
             {
                 // Giả sử phương thức Delete trả về một thông báo thành công hoặc thất bại dưới dạng chuỗi
-                string ketQua = _chuTheService.Delete(_chuTheIdChon);
-                string thongBao = ketQua == "Xóa thành công" ? "Xóa thành công" : "Xóa thất bại";
+                var ketQua = _chuTheService.Delete(_chuTheIdChon);
+                var thongBao = ketQua ? "Xóa thành công" : "Xóa thất bại";
 
                 MessageBoxExtension.Notification("Thông Báo", thongBao);
 
-                LoadGridData();
+                LoadGridDataChuThe();
             }
         }
         #endregion
@@ -444,12 +407,10 @@ namespace DuAnOne.PL
         #endregion
 
 
-
         #region btn_suachuthe
         private void btn_suachuthe_Click(object sender, EventArgs e)
         {
-            ShowSuaChuThe();
-            UpdateDataToSuaChuThe();
+            ShowFormSuaChuThe();
         }
         #endregion
 
@@ -458,7 +419,6 @@ namespace DuAnOne.PL
         {
             dgv_thethuvien.Columns.Clear();
             dgv_thethuvien.Columns.Add("Clm1", "STT");
-            dgv_thethuvien.Columns.Add("Clm2", "Id Chủ Thẻ");
             dgv_thethuvien.Columns.Add("clm3", "Ngày Cấp");
             dgv_thethuvien.Columns.Add("clm4", "Ngày Hết Hạn");
             dgv_thethuvien.Columns.Add("clm5", "Mã Thẻ");
@@ -476,29 +436,42 @@ namespace DuAnOne.PL
             {
                 dgv_thethuvien.Rows.Add(
                     (_theThuViens.IndexOf(ttv) + 1),
-                      ttv.IdChuThe,
                       ttv.NgayCap,
                       ttv.NgayHetHan,
                       ttv.MaThe,
                       ttv.Status
                     );
             }
-
         }
         #endregion
 
         #region ShowSuaTheThuVien
         private void ShowSuaTheThuVien()
         {
-            if (_suaTTV == null)
+            if (_maTTVChon == Guid.Empty)
             {
-                _suaTTV = new SuaTheThuVien();
-                _suaTTV.FormClosed += SuaTheThuVien_FormClosed;
+                MessageBox.Show("Bạn chưa chọn thẻ thư viện");
+                return;
             }
+            var theThuVienChon = _theThuViens.FirstOrDefault(ttv => ttv.Id == _maTTVChon);
 
+            if (theThuVienChon == null)
+            {
+                MessageBox.Show("Form Sửa Tài khoản chưa đc khởi tạo");
+                return;
+            }
+            var form = new SuaTheThuVien(LoadGridDataTheThuVien);
             this.Enabled = false;
-            _suaTTV.SendData(_id, _idChuTheChon, _ngayCapChon, _ngayHetHan, _maTheChon, _statusTheChon);
-            _suaTTV.Show();
+            form.SendDataToTheThuVien(
+                    _maTTVChon,
+                    theThuVienChon.IdChuThe,
+                    theThuVienChon.NgayCap,
+                    theThuVienChon.NgayHetHan,
+                    theThuVienChon.MaThe,
+                    theThuVienChon.Status
+                    );
+            form.Show();
+            form.FormClosed += (s, e) => this.Enabled = true;
         }
         #endregion
 
@@ -506,7 +479,6 @@ namespace DuAnOne.PL
         private void SuaTheThuVien_FormClosed(object sender, FormClosedEventArgs e)
         {
             this.Enabled = true;
-            LoadGridDataTheThuVien();
         }
         #endregion
 
@@ -522,58 +494,12 @@ namespace DuAnOne.PL
 
         public void ShowThemTheThuVien()
         {
-            if (_themTheThuViens == null)
-            {
-                _themTheThuViens = new ThemTheThuVien();
-                _themTheThuViens.DataAdded += LoadGridDataTheThuVien;
-                _themTheThuViens.FormClosed += ThemTheThuVien_FormClosed;
-            }
-
-            this.Enabled = false; // Vô hiệu hóa form chính
-            _themTheThuViens.Show(); // Hiển thị form mới
+            var form = new ThemTheThuVien(LoadGridDataTheThuVien);
+            this.Enabled = false;
+            form.Show(); // Hiển thị form mới
+            form.FormClosed += (s, e) => this.Enabled = true;
         }
 
-        #endregion
-
-        #region UpdateDataToSuaTheThuVien
-
-        private void UpdateDataToSuaTheThuVien()
-        {
-            // Kiểm tra nếu _idTheThuVienChon là Guid.Empty hoặc giá trị khác không hợp lệ
-            if (_idChuThe == Guid.Empty)
-            {
-                MessageBox.Show("Chưa chọn thẻ thư viện để sửa.");
-                return;
-            }
-
-            // Tìm thẻ thư viện đã chọn trong danh sách _theThuViens
-            var theThuVienChon = _theThuViens.FirstOrDefault(ttv => ttv.Id == _idChuThe);
-
-            if (theThuVienChon != null)
-            {
-                // Gán các giá trị từ thẻ thư viện chọn vào biến tương ứng
-                if (_suaTTV != null)
-                {
-                    _suaTTV.SendData(
-                        _id,
-                        theThuVienChon.IdChuThe,
-                        theThuVienChon.NgayCap,
-                        theThuVienChon.NgayHetHan,
-                        theThuVienChon.MaThe,
-                        theThuVienChon.Status
-                    );
-                    _suaTTV.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Form sửa thẻ thư viện chưa được khởi tạo.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Thẻ thư viện không tồn tại trong danh sách.");
-            }
-        }
         #endregion
 
         #region ThemTheThuVien_FormClosed
@@ -608,7 +534,6 @@ namespace DuAnOne.PL
         private void btn_suathethuvien_Click(object sender, EventArgs e)
         {
             ShowSuaTheThuVien();
-            UpdateDataToSuaChuThe();
         }
         #endregion
 
@@ -630,11 +555,12 @@ namespace DuAnOne.PL
             }
 
             var ttvChon = _theThuViens.ElementAt(index);
-            _id = ttvChon.Id;
+            _maTTVChon = ttvChon.Id;
             txt_hienthichonthethuvien.Text = ttvChon.Id.ToString();
         }
-
         #endregion
+
+
 
         #region Khai báo Sách
         List<SachVM> _sachs;
@@ -694,14 +620,33 @@ namespace DuAnOne.PL
         #region ShowSuaSach
         private void ShowSuaSach()
         {
-            if (_suaSach == null)
+            if (_idSachChon == Guid.Empty)
             {
-                _suaSach = new SuaSach();
-                _suaSach.FormClosed += SuaSach_FormClosed;
+                MessageBox.Show(" Bạn chưa chọn sách");
+                return;
             }
+            var sachChon = _sachs.FirstOrDefault(s => s.Id == _idSachChon);
+
+            if (sachChon == null)
+            {
+                MessageBox.Show("Form Sửa Sách chưa được khởi tạo");
+                return;
+            }
+            var form = new SuaSach(LoadGridDataSach);
             this.Enabled = false;
-            _suaSach.SendData(_id, _tenSachChon, _namXuatBanChon, _soLuongChon, _theLoaiChon, _maSachChon, _giaTienChon, _tacGiaChon, _statusSachChon);
-            _suaSach.Show();
+            form.SendDataToSach(
+                _idSachChon,
+                sachChon.TenSach,
+                sachChon.NamXuatBan,
+                sachChon.SoLuong,
+                sachChon.TheLoai,
+                sachChon.MaSach,
+                sachChon.GiaTien,
+                sachChon.TacGia,
+                sachChon.Status
+                );
+            form.Show();
+            form.FormClosed += (s, e) => this.Enabled = true;
         }
         #endregion
 
@@ -714,42 +659,6 @@ namespace DuAnOne.PL
         }
         #endregion
 
-        #region OpenSuaSachForm
-
-        private void OpenSuaSachForm(Guid id)
-        {
-            // Kiểm tra xem form đã được tạo chưa, nếu chưa thì tạo mới
-            if (_suaSach == null)
-            {
-                _suaSach = new SuaSach();
-                _suaSach.FormClosed += SuaSach_FormClosed;
-            }
-
-            // Lấy thông tin sách từ danh sách dựa trên id
-            var sach = _sachs.FirstOrDefault(s => s.Id == id);
-            if (sach != null)
-            {
-                // Gửi dữ liệu đến form SuaSach
-                _suaSach.SendData(
-                    id,
-                    sach.TenSach,
-                    sach.NamXuatBan,
-                    sach.SoLuong,
-                    sach.TheLoai,
-                    sach.MaSach,
-                    sach.GiaTien,
-                    sach.TacGia,
-                    sach.Status
-                );
-                _suaSach.Show(); // Hiển thị form sửa sách
-            }
-            else
-            {
-                // Nếu không tìm thấy sách tương ứng, có thể thông báo lỗi hoặc xử lý theo cách khác
-                MessageBox.Show("Không tìm thấy sách cần chỉnh sửa.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
-        }
-        #endregion
 
         #region Load Data Sach
 
@@ -763,60 +672,13 @@ namespace DuAnOne.PL
         #region Show Thêm Sách
         public void ShowThemSach()
         {
-            if (_themSach == null)
-            {
-                _themSach = new ThemSach();
-                _themSach.DataAdded += LoadGridDataSach; // Đăng ký sự kiện khi dữ liệu được thêm
-                _themSach.FormClosed += ThemSach_FormClosed; // Đăng ký sự kiện khi form đóng
-            }
-
-            this.Enabled = false; // Vô hiệu hóa form chính
-            _themSach.Show(); // Hiển thị form thêm sách
+            var form = new ThemSach(LoadGridDataSach);
+            this.Enabled = false;
+            form.Show(); // Hiển thị form mới
+            form.FormClosed += (s, e) => this.Enabled = true;
         }
         #endregion
 
-        #region UpdateDataToSuaSach
-        private void UpdateDataToSuaSach()
-        {
-            // Kiểm tra nếu _idSachChon là Guid.Empty hoặc giá trị khác không hợp lệ
-            if (_idSachChon == Guid.Empty)
-            {
-                MessageBox.Show("Chưa chọn sách để sửa.");
-                return;
-            }
-
-            // Tìm sách đã chọn trong danh sách _sachs
-            var sachChon = _sachs.FirstOrDefault(s => s.Id == _idSachChon);
-
-            if (sachChon != null)
-            {
-                // Gán các giá trị từ sách chọn vào biến tương ứng
-                if (_suaSach != null)
-                {
-                    _suaSach.SendData(
-                        _idSachChon,
-                        sachChon.TenSach,
-                        sachChon.NamXuatBan,
-                        sachChon.SoLuong,
-                        sachChon.TheLoai,
-                        sachChon.MaSach,
-                        sachChon.GiaTien,
-                        sachChon.TacGia,
-                        sachChon.Status
-                    );
-                    _suaSach.Show();
-                }
-                else
-                {
-                    MessageBox.Show("Form sửa sách chưa được khởi tạo.");
-                }
-            }
-            else
-            {
-                MessageBox.Show("Sách không tồn tại trong danh sách.");
-            }
-        }
-        #endregion
 
 
         #region Thêm Sách Form CLosed
@@ -831,7 +693,7 @@ namespace DuAnOne.PL
         private void btn_suasach_Click(object sender, EventArgs e)
         {
             ShowSuaSach();
-            UpdateDataToSuaSach();
+
         }
         #endregion
 
@@ -1057,6 +919,26 @@ namespace DuAnOne.PL
 
                 LoadGridData();
             }
+        }
+
+        private void dgv_sach_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            var index = e.RowIndex;
+
+            if (index < 0 || index > _sachs.Count - 1)
+            {
+                _id = Guid.Empty;
+                return;
+            }
+
+            var sachChon = _sachs.ElementAt(index);
+            _idSachChon = sachChon.Id;
+            txt_hienthichonsach.Text = sachChon.TenSach;
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

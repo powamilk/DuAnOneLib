@@ -34,8 +34,8 @@ namespace DuAnOne.BUS.Implement
             try
             {
                 TheThuVien entity = TheThuVienMapping.MapCreateVMToEntity(createVM);
-                bool result = _repo.Create(entity);
-                return result ? "Tạo thẻ thư viện thành công." : "Tạo thẻ thư viện thất bại.";
+                _repo.Create(entity);
+                return "Tạo thẻ thư viện thành công.";
             }
             catch (Exception ex)
             {
@@ -43,36 +43,29 @@ namespace DuAnOne.BUS.Implement
             }
         }
 
-        public bool Update(TheThuVienUpdateVM updateVM)
+        public string Update(TheThuVienUpdateVM updateVM)
         {
-            if (updateVM == null)
-            {
-                return false; // Dữ liệu không hợp lệ
-            }
-
             try
             {
                 TheThuVien entity = TheThuVienMapping.MapUpdateVMToEntity(updateVM);
                 bool result = _repo.Update(entity);
-                return result;
+                return result ? "Cập nhật thẻ thư viện thành công" : "Cập nhật thẻ thư viện thất bại.";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                return $"Cập nhật thẻ thư viện thất bại. Lỗi: {ex.Message}";
             }
         }
 
         public bool Delete(Guid id)
         {
-            try
-            {
-                bool result = _repo.Delete(id);
-                return result;
-            }
-            catch (Exception)
-            {
-                return false;
-            }
+           return _repo.Delete(id); 
+        }
+
+        public List<TheThuVienVM> GetAll()
+        {
+            List<TheThuVien> entities = _repo.GetAll();
+            return entities.Select(e => TheThuVienMapping.MapEntityToVM(e)).ToList();   
         }
     }
 }

@@ -11,6 +11,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using DuAnOne.BUS.Utils.Validation;
+using DuAnOne.PL.Extensions;
 
 namespace DuAnOne.PL.TheThuVien
 {
@@ -19,14 +21,17 @@ namespace DuAnOne.PL.TheThuVien
         List<TheThuVienVM> _theThuViens;
         ITheThuVienService _theThuVienService;
 
-        public event Action DataAdded;
+        public event Action _onDataAdded;
 
-        public ThemTheThuVien()
+        public ThemTheThuVien(Action onDataAdded)
         {
             InitializeComponent();
             _theThuVienService = new TheThuVienService();
             _theThuViens = _theThuVienService.GetList();
+            _onDataAdded = onDataAdded; 
+            LoadFormData();
         }
+
         private void LoadFormData()
         {
             cb_status.Items.Add("1");
@@ -35,21 +40,10 @@ namespace DuAnOne.PL.TheThuVien
             cb_status.Items.Add("4");
         }
 
-        public void SendData(Guid id, Guid chuThe, DateTime ngayCap, DateTime ngayHetHan, String maThe, int status)
-        {
-            txt_idchuthe.Text = chuThe.ToString();
-            txt_ngaycap.Text = ngayCap.ToString();
-            txt_ngayhethan.Text = ngayHetHan.ToString();
-            txt_mathe.Text = maThe;
-            cb_status.Text = status.ToString();
-        }
-
         private void btn_xacnhan_Click(object sender, EventArgs e)
         {
-            // Xác nhận hành động từ người dùng
             if (MessageBox.Show("Bạn có chắc chắn muốn thêm thẻ thư viện này không?", "Xác Nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
-                // Kiểm tra và chuyển đổi dữ liệu nhập vào
                 DateTime ngayCap, ngayHetHan;
                 if (!DateTime.TryParse(txt_ngaycap.Text, out ngayCap))
                 {
@@ -75,26 +69,30 @@ namespace DuAnOne.PL.TheThuVien
                 }
 
                 // Tạo ViewModel từ dữ liệu nhập vào
-                var theThuVienCreateVM = new TheThuVienCreateVM
+                var ttvCreate = new TheThuVienCreateVM
                 {
-                    IdChuThe = Guid.Parse(txt_idchuthe.Text),
                     NgayCap = ngayCap,
                     NgayHetHan = ngayHetHan,
                     MaThe = txt_mathe.Text,
                     Status = status
                 };
 
-                // Gọi phương thức tạo của dịch vụ
-                var result = _theThuVienService.Create(theThuVienCreateVM);
-
-                // Thông báo kết quả cho người dùng
-                MessageBox.Show(result, "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                // Kích hoạt sự kiện DataUpdated nếu có
-                if (result.Equals("Tạo thẻ thư viện thành công.", StringComparison.OrdinalIgnoreCase))
+                var validResult = TheThuVienValidation.ValidateCreateVM(ttvCreate);
+                if(string.IsNullOrEmpty(validResult))
                 {
-                    DataAdded?.Invoke();
-                    this.Close(); // Đóng form sau khi thêm thành công
+                    var result = _theThuVienService.Create(ttvCreate);
+                    bool isSuccess = result.Equals("Tạo thẻ thư viện thành công.", StringComparison.OrdinalIgnoreCase);
+                    MessageBoxExtension.Notification("THÊM", result);
+
+                    if (isSuccess)
+                    {
+                        _onDataAdded?.Invoke();
+                    }
+                    this.Close();
+                }      
+                else
+                {
+                    MessageBoxExtension.Notification("THÊM", validResult);
                 }
             }
         }

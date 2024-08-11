@@ -58,15 +58,15 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(442, 73);
+            label8.Location = new Point(385, 23);
             label8.Name = "label8";
             label8.Size = new Size(84, 15);
             label8.TabIndex = 69;
-            label8.Text = "Thêm CHủ thẻ";
+            label8.Text = "Thêm Chủ Thẻ";
             // 
             // btn_huy
             // 
-            btn_huy.Location = new Point(578, 369);
+            btn_huy.Location = new Point(193, 253);
             btn_huy.Name = "btn_huy";
             btn_huy.Size = new Size(214, 55);
             btn_huy.TabIndex = 68;
@@ -76,7 +76,7 @@
             // 
             // btn_xacnhan
             // 
-            btn_xacnhan.Location = new Point(203, 369);
+            btn_xacnhan.Location = new Point(461, 253);
             btn_xacnhan.Name = "btn_xacnhan";
             btn_xacnhan.Size = new Size(214, 55);
             btn_xacnhan.TabIndex = 67;
@@ -87,24 +87,24 @@
             // cb_status
             // 
             cb_status.FormattingEnabled = true;
-            cb_status.Location = new Point(356, 281);
+            cb_status.Location = new Point(70, 223);
             cb_status.Name = "cb_status";
-            cb_status.Size = new Size(281, 23);
+            cb_status.Size = new Size(301, 23);
             cb_status.TabIndex = 66;
             // 
             // lb_status
             // 
             lb_status.AutoSize = true;
-            lb_status.Location = new Point(303, 284);
+            lb_status.Location = new Point(7, 226);
             lb_status.Name = "lb_status";
-            lb_status.Size = new Size(38, 15);
+            lb_status.Size = new Size(61, 15);
             lb_status.TabIndex = 65;
-            lb_status.Text = "status";
+            lb_status.Text = "Trạng Thái";
             // 
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(498, 238);
+            label1.Location = new Point(432, 191);
             label1.Name = "label1";
             label1.Size = new Size(76, 15);
             label1.TabIndex = 64;
@@ -112,7 +112,7 @@
             // 
             // txt_noilamviec
             // 
-            txt_noilamviec.Location = new Point(578, 235);
+            txt_noilamviec.Location = new Point(512, 188);
             txt_noilamviec.Name = "txt_noilamviec";
             txt_noilamviec.Size = new Size(282, 23);
             txt_noilamviec.TabIndex = 63;
@@ -120,7 +120,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(527, 212);
+            label7.Location = new Point(461, 165);
             label7.Name = "label7";
             label7.Size = new Size(36, 15);
             label7.TabIndex = 62;
@@ -129,7 +129,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(511, 142);
+            label6.Location = new Point(445, 95);
             label6.Name = "label6";
             label6.Size = new Size(61, 15);
             label6.TabIndex = 61;
@@ -138,7 +138,7 @@
             // l
             // 
             l.AutoSize = true;
-            l.Location = new Point(67, 238);
+            l.Location = new Point(10, 188);
             l.Name = "l";
             l.Size = new Size(54, 15);
             l.TabIndex = 60;
@@ -147,7 +147,7 @@
             // lb_LoaiThe
             // 
             lb_LoaiThe.AutoSize = true;
-            lb_LoaiThe.Location = new Point(66, 180);
+            lb_LoaiThe.Location = new Point(9, 130);
             lb_LoaiThe.Name = "lb_LoaiThe";
             lb_LoaiThe.Size = new Size(51, 15);
             lb_LoaiThe.TabIndex = 59;
@@ -156,7 +156,7 @@
             // cb_quoctich
             // 
             cb_quoctich.FormattingEnabled = true;
-            cb_quoctich.Location = new Point(578, 142);
+            cb_quoctich.Location = new Point(512, 95);
             cb_quoctich.Name = "cb_quoctich";
             cb_quoctich.Size = new Size(281, 23);
             cb_quoctich.TabIndex = 58;
@@ -164,7 +164,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(494, 116);
+            label5.Location = new Point(428, 69);
             label5.Name = "label5";
             label5.Size = new Size(78, 15);
             label5.TabIndex = 57;
@@ -172,7 +172,7 @@
             // 
             // txt_nghenghiep
             // 
-            txt_nghenghiep.Location = new Point(578, 113);
+            txt_nghenghiep.Location = new Point(512, 66);
             txt_nghenghiep.Name = "txt_nghenghiep";
             txt_nghenghiep.Size = new Size(282, 23);
             txt_nghenghiep.TabIndex = 56;
@@ -180,7 +180,7 @@
             // cb_loaibandoc
             // 
             cb_loaibandoc.FormattingEnabled = true;
-            cb_loaibandoc.Location = new Point(578, 177);
+            cb_loaibandoc.Location = new Point(512, 130);
             cb_loaibandoc.Name = "cb_loaibandoc";
             cb_loaibandoc.Size = new Size(281, 23);
             cb_loaibandoc.TabIndex = 55;
@@ -188,7 +188,7 @@
             // cb_gioitinh
             // 
             cb_gioitinh.FormattingEnabled = true;
-            cb_gioitinh.Location = new Point(127, 235);
+            cb_gioitinh.Location = new Point(70, 185);
             cb_gioitinh.Name = "cb_gioitinh";
             cb_gioitinh.Size = new Size(302, 23);
             cb_gioitinh.TabIndex = 54;
@@ -196,7 +196,7 @@
             // cb_loaithe
             // 
             cb_loaithe.FormattingEnabled = true;
-            cb_loaithe.Location = new Point(126, 177);
+            cb_loaithe.Location = new Point(69, 127);
             cb_loaithe.Name = "cb_loaithe";
             cb_loaithe.Size = new Size(302, 23);
             cb_loaithe.TabIndex = 53;
@@ -204,7 +204,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(497, 177);
+            label4.Location = new Point(431, 130);
             label4.Name = "label4";
             label4.Size = new Size(75, 15);
             label4.TabIndex = 52;
@@ -212,7 +212,7 @@
             // 
             // txt_email
             // 
-            txt_email.Location = new Point(578, 209);
+            txt_email.Location = new Point(512, 162);
             txt_email.Name = "txt_email";
             txt_email.Size = new Size(282, 23);
             txt_email.TabIndex = 51;
@@ -220,7 +220,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(73, 209);
+            label3.Location = new Point(16, 159);
             label3.Name = "label3";
             label3.Size = new Size(45, 15);
             label3.TabIndex = 50;
@@ -228,7 +228,7 @@
             // 
             // txt_diachi
             // 
-            txt_diachi.Location = new Point(126, 206);
+            txt_diachi.Location = new Point(69, 156);
             txt_diachi.Name = "txt_diachi";
             txt_diachi.Size = new Size(303, 23);
             txt_diachi.TabIndex = 49;
@@ -236,7 +236,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(66, 145);
+            label2.Location = new Point(9, 95);
             label2.Name = "label2";
             label2.Size = new Size(59, 15);
             label2.TabIndex = 48;
@@ -244,7 +244,7 @@
             // 
             // txt_hovaten
             // 
-            txt_hovaten.Location = new Point(126, 142);
+            txt_hovaten.Location = new Point(69, 92);
             txt_hovaten.Name = "txt_hovaten";
             txt_hovaten.Size = new Size(303, 23);
             txt_hovaten.TabIndex = 47;
@@ -252,7 +252,7 @@
             // lb_Cmnd
             // 
             lb_Cmnd.AutoSize = true;
-            lb_Cmnd.Location = new Point(73, 116);
+            lb_Cmnd.Location = new Point(16, 66);
             lb_Cmnd.Name = "lb_Cmnd";
             lb_Cmnd.Size = new Size(39, 15);
             lb_Cmnd.TabIndex = 46;
@@ -260,7 +260,7 @@
             // 
             // txt_cccd
             // 
-            txt_cccd.Location = new Point(126, 113);
+            txt_cccd.Location = new Point(69, 63);
             txt_cccd.Name = "txt_cccd";
             txt_cccd.Size = new Size(303, 23);
             txt_cccd.TabIndex = 45;
@@ -269,7 +269,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(927, 496);
+            ClientSize = new Size(824, 368);
             Controls.Add(label8);
             Controls.Add(btn_huy);
             Controls.Add(btn_xacnhan);

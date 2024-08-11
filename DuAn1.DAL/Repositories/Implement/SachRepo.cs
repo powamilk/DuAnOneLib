@@ -1,5 +1,6 @@
 ﻿using DuAnOne.DAL.Entities;
 using DuAnOne.DAL.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DuAnOne.DAL.Repositories.Implement
 {
@@ -24,6 +25,7 @@ namespace DuAnOne.DAL.Repositories.Implement
 
         public string Create(Sach entity)
         {
+            entity.CreateTime = DateTime.Now;
             try
             {
                 _appDbContext.Saches.Add(entity);
@@ -36,7 +38,7 @@ namespace DuAnOne.DAL.Repositories.Implement
             }
         }
 
-        public string Update(Sach entity)
+        public bool Update(Sach entity)
         {
             try
             {
@@ -58,13 +60,15 @@ namespace DuAnOne.DAL.Repositories.Implement
 
                     _appDbContext.Saches.Update(existingSach);
                     _appDbContext.SaveChanges();
-                    return "Cập nhật sách thành công.";
+                    return true;
                 }
-                return "Sách không tìm thấy.";
+                Console.WriteLine("Không tìm thấy sách cần cập nhật");
+                return false;
             }
             catch (Exception ex)
             {
-                return $"Cập nhật sách thất bại. Lỗi: {ex.Message}";
+                Console.WriteLine("Cập nhật sách thất bại\nLỗi: " + ex.Message);
+                return false;
             }
         }
 
@@ -85,6 +89,11 @@ namespace DuAnOne.DAL.Repositories.Implement
             {
                 return $"Xóa sách thất bại. Lỗi: {ex.Message}";
             }
+        }
+
+        public List<Sach> GetAll()
+        {
+            return _appDbContext.Saches.AsQueryable().AsNoTracking().ToList();
         }
     }
 }

@@ -8,7 +8,8 @@ namespace DuAnOne.BUS.Interface
         List<ChuTheVM> GetList();
         string Create(ChuTheCreateVM createVM);
         string Update(ChuTheUpdateVM updateVM);
-        string Delete(Guid id);
+        bool Delete(Guid id);
+        List<ChuTheVM> GetAll();
 
     }
 }

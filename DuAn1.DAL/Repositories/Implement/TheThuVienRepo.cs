@@ -1,5 +1,6 @@
 ﻿using DuAnOne.DAL.Entities;
 using DuAnOne.DAL.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DuAnOne.DAL.Repositories.Implement
 {
@@ -24,6 +25,16 @@ namespace DuAnOne.DAL.Repositories.Implement
 
         public bool Create(TheThuVien entity)
         {
+            entity.CreateTime = DateTime.Now;
+
+            // Kiểm tra xem IdChuThe có tồn tại trong bảng ChuThe không
+            var chuTheExists = _appDbContext.ChuThes.Any(ct => ct.Id == entity.IdChuThe);
+            if (!chuTheExists)
+            {
+                Console.WriteLine("Thêm thẻ thư viện thất bại\nLỗi: IdChuThe không tồn tại trong bảng ChuThe.");
+                return false; // Failure
+            }
+
             try
             {
                 _appDbContext.TheThuViens.Add(entity);
@@ -87,6 +98,11 @@ namespace DuAnOne.DAL.Repositories.Implement
                 Console.WriteLine("Xóa thẻ thư viện thất bại\nLỗi: " + ex.Message);
                 return false; // Failure
             }
+        }
+
+        public List<TheThuVien> GetAll()
+        {
+            return _appDbContext.TheThuViens.AsQueryable().AsNoTracking().ToList();
         }
     }
 }

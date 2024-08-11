@@ -23,7 +23,8 @@ namespace DuAnOne.DAL.Repositories.Implement
         }
 
         public bool Create(PhieuMuon entity)
-        {
+        {   
+            entity.CreateTime = DateTime.Now;   
             try
             {
                 _appDbContext.PhieuMuons.Add(entity);
@@ -47,7 +48,6 @@ namespace DuAnOne.DAL.Repositories.Implement
                     return false;
                 }
 
-                existingPhieuMuon.IdTaiKhoan = entity.IdTaiKhoan;
                 existingPhieuMuon.IdThe = entity.IdThe;
                 existingPhieuMuon.NgayMuon = entity.NgayMuon;
                 existingPhieuMuon.NgayTra = entity.NgayTra;

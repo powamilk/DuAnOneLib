@@ -9,5 +9,6 @@ namespace DuAnOne.DAL.Repositories.Interfaces
         void Delete(Guid idPhieuMuon, Guid idSach);
         ChiTietPhieuMuon GetById(Guid idPhieuMuon, Guid idSach);
         List<ChiTietPhieuMuon> GetByIdPhieuMuon(Guid idPhieuMuon);
+        
     }
 }

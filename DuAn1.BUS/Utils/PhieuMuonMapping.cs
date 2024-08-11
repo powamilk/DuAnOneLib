@@ -9,7 +9,6 @@ namespace DuAnOne.BUS.Utils
         {
             return new PhieuMuon
             {
-                IdTaiKhoan = createVM.IdTaiKhoan ?? Guid.Empty, // Cung cấp giá trị Guid.Empty nếu null
                 IdThe = createVM.IdThe ?? Guid.Empty,           // Cung cấp giá trị Guid.Empty nếu null
                 NgayMuon = createVM.NgayMuon ?? DateTime.MinValue, // Cung cấp giá trị mặc định nếu null
                 NgayTra = createVM.NgayTra ?? DateTime.MinValue,   // Cung cấp giá trị mặc định nếu null
@@ -24,7 +23,6 @@ namespace DuAnOne.BUS.Utils
             return new PhieuMuonVM
             {
                 Id = entity.Id,
-                IdTaiKhoan = entity.IdTaiKhoan,
                 IdThe = entity.IdThe,
                 NgayMuon = entity.NgayMuon,
                 NgayTra = entity.NgayTra,
@@ -45,7 +43,6 @@ namespace DuAnOne.BUS.Utils
             return new PhieuMuon
             {
                 Id = updateVM.Id,
-                IdTaiKhoan = updateVM.IdTaiKhoan ?? Guid.Empty,
                 IdThe = updateVM.IdThe ?? Guid.Empty,
                 NgayMuon = updateVM.NgayMuon ?? default(DateTime),
                 NgayTra = updateVM.NgayTra ?? default(DateTime),

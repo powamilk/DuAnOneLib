@@ -16,7 +16,7 @@ namespace DuAnOne.DAL.Repositories.Implement
         public List<ChuThe> GetList()
         {
             // Trả về danh sách tất cả các ChuThe
-            return _appDbContext.ChuThes.AsQueryable().AsNoTracking().ToList(); ;
+            return _appDbContext.ChuThes.ToList(); 
         }
 
         public ChuThe GetById(Guid id)
@@ -27,17 +27,17 @@ namespace DuAnOne.DAL.Repositories.Implement
 
         public bool Create(ChuThe entity)
         {
+            entity.CreateTime = DateTime.Now;
             try
             {
-                // Thêm đối tượng ChuThe mới vào cơ sở dữ liệu
                 _appDbContext.ChuThes.Add(entity);
                 _appDbContext.SaveChanges();
-                return true; // Thành công
+                return true;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Thêm thẻ thư viện thất bại\nLỗi: " + ex.Message);
-                return false; // Thất bại
+                return false;
             }
         }
 
@@ -45,35 +45,31 @@ namespace DuAnOne.DAL.Repositories.Implement
         {
             try
             {
-                // Tìm đối tượng ChuThe hiện tại trong cơ sở dữ liệu
                 var existingChuThe = _appDbContext.ChuThes.FirstOrDefault(c => c.Id == entity.Id);
-                if (existingChuThe == null)
+                if (existingChuThe != null)
                 {
-                    Console.WriteLine("Không tìm thấy thẻ thư viện cần cập nhật");
-                    return false; // Không tìm thấy đối tượng để cập nhật
+                    existingChuThe.Cccd = entity.Cccd;
+                    existingChuThe.HoVaTen = entity.HoVaTen;
+                    existingChuThe.LoaiThe = entity.LoaiThe;
+                    existingChuThe.DiaChi = entity.DiaChi;
+                    existingChuThe.GioiTinh = entity.GioiTinh;
+                    existingChuThe.NgheNghiep = entity.NgheNghiep;
+                    existingChuThe.QuocTich = entity.QuocTich;
+                    existingChuThe.LoaiBanDoc = entity.LoaiBanDoc;
+                    existingChuThe.Email = entity.Email;
+                    existingChuThe.NoiLamViec = entity.NoiLamViec;
+                    existingChuThe.Status = entity.Status;
+                    existingChuThe.ModifyBy = entity.ModifyBy;
+                    existingChuThe.ModifyTime = entity.ModifyTime;
+                    existingChuThe.DeleteBy = entity.DeleteBy;
+                    existingChuThe.DeleteTime = entity.DeleteTime;
+
+                    _appDbContext.ChuThes.Update(existingChuThe);
+                    _appDbContext.SaveChanges();
+                    return true;
                 }
-
-                // Cập nhật các thuộc tính của đối tượng ChuThe
-                existingChuThe.Cccd = entity.Cccd;
-                existingChuThe.HoVaTen = entity.HoVaTen;
-                existingChuThe.LoaiThe = entity.LoaiThe;
-                existingChuThe.DiaChi = entity.DiaChi;
-                existingChuThe.GioiTinh = entity.GioiTinh;
-                existingChuThe.NgheNghiep = entity.NgheNghiep;
-                existingChuThe.QuocTich = entity.QuocTich;
-                existingChuThe.LoaiBanDoc = entity.LoaiBanDoc;
-                existingChuThe.Email = entity.Email;
-                existingChuThe.NoiLamViec = entity.NoiLamViec;
-                existingChuThe.Status = entity.Status;
-                existingChuThe.ModifyBy = entity.ModifyBy;
-                existingChuThe.ModifyTime = entity.ModifyTime;
-                existingChuThe.DeleteBy = entity.DeleteBy;
-                existingChuThe.DeleteTime = entity.DeleteTime;
-
-                // Cập nhật đối tượng ChuThe trong cơ sở dữ liệu
-                _appDbContext.ChuThes.Update(existingChuThe);
-                _appDbContext.SaveChanges();
-                return true; // Cập nhật thành công
+                Console.WriteLine("Không tìm thấy thẻ thư viện cần cập nhật");
+                return false;              
             }
             catch (Exception ex)
             {
@@ -86,24 +82,26 @@ namespace DuAnOne.DAL.Repositories.Implement
         {
             try
             {
-                // Tìm đối tượng ChuThe trong cơ sở dữ liệu theo Id
                 var existingChuThe = _appDbContext.ChuThes.FirstOrDefault(c => c.Id == id);
                 if (existingChuThe == null)
                 {
-                    Console.WriteLine("Không tìm thấy thẻ thư viện cần xóa");
-                    return false; // Không tìm thấy đối tượng để xóa
+                    _appDbContext.ChuThes.Remove(existingChuThe);
+                    _appDbContext.SaveChanges();
+                    return true;
                 }
-
-                // Xóa đối tượng ChuThe khỏi cơ sở dữ liệu
-                _appDbContext.ChuThes.Remove(existingChuThe);
-                _appDbContext.SaveChanges();
-                return true; // Xóa thành công
+                Console.WriteLine("Không tìm thấy thẻ thư viện cần xóa");
+                return false;
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Xóa thẻ thư viện thất bại\nLỗi: " + ex.Message);
-                return false; // Thất bại
+                return false; 
             }
+        }
+
+        public List<ChuThe> GetAll()
+        {
+            return _appDbContext.ChuThes.AsQueryable().AsNoTracking().ToList();
         }
     }
 }

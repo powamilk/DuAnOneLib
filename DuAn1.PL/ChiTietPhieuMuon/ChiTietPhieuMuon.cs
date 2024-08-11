@@ -37,7 +37,7 @@ namespace DuAnOne.PL.ChiTietPhieuMuon
 
         private void LoadFormData()
         {
-            dgv_chitietphieumuon.Columns.Clear();   
+            dgv_chitietphieumuon.Columns.Clear();
             dgv_chitietphieumuon.Columns.Add("Column1", "STT");
             dgv_chitietphieumuon.Columns.Add("Column2", "Mã Sách");
             dgv_chitietphieumuon.Columns.Add("Column3", "Tên Sách");
@@ -107,6 +107,16 @@ namespace DuAnOne.PL.ChiTietPhieuMuon
         //}
 
         private void btn_sua_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label6_Click(object sender, EventArgs e)
         {
 
         }

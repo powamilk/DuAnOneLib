@@ -55,7 +55,7 @@
             // 
             // btn_huy
             // 
-            btn_huy.Location = new Point(183, 333);
+            btn_huy.Location = new Point(127, 247);
             btn_huy.Name = "btn_huy";
             btn_huy.Size = new Size(188, 54);
             btn_huy.TabIndex = 45;
@@ -65,7 +65,7 @@
             // 
             // btn_them
             // 
-            btn_them.Location = new Point(413, 333);
+            btn_them.Location = new Point(357, 247);
             btn_them.Name = "btn_them";
             btn_them.Size = new Size(188, 54);
             btn_them.TabIndex = 44;
@@ -76,7 +76,7 @@
             // cbx_chucvu
             // 
             cbx_chucvu.FormattingEnabled = true;
-            cbx_chucvu.Location = new Point(501, 189);
+            cbx_chucvu.Location = new Point(401, 134);
             cbx_chucvu.Name = "cbx_chucvu";
             cbx_chucvu.Size = new Size(215, 23);
             cbx_chucvu.TabIndex = 43;
@@ -84,7 +84,7 @@
             // cbx_status
             // 
             cbx_status.FormattingEnabled = true;
-            cbx_status.Location = new Point(503, 150);
+            cbx_status.Location = new Point(403, 95);
             cbx_status.Name = "cbx_status";
             cbx_status.Size = new Size(215, 23);
             cbx_status.TabIndex = 42;
@@ -92,7 +92,7 @@
             // lbl_matkhau
             // 
             lbl_matkhau.AutoSize = true;
-            lbl_matkhau.Location = new Point(438, 264);
+            lbl_matkhau.Location = new Point(338, 209);
             lbl_matkhau.Name = "lbl_matkhau";
             lbl_matkhau.Size = new Size(58, 15);
             lbl_matkhau.TabIndex = 41;
@@ -100,7 +100,7 @@
             // 
             // txt_matkhau
             // 
-            txt_matkhau.Location = new Point(501, 261);
+            txt_matkhau.Location = new Point(401, 206);
             txt_matkhau.Name = "txt_matkhau";
             txt_matkhau.Size = new Size(217, 23);
             txt_matkhau.TabIndex = 40;
@@ -108,7 +108,7 @@
             // tbl_taikhoan
             // 
             tbl_taikhoan.AutoSize = true;
-            tbl_taikhoan.Location = new Point(437, 232);
+            tbl_taikhoan.Location = new Point(337, 177);
             tbl_taikhoan.Name = "tbl_taikhoan";
             tbl_taikhoan.Size = new Size(58, 15);
             tbl_taikhoan.TabIndex = 39;
@@ -116,7 +116,7 @@
             // 
             // txt_taikhoan
             // 
-            txt_taikhoan.Location = new Point(501, 229);
+            txt_taikhoan.Location = new Point(401, 174);
             txt_taikhoan.Name = "txt_taikhoan";
             txt_taikhoan.Size = new Size(217, 23);
             txt_taikhoan.TabIndex = 38;
@@ -124,7 +124,7 @@
             // lbl_chucvu
             // 
             lbl_chucvu.AutoSize = true;
-            lbl_chucvu.Location = new Point(439, 192);
+            lbl_chucvu.Location = new Point(339, 137);
             lbl_chucvu.Name = "lbl_chucvu";
             lbl_chucvu.Size = new Size(52, 15);
             lbl_chucvu.TabIndex = 37;
@@ -133,7 +133,7 @@
             // lbl_status
             // 
             lbl_status.AutoSize = true;
-            lbl_status.Location = new Point(457, 152);
+            lbl_status.Location = new Point(357, 97);
             lbl_status.Name = "lbl_status";
             lbl_status.Size = new Size(39, 15);
             lbl_status.TabIndex = 36;
@@ -142,7 +142,7 @@
             // lbl_manhanvien
             // 
             lbl_manhanvien.AutoSize = true;
-            lbl_manhanvien.Location = new Point(413, 115);
+            lbl_manhanvien.Location = new Point(313, 60);
             lbl_manhanvien.Name = "lbl_manhanvien";
             lbl_manhanvien.Size = new Size(82, 15);
             lbl_manhanvien.TabIndex = 35;
@@ -150,7 +150,7 @@
             // 
             // txt_manhanvien
             // 
-            txt_manhanvien.Location = new Point(503, 112);
+            txt_manhanvien.Location = new Point(403, 57);
             txt_manhanvien.Name = "txt_manhanvien";
             txt_manhanvien.Size = new Size(217, 23);
             txt_manhanvien.TabIndex = 34;
@@ -158,7 +158,7 @@
             // lbl_email
             // 
             lbl_email.AutoSize = true;
-            lbl_email.Location = new Point(72, 261);
+            lbl_email.Location = new Point(28, 206);
             lbl_email.Name = "lbl_email";
             lbl_email.Size = new Size(36, 15);
             lbl_email.TabIndex = 33;
@@ -166,7 +166,7 @@
             // 
             // txt_email
             // 
-            txt_email.Location = new Point(116, 258);
+            txt_email.Location = new Point(72, 203);
             txt_email.Name = "txt_email";
             txt_email.Size = new Size(217, 23);
             txt_email.TabIndex = 32;
@@ -174,7 +174,7 @@
             // lbl_sdt
             // 
             lbl_sdt.AutoSize = true;
-            lbl_sdt.Location = new Point(72, 232);
+            lbl_sdt.Location = new Point(28, 177);
             lbl_sdt.Name = "lbl_sdt";
             lbl_sdt.Size = new Size(27, 15);
             lbl_sdt.TabIndex = 31;
@@ -182,7 +182,7 @@
             // 
             // txt_sodienthoai
             // 
-            txt_sodienthoai.Location = new Point(116, 229);
+            txt_sodienthoai.Location = new Point(72, 174);
             txt_sodienthoai.Name = "txt_sodienthoai";
             txt_sodienthoai.Size = new Size(217, 23);
             txt_sodienthoai.TabIndex = 30;
@@ -190,7 +190,7 @@
             // lbl_diachi
             // 
             lbl_diachi.AutoSize = true;
-            lbl_diachi.Location = new Point(65, 192);
+            lbl_diachi.Location = new Point(21, 137);
             lbl_diachi.Name = "lbl_diachi";
             lbl_diachi.Size = new Size(45, 15);
             lbl_diachi.TabIndex = 29;
@@ -198,7 +198,7 @@
             // 
             // txt_diachi
             // 
-            txt_diachi.Location = new Point(116, 189);
+            txt_diachi.Location = new Point(72, 134);
             txt_diachi.Name = "txt_diachi";
             txt_diachi.Size = new Size(217, 23);
             txt_diachi.TabIndex = 28;
@@ -206,7 +206,7 @@
             // lbl_ngaysinh
             // 
             lbl_ngaysinh.AutoSize = true;
-            lbl_ngaysinh.Location = new Point(49, 153);
+            lbl_ngaysinh.Location = new Point(5, 98);
             lbl_ngaysinh.Name = "lbl_ngaysinh";
             lbl_ngaysinh.Size = new Size(61, 15);
             lbl_ngaysinh.TabIndex = 27;
@@ -214,7 +214,7 @@
             // 
             // txt_ngaysinh
             // 
-            txt_ngaysinh.Location = new Point(116, 150);
+            txt_ngaysinh.Location = new Point(72, 95);
             txt_ngaysinh.Name = "txt_ngaysinh";
             txt_ngaysinh.Size = new Size(217, 23);
             txt_ngaysinh.TabIndex = 26;
@@ -222,7 +222,7 @@
             // lbl_ten
             // 
             lbl_ten.AutoSize = true;
-            lbl_ten.Location = new Point(72, 115);
+            lbl_ten.Location = new Point(28, 60);
             lbl_ten.Name = "lbl_ten";
             lbl_ten.Size = new Size(25, 15);
             lbl_ten.TabIndex = 25;
@@ -230,7 +230,7 @@
             // 
             // txt_hovaten
             // 
-            txt_hovaten.Location = new Point(116, 112);
+            txt_hovaten.Location = new Point(72, 57);
             txt_hovaten.Name = "txt_hovaten";
             txt_hovaten.Size = new Size(217, 23);
             txt_hovaten.TabIndex = 24;
@@ -238,7 +238,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(352, 70);
+            label1.Location = new Point(268, 25);
             label1.Name = "label1";
             label1.Size = new Size(91, 15);
             label1.TabIndex = 46;
@@ -248,7 +248,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(675, 354);
             Controls.Add(label1);
             Controls.Add(btn_huy);
             Controls.Add(btn_them);

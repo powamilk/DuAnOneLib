@@ -49,7 +49,7 @@
             // 
             // btn_huy
             // 
-            btn_huy.Location = new Point(474, 351);
+            btn_huy.Location = new Point(166, 255);
             btn_huy.Name = "btn_huy";
             btn_huy.Size = new Size(173, 62);
             btn_huy.TabIndex = 33;
@@ -59,7 +59,7 @@
             // 
             // btn_xacnhan
             // 
-            btn_xacnhan.Location = new Point(184, 351);
+            btn_xacnhan.Location = new Point(390, 255);
             btn_xacnhan.Name = "btn_xacnhan";
             btn_xacnhan.Size = new Size(173, 62);
             btn_xacnhan.TabIndex = 32;
@@ -70,24 +70,24 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(270, 286);
+            label8.Location = new Point(49, 220);
             label8.Name = "label8";
-            label8.Size = new Size(39, 15);
+            label8.Size = new Size(61, 15);
             label8.TabIndex = 31;
-            label8.Text = "Status";
+            label8.Text = "Trạng Thái";
             // 
             // cb_status
             // 
             cb_status.FormattingEnabled = true;
-            cb_status.Location = new Point(317, 283);
+            cb_status.Location = new Point(118, 217);
             cb_status.Name = "cb_status";
-            cb_status.Size = new Size(202, 23);
+            cb_status.Size = new Size(191, 23);
             cb_status.TabIndex = 30;
             // 
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(487, 225);
+            label7.Location = new Point(386, 187);
             label7.Name = "label7";
             label7.Size = new Size(57, 15);
             label7.TabIndex = 29;
@@ -96,7 +96,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(447, 170);
+            label6.Location = new Point(346, 150);
             label6.Name = "label6";
             label6.Size = new Size(97, 15);
             label6.TabIndex = 28;
@@ -105,7 +105,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(491, 111);
+            label5.Location = new Point(390, 111);
             label5.Name = "label5";
             label5.Size = new Size(53, 15);
             label5.TabIndex = 27;
@@ -114,7 +114,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(40, 225);
+            label4.Location = new Point(40, 187);
             label4.Name = "label4";
             label4.Size = new Size(70, 15);
             label4.TabIndex = 26;
@@ -123,7 +123,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(63, 162);
+            label3.Location = new Point(63, 150);
             label3.Name = "label3";
             label3.Size = new Size(40, 15);
             label3.TabIndex = 25;
@@ -140,35 +140,35 @@
             // 
             // txt_maphieu
             // 
-            txt_maphieu.Location = new Point(550, 217);
+            txt_maphieu.Location = new Point(449, 179);
             txt_maphieu.Name = "txt_maphieu";
             txt_maphieu.Size = new Size(191, 23);
             txt_maphieu.TabIndex = 23;
             // 
             // txt_ngaytrathucte
             // 
-            txt_ngaytrathucte.Location = new Point(550, 162);
+            txt_ngaytrathucte.Location = new Point(449, 142);
             txt_ngaytrathucte.Name = "txt_ngaytrathucte";
             txt_ngaytrathucte.Size = new Size(191, 23);
             txt_ngaytrathucte.TabIndex = 22;
             // 
             // txt_ngaytra
             // 
-            txt_ngaytra.Location = new Point(550, 108);
+            txt_ngaytra.Location = new Point(449, 108);
             txt_ngaytra.Name = "txt_ngaytra";
             txt_ngaytra.Size = new Size(191, 23);
             txt_ngaytra.TabIndex = 21;
             // 
             // txt_ngaymuon
             // 
-            txt_ngaymuon.Location = new Point(118, 217);
+            txt_ngaymuon.Location = new Point(118, 179);
             txt_ngaymuon.Name = "txt_ngaymuon";
             txt_ngaymuon.Size = new Size(191, 23);
             txt_ngaymuon.TabIndex = 20;
             // 
             // txt_idthe
             // 
-            txt_idthe.Location = new Point(118, 162);
+            txt_idthe.Location = new Point(118, 150);
             txt_idthe.Name = "txt_idthe";
             txt_idthe.Size = new Size(191, 23);
             txt_idthe.TabIndex = 19;
@@ -183,7 +183,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(358, 33);
+            label1.Location = new Point(309, 68);
             label1.Name = "label1";
             label1.Size = new Size(105, 15);
             label1.TabIndex = 17;
@@ -193,7 +193,7 @@
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(720, 372);
             Controls.Add(btn_huy);
             Controls.Add(btn_xacnhan);
             Controls.Add(label8);

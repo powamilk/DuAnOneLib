@@ -62,10 +62,11 @@
             tb_searchSach = new TextBox();
             dgv_sach = new DataGridView();
             tab_phieumuon = new TabPage();
+            btn_chitiet = new Button();
             button1 = new Button();
             button2 = new Button();
             button3 = new Button();
-            textBox1 = new TextBox();
+            txt_hienthichonphieumuon = new TextBox();
             label3 = new Label();
             textBox2 = new TextBox();
             dgv_phieumuon = new DataGridView();
@@ -435,13 +436,15 @@
             dgv_sach.RowTemplate.Height = 25;
             dgv_sach.Size = new Size(1297, 395);
             dgv_sach.TabIndex = 70;
+            dgv_sach.CellClick += dgv_sach_CellClick;
             // 
             // tab_phieumuon
             // 
+            tab_phieumuon.Controls.Add(btn_chitiet);
             tab_phieumuon.Controls.Add(button1);
             tab_phieumuon.Controls.Add(button2);
             tab_phieumuon.Controls.Add(button3);
-            tab_phieumuon.Controls.Add(textBox1);
+            tab_phieumuon.Controls.Add(txt_hienthichonphieumuon);
             tab_phieumuon.Controls.Add(label3);
             tab_phieumuon.Controls.Add(textBox2);
             tab_phieumuon.Controls.Add(dgv_phieumuon);
@@ -453,39 +456,49 @@
             tab_phieumuon.Text = "Phiếu Mượn";
             tab_phieumuon.UseVisualStyleBackColor = true;
             // 
+            // btn_chitiet
+            // 
+            btn_chitiet.Location = new Point(310, 120);
+            btn_chitiet.Name = "btn_chitiet";
+            btn_chitiet.Size = new Size(159, 27);
+            btn_chitiet.TabIndex = 82;
+            btn_chitiet.Text = "Xem Chi Tiết";
+            btn_chitiet.UseVisualStyleBackColor = true;
+            btn_chitiet.Click += button4_Click;
+            // 
             // button1
             // 
-            button1.Location = new Point(1145, 111);
+            button1.Location = new Point(894, 148);
             button1.Name = "button1";
-            button1.Size = new Size(149, 60);
+            button1.Size = new Size(136, 53);
             button1.TabIndex = 78;
             button1.Text = "Thêm";
             button1.UseVisualStyleBackColor = true;
             // 
             // button2
             // 
-            button2.Location = new Point(512, 111);
+            button2.Location = new Point(1036, 148);
             button2.Name = "button2";
-            button2.Size = new Size(149, 60);
+            button2.Size = new Size(136, 53);
             button2.TabIndex = 76;
             button2.Text = "Sửa";
             button2.UseVisualStyleBackColor = true;
             // 
             // button3
             // 
-            button3.Location = new Point(710, 111);
+            button3.Location = new Point(1178, 148);
             button3.Name = "button3";
-            button3.Size = new Size(149, 60);
+            button3.Size = new Size(136, 53);
             button3.TabIndex = 75;
             button3.Text = "Xóa";
             button3.UseVisualStyleBackColor = true;
             // 
-            // textBox1
+            // txt_hienthichonphieumuon
             // 
-            textBox1.Location = new Point(131, 120);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(173, 23);
-            textBox1.TabIndex = 81;
+            txt_hienthichonphieumuon.Location = new Point(131, 120);
+            txt_hienthichonphieumuon.Name = "txt_hienthichonphieumuon";
+            txt_hienthichonphieumuon.Size = new Size(173, 23);
+            txt_hienthichonphieumuon.TabIndex = 81;
             // 
             // label3
             // 
@@ -584,9 +597,10 @@
         private Button button1;
         private Button button2;
         private Button button3;
-        private TextBox textBox1;
+        private TextBox txt_hienthichonphieumuon;
         private Label label3;
         private TextBox textBox2;
         private DataGridView dgv_phieumuon;
+        private Button btn_chitiet;
     }
 }

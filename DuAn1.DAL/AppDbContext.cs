@@ -114,7 +114,7 @@ namespace DuAnOne.DAL
 
                 entity.HasOne(d => d.IdTaiKhoanNavigation)
                     .WithMany(p => p.PhieuMuons)
-                    .HasForeignKey(d => d.IdTaiKhoan)
+                    .HasForeignKey(d => d.IdThe)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK__PhieuMuon__IdTai__48CFD27E");
 
