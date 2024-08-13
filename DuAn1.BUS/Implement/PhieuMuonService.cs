@@ -112,5 +112,24 @@ namespace DuAnOne.BUS.Implement
 
             return statistics;
         }
+
+        public List<(string MaThe, int SoLanMuon)> GetThongKeTheThuVien()
+        {
+            var phieuMuons = _repo.GetList();
+
+            var result = phieuMuons
+                .GroupBy(pm => pm.IdThe)
+                .Select(group => new
+                {
+                    MaThe = group.First().IdTheNavigation?.MaThe ?? "N/A", // Kiểm tra nếu MaThe null
+                    SoLanMuon = group.Count()
+                })
+                .Select(x => (x.MaThe, x.SoLanMuon))
+                .ToList();
+
+            return result;
+        }
+
+
     }
 }

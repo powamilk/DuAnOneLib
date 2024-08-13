@@ -10,6 +10,7 @@ namespace DuAnOne.BUS.Interface
         string Update(ChuTheUpdateVM updateVM);
         bool Delete(Guid id);
         List<ChuTheVM> GetAll();
+        List<(string CCCD, string HoVaTen, int SoLuongThe)> GetThongKeChuThe();
 
     }
 }

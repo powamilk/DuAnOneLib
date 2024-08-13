@@ -16,14 +16,15 @@ namespace DuAnOne.PL
 
         private readonly ITaiKhoanService _taiKhoanService;
         public Guid LoggedInUserId { get; private set; }
+        public int UserRole { get; private set; } // Thuộc tính mới để lưu chức vụ của người dùng
+        public string LoaiTaiKhoan { get; private set; }
+        public string MaNhanVien {  get; private set; }
 
         public Login(ITaiKhoanService taiKhoanService)
         {
             InitializeComponent();
             _taiKhoanService = taiKhoanService;
         }
-        public string Username { get; private set; }
-
 
         private void btn_login_Click(object sender, EventArgs e)
         {
@@ -35,8 +36,15 @@ namespace DuAnOne.PL
             if (taiKhoan != null && taiKhoan.MatKhau == matKhau)
             {
                 LoggedInUserId = taiKhoan.Id;
+                UserRole = taiKhoan.ChucVu;
+
                 MessageBox.Show("Đăng nhập thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                DialogResult = DialogResult.OK;
+
+                TabForm mainForm = new TabForm(LoggedInUserId, UserRole, taiKhoan.MaNhanVien, UserRole == 1 ? "Admin" : "Nhân viên");
+                this.Hide(); // Ẩn form login
+                mainForm.ShowDialog(); // Mở form chính
+
+                this.Show(); // Hiển thị lại form login nếu form chính đóng
             }
             else
             {

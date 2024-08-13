@@ -1,6 +1,6 @@
 ﻿namespace DuAnOne.PL.ChiTietPhieuMuon
 {
-    partial class ChiTietPhieuMuon
+    partial class ChiTietPhieuMuonForm
     {
         /// <summary>
         /// Required designer variable.

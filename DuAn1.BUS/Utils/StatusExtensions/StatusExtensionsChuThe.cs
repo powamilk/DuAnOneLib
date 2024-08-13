@@ -8,5 +8,6 @@ namespace DuAnOne.BUS.Utils.StatusExtensions
 {
     internal class StatusExtensionsChuThe
     {
+
     }
 }

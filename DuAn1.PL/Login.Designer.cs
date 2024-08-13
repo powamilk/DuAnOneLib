@@ -69,7 +69,6 @@
             txt_username.Name = "txt_username";
             txt_username.Size = new Size(170, 23);
             txt_username.TabIndex = 3;
-            txt_username.Text = "Nhập Username";
             // 
             // txt_password
             // 
@@ -77,7 +76,6 @@
             txt_password.Name = "txt_password";
             txt_password.Size = new Size(170, 23);
             txt_password.TabIndex = 4;
-            txt_password.Text = "Nhập Password";
             // 
             // btn_login
             // 

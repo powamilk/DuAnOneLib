@@ -11,10 +11,14 @@ namespace DuAnOne.BUS.Implement
     public class ChuTheService : IChuTheService
     {
         private readonly IChuTheRepo _repo;
+        private readonly IChuTheRepo _chuTheRepo;
+        private readonly ITheThuVienRepo _theThuVienRepo;  
 
         public ChuTheService()
         {
             _repo = new ChuTheRepo(new AppDbContext());
+            _chuTheRepo = new ChuTheRepo(new AppDbContext());
+            _theThuVienRepo = new TheThuVienRepo(new AppDbContext());  
         }
 
         public ChuTheVM GetById(Guid id)
@@ -69,5 +73,26 @@ namespace DuAnOne.BUS.Implement
             List<ChuThe> entities = _repo.GetAll();
             return entities.Select(e => ChuTheMapping.MapEntityToVM(e)).ToList();
         }
+
+        public List<(string CCCD, string HoVaTen, int SoLuongThe)> GetThongKeChuThe()
+        {
+            // Lấy danh sách tất cả Chủ Thẻ và Thẻ Thư Viện
+            var chuTheList = _chuTheRepo.GetList();
+            var theThuVienList = _theThuVienRepo.GetAll();
+
+            // Tính toán số lượng thẻ cho mỗi chủ thẻ
+            var result = chuTheList
+                .Select(chuThe => new
+                {
+                    CCCD = chuThe.Cccd,
+                    HoVaTen = chuThe.HoVaTen,
+                    SoLuongThe = theThuVienList.Count(the => the.IdChuThe == chuThe.Id)
+                })
+                .Select(x => (x.CCCD, x.HoVaTen, x.SoLuongThe))
+                .ToList();
+
+            return result;
+        }
+
     }
 }

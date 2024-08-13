@@ -20,7 +20,9 @@ namespace DuAnOne.DAL.Repositories.Implement
 
         public List<PhieuMuon> GetList()
         {
-            return _appDbContext.PhieuMuons.ToList();
+            return _appDbContext.PhieuMuons
+            .Include(pm => pm.IdTheNavigation) // Nạp đối tượng TheThuVien
+            .ToList();
         }
 
         public bool Create(PhieuMuon entity)

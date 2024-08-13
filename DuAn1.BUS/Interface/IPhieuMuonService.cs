@@ -12,5 +12,7 @@ namespace DuAnOne.BUS.Interface
         string Delete(Guid id);
         List<IdTheData> GetIdTheList();
         List<(string Status, int SoLuong)> GetPhieuMuonStatistics();
+
+        List<(string MaThe, int SoLanMuon)> GetThongKeTheThuVien();
     }
 }

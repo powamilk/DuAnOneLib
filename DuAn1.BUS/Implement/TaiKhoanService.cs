@@ -119,7 +119,7 @@ namespace DuAnOne.BUS.Implement
 
             // Nhóm theo loại tài khoản và đếm số lượng
             var statistics = allTaiKhoan
-                .GroupBy(tk => tk.ChucVu == 1 ? "Admin" : "User")
+                .GroupBy(tk => tk.ChucVu == 1 ? "Admin" : "NhanVien")
                 .Select(group => (LoaiTaiKhoan: group.Key, SoLuong: group.Count()))
                 .ToList();
 
