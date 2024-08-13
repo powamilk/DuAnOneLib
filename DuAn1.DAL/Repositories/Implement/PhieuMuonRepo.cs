@@ -1,5 +1,6 @@
 ﻿using DuAnOne.DAL.Entities;
 using DuAnOne.DAL.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace DuAnOne.DAL.Repositories.Implement
 {
@@ -93,6 +94,21 @@ namespace DuAnOne.DAL.Repositories.Implement
                 // Log the exception
                 return false;
             }
+        }
+
+        public List<TheThuVien> GetIdTheList()
+        {
+            return _appDbContext.TheThuViens.ToList();
+        }
+
+        public List<ChuThe> GetChuTheList()
+        {
+            return _appDbContext.ChuThes.ToList();
+        }
+
+        public List<TaiKhoan> GetTaiKhoanList()
+        {
+            return _appDbContext.TaiKhoans.ToList();
         }
     }
 }

@@ -31,13 +31,12 @@ namespace DuAnOne.BUS.Utils.Validation
             if (vm == null)
                 return "Yêu cầu nhập thông tin sách";
 
-            // Kiểm tra thuộc tính không nullable
             if (!string.IsNullOrWhiteSpace(vm.TenSach))
             {
                 result += BaseValidation.CheckEmpty("Tên Sách", vm.TenSach);
             }
 
-            // Kiểm tra thuộc tính nullable với giá trị nếu có
+            // Kiểm tra thuộc tính nullable với giá trị
             if (vm.NamXuatBan.HasValue)
             {
                 result += BaseValidation.CheckNumber("Năm Xuất Bản", vm.NamXuatBan.Value, minValue: 1000);
@@ -57,10 +56,6 @@ namespace DuAnOne.BUS.Utils.Validation
             {
                 result += BaseValidation.CheckNumber("Giá Tiền", vm.GiaTien.Value);
             }
-
-            // Các thuộc tính nullable không cần phải kiểm tra trống
-            // Nhưng bạn có thể kiểm tra giá trị nếu cần thiết
-
             return result;
         }
     }

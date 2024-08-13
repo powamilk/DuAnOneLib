@@ -1,5 +1,6 @@
 ﻿using DuAnOne.BUS.Interface;
 using DuAnOne.BUS.Utils;
+using DuAnOne.BUS.ViewModel;
 using DuAnOne.BUS.ViewModel.PhieuMuons;
 using DuAnOne.DAL;
 using DuAnOne.DAL.Entities;
@@ -11,10 +12,13 @@ namespace DuAnOne.BUS.Implement
     public class PhieuMuonService : IPhieuMuonService
     {
         private readonly IPhieuMuonRepo _repo;
+        private readonly ITheThuVienRepo _theThuVienRepo;
 
         public PhieuMuonService()
         {
+            _theThuVienRepo = new TheThuVienRepo(new AppDbContext());
             _repo = new PhieuMuonRepo(new AppDbContext());
+
         }
 
         public PhieuMuonVM GetById(Guid id)
@@ -75,6 +79,38 @@ namespace DuAnOne.BUS.Implement
             {
                 return $"Xóa phiếu mượn thất bại. Lỗi: {ex.Message}";
             }
+        }
+
+        public List<IdTheData> GetIdTheList()
+        {
+            var entities = _theThuVienRepo.GetAll(); // Giả sử GetAll() trả về danh sách TheThuVien
+            return entities.Select(e => new IdTheData
+            {
+                Id = e.Id,
+                MaThe = e.MaThe
+            }).ToList();
+        }
+
+        public List<(string Status, int SoLuong)> GetPhieuMuonStatistics()
+        {
+            // Lấy tất cả phiếu mượn
+            var allPhieuMuon = _repo.GetList();
+
+            // Nhóm theo trạng thái và đếm số lượng
+            var statistics = allPhieuMuon
+                .GroupBy(pm => pm.Status switch
+                {
+                    1 => "Đang mượn",
+                    2 => "Đã trả",
+                    3 => "Quá hạn",
+                    4 => "Đã trả quá hạn",
+                    5 => "Đang yêu cầu",
+                    _ => "Khác"
+                })
+                .Select(group => (Status: group.Key, SoLuong: group.Count()))
+                .ToList();
+
+            return statistics;
         }
     }
 }

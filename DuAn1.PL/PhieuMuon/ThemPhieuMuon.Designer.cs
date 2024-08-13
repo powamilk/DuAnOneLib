@@ -37,14 +37,12 @@
             label5 = new Label();
             label4 = new Label();
             label3 = new Label();
-            label2 = new Label();
             txt_maphieu = new TextBox();
             txt_ngaytrathucte = new TextBox();
             txt_ngaytra = new TextBox();
             txt_ngaymuon = new TextBox();
-            txt_idthe = new TextBox();
-            txt_idtaikhoan = new TextBox();
             label1 = new Label();
+            cb_idthe = new ComboBox();
             SuspendLayout();
             // 
             // btn_huy
@@ -70,7 +68,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(49, 220);
+            label8.Location = new Point(52, 182);
             label8.Name = "label8";
             label8.Size = new Size(61, 15);
             label8.TabIndex = 31;
@@ -79,7 +77,7 @@
             // cb_status
             // 
             cb_status.FormattingEnabled = true;
-            cb_status.Location = new Point(118, 217);
+            cb_status.Location = new Point(121, 179);
             cb_status.Name = "cb_status";
             cb_status.Size = new Size(191, 23);
             cb_status.TabIndex = 30;
@@ -114,7 +112,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(40, 187);
+            label4.Location = new Point(43, 149);
             label4.Name = "label4";
             label4.Size = new Size(70, 15);
             label4.TabIndex = 26;
@@ -123,20 +121,11 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(63, 150);
+            label3.Location = new Point(66, 112);
             label3.Name = "label3";
             label3.Size = new Size(40, 15);
             label3.TabIndex = 25;
             label3.Text = "ID Thẻ";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(40, 111);
-            label2.Name = "label2";
-            label2.Size = new Size(72, 15);
-            label2.TabIndex = 24;
-            label2.Text = "ID Tài Khoản";
             // 
             // txt_maphieu
             // 
@@ -161,24 +150,10 @@
             // 
             // txt_ngaymuon
             // 
-            txt_ngaymuon.Location = new Point(118, 179);
+            txt_ngaymuon.Location = new Point(121, 141);
             txt_ngaymuon.Name = "txt_ngaymuon";
             txt_ngaymuon.Size = new Size(191, 23);
             txt_ngaymuon.TabIndex = 20;
-            // 
-            // txt_idthe
-            // 
-            txt_idthe.Location = new Point(118, 150);
-            txt_idthe.Name = "txt_idthe";
-            txt_idthe.Size = new Size(191, 23);
-            txt_idthe.TabIndex = 19;
-            // 
-            // txt_idtaikhoan
-            // 
-            txt_idtaikhoan.Location = new Point(118, 108);
-            txt_idtaikhoan.Name = "txt_idtaikhoan";
-            txt_idtaikhoan.Size = new Size(191, 23);
-            txt_idtaikhoan.TabIndex = 18;
             // 
             // label1
             // 
@@ -189,11 +164,20 @@
             label1.TabIndex = 17;
             label1.Text = "Thêm Phiếu mượn";
             // 
+            // cb_idthe
+            // 
+            cb_idthe.FormattingEnabled = true;
+            cb_idthe.Location = new Point(121, 109);
+            cb_idthe.Name = "cb_idthe";
+            cb_idthe.Size = new Size(191, 23);
+            cb_idthe.TabIndex = 34;
+            // 
             // ThemPhieuMuon
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(720, 372);
+            Controls.Add(cb_idthe);
             Controls.Add(btn_huy);
             Controls.Add(btn_xacnhan);
             Controls.Add(label8);
@@ -203,13 +187,10 @@
             Controls.Add(label5);
             Controls.Add(label4);
             Controls.Add(label3);
-            Controls.Add(label2);
             Controls.Add(txt_maphieu);
             Controls.Add(txt_ngaytrathucte);
             Controls.Add(txt_ngaytra);
             Controls.Add(txt_ngaymuon);
-            Controls.Add(txt_idthe);
-            Controls.Add(txt_idtaikhoan);
             Controls.Add(label1);
             Name = "ThemPhieuMuon";
             Text = "ThemPhieuMuon";
@@ -228,13 +209,11 @@
         private Label label5;
         private Label label4;
         private Label label3;
-        private Label label2;
         private TextBox txt_maphieu;
         private TextBox txt_ngaytrathucte;
         private TextBox txt_ngaytra;
         private TextBox txt_ngaymuon;
-        private TextBox txt_idthe;
-        private TextBox txt_idtaikhoan;
         private Label label1;
+        private ComboBox cb_idthe;
     }
 }

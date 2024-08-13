@@ -52,6 +52,8 @@ namespace DuAnOne.PL.ChuThe
             cb_quoctich.Items.Add("2");
         }
 
+
+
         private void btn_xacnhan_Click(object sender, EventArgs e)
         {
             if (MessageBoxExtension.Confirm("Bạn có chắc chắn muốn thêm thẻ thư viện?"))

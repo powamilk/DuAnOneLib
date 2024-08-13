@@ -9,6 +9,9 @@ namespace DuAnOne.DAL.Repositories.Interfaces
         bool Create(TaiKhoan entity);
         bool Update(TaiKhoan entity);
         bool Delete(Guid id);
+        string GetUserNameById(Guid userId);
         List<TaiKhoan> GetAll();
+        TaiKhoan GetByUsername(string tenTaiKhoan);
+
     }
 }

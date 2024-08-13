@@ -1,9 +1,11 @@
 ﻿using DuAnOne.BUS.Implement;
 using DuAnOne.BUS.Interface;
+using DuAnOne.BUS.Utils.Status;
 using DuAnOne.BUS.Utils.Validation;
 using DuAnOne.BUS.ViewModel.TaiKhoans;
 using DuAnOne.PL.Extensions;
 using System.Security.Cryptography;
+using DuAnOne.BUS.Utils;
 
 namespace DuAnOne.PL.TaiKhoan
 {
@@ -30,9 +32,9 @@ namespace DuAnOne.PL.TaiKhoan
             cbx_chucvu.Items.Add("3");
 
             cbx_status.Items.Clear();
-            cbx_status.Items.Add("1");
-            cbx_status.Items.Add("2");
-            cbx_status.Items.Add("3");
+            cbx_status.Items.Add(StatusEnum.HoatDong.GetStatusName());
+            cbx_status.Items.Add(StatusEnum.KhongHoatDong.GetStatusName());
+            cbx_status.Items.Add(StatusEnum.BiKhoa.GetStatusName());
 
         }
 
@@ -64,7 +66,7 @@ namespace DuAnOne.PL.TaiKhoan
 
                 int status;
                 string statusText = cbx_status.Text.Trim();
-                if (string.IsNullOrEmpty(statusText) || !int.TryParse(statusText, out status))
+                if (string.IsNullOrEmpty(statusText) || !int.TryParse(statusText.Split(' ')[0], out status))
                 {
                     MessageBoxExtension.Notification("Lỗi", "Status không hợp lệ.");
                     return;

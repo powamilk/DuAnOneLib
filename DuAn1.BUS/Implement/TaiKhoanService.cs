@@ -17,6 +17,27 @@ namespace DuAnOne.BUS.Implement
             _repo = new TaiKhoanRepo(new AppDbContext());
         }
 
+        public TaiKhoanVM Login(string tenTaiKhoan, string matKhau)
+        {
+            // Tìm tài khoản trong cơ sở dữ liệu
+            var taiKhoan = _repo.GetList().FirstOrDefault(tk => tk.TenTaiKhoan == tenTaiKhoan && tk.MatKhau == matKhau);
+
+            if (taiKhoan != null)
+            {
+                // Nếu tài khoản tồn tại và mật khẩu khớp, trả về thông tin tài khoản
+                return new TaiKhoanVM
+                {
+                    Id = taiKhoan.Id,
+                    TenTaiKhoan = taiKhoan.TenTaiKhoan,
+                    MatKhau = taiKhoan.MatKhau,
+                    ChucVu = taiKhoan.ChucVu
+                    // Cập nhật các thuộc tính khác nếu cần
+                };
+            }
+
+            return null; // Nếu không tìm thấy tài khoản
+        }
+
         public TaiKhoanVM GetById(Guid id)
         {
             TaiKhoan entity = _repo.GetById(id);
@@ -64,10 +85,45 @@ namespace DuAnOne.BUS.Implement
             return _repo.Delete(id);
         }
 
+        public string GetUserNameById(Guid userId)
+        {
+            return _repo.GetUserNameById(userId);
+        }
+
         public List<TaiKhoanVM> GetAll()
         {
             List<TaiKhoan> entities = _repo.GetAll(); // Giả sử có phương thức GetAll trong repo
             return entities.Select(e => TaiKhoanMapping.MapEntityToVM(e)).ToList();
+        }
+        public bool ValidateUser(string tenTaiKhoan, string matKhau)
+        {
+            var taiKhoan = _repo.GetByUsername(tenTaiKhoan);
+            if (taiKhoan == null)
+            {
+                return false;
+            }
+
+            // Kiểm tra mật khẩu
+            return taiKhoan.MatKhau == matKhau;
+        }
+
+        public TaiKhoan GetByUsername(string username)
+        {
+            return _repo.GetByUsername(username);
+        }
+
+        public List<(string LoaiTaiKhoan, int SoLuong)> GetTaiKhoanStatistics()
+        {
+            // Lấy tất cả tài khoản
+            var allTaiKhoan = _repo.GetAll();
+
+            // Nhóm theo loại tài khoản và đếm số lượng
+            var statistics = allTaiKhoan
+                .GroupBy(tk => tk.ChucVu == 1 ? "Admin" : "User")
+                .Select(group => (LoaiTaiKhoan: group.Key, SoLuong: group.Count()))
+                .ToList();
+
+            return statistics;
         }
     }
 }

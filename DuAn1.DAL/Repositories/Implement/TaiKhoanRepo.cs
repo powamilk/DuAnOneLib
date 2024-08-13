@@ -41,6 +41,7 @@ namespace DuAnOne.DAL.Repositories.Implement
 
         public bool Update(TaiKhoan entity)
         {
+            entity.ModifyTime = DateTime.Now;   
             try
             {
                 var existingTaiKhoan = _appDbContext.TaiKhoans.FirstOrDefault(tk => tk.Id == entity.Id);
@@ -77,6 +78,7 @@ namespace DuAnOne.DAL.Repositories.Implement
 
         public bool Delete(Guid id)
         {
+            
             try
             {
                 var existingTaiKhoan = _appDbContext.TaiKhoans.FirstOrDefault(tk => tk.Id == id);
@@ -95,11 +97,27 @@ namespace DuAnOne.DAL.Repositories.Implement
                 return false; // Failure
             }
         }
+        public string GetUserNameById(Guid userId)
+        {
+            var user = _appDbContext.TaiKhoans.FirstOrDefault(u => u.Id == userId);
+            if (user != null)
+            {
+                return $"{user.MaNhanVien} - {user.HoVaTen}";
+            }
+            return "Không xác định";
+        }
 
         public List<TaiKhoan> GetAll()
         {
             // Trả về tất cả các tài khoản từ cơ sở dữ liệu
             return _appDbContext.TaiKhoans.AsQueryable().AsNoTracking().ToList();
         }
+
+        public TaiKhoan GetByUsername(string tenTaiKhoan)
+        {
+            return _appDbContext.TaiKhoans.SingleOrDefault(tk => tk.TenTaiKhoan == tenTaiKhoan);
+        }
+       
+
     }
 }

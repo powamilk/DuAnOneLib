@@ -1,4 +1,5 @@
-﻿using DuAnOne.BUS.ViewModel.PhieuMuons;
+﻿using DuAnOne.BUS.ViewModel;
+using DuAnOne.BUS.ViewModel.PhieuMuons;
 
 namespace DuAnOne.BUS.Interface
 {
@@ -9,5 +10,7 @@ namespace DuAnOne.BUS.Interface
         string Create(PhieuMuonCreateVM createVM);
         string Update(PhieuMuonUpdateVM updateVM);
         string Delete(Guid id);
+        List<IdTheData> GetIdTheList();
+        List<(string Status, int SoLuong)> GetPhieuMuonStatistics();
     }
 }

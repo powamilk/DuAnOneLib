@@ -21,13 +21,14 @@ namespace DuAnOne.PL.PhieuMuon
         IPhieuMuonService _phieuMuonService;
         private Guid _id;
 
-        public event Action DataUpdated;
+        public event Action _onDataUpdated;
 
-        public SuaPhieuMuon()
+        public SuaPhieuMuon(Action onDataUpdated)
         {
             InitializeComponent();
             LoadFormData();
             _phieuMuonService = new PhieuMuonService();
+            _onDataUpdated = onDataUpdated;
         }
 
         private void LoadFormData()
@@ -38,14 +39,13 @@ namespace DuAnOne.PL.PhieuMuon
             cb_status.Items.Add("4");
         }
 
-        public void SendData(Guid id, Guid idTaiKhoan, Guid idThe, DateTime ngayMuon, DateTime ngayTra, DateTime? ngayTraThucTe, string maPhieu, int status)
+        public void SendDataToSuaPhieuMuon(Guid id, Guid idThe, DateTime ngayMuon, DateTime ngayTra, DateTime ngayTraThucTe, string maPhieu, int status )
         {
             _id = id;
-            txt_idtaikhoan.Text = idTaiKhoan.ToString();
-            txt_idthe.Text = idThe.ToString();
+            cb_idthe.SelectedValue = idThe;
             txt_ngaymuon.Text = ngayMuon.ToString("dd/MM/yyyy");
             txt_ngaytra.Text = ngayTra.ToString("dd/MM/yyyy");
-            txt_ngaytrathucte.Text = ngayTraThucTe.HasValue ? ngayTraThucTe.Value.ToString("dd/MM/yyyy") : string.Empty;
+            txt_ngaytrathucte.Text = ngayTraThucTe.ToString("dd/MM/yyyy");
             txt_maphieu.Text = maPhieu;
             cb_status.SelectedIndex = status - 1; 
         }
@@ -88,8 +88,7 @@ namespace DuAnOne.PL.PhieuMuon
                 var phieuMuonUpdate = new PhieuMuonUpdateVM
                 {
                     Id = _id,
-                    IdTaiKhoan = Guid.Parse(txt_idtaikhoan.Text),
-                    IdThe = Guid.Parse(txt_idthe.Text),
+                    IdThe = Guid.Parse(cb_idthe.Text),
                     NgayMuon = ngayMuon,
                     NgayTra = ngayTra,
                     NgayTraThucTe = ngayTraThucTe,
@@ -107,7 +106,7 @@ namespace DuAnOne.PL.PhieuMuon
                 if (isSuccess)
                 {
                     // Nếu cần, gọi phương thức để làm mới dữ liệu trong giao diện
-                    DataUpdated?.Invoke();
+                    _onDataUpdated?.Invoke();
                     this.Close(); // Đóng form sau khi cập nhật thành công
                 }
             }

@@ -19,14 +19,20 @@ namespace DuAnOne.PL.PhieuMuon
         List<PhieuMuonVM> _phieuMuons;
         IPhieuMuonService _phieuMuonService;
         private Guid _id;
+        private ComboBox cb_idThe;
+        private Guid _idPhieuMuonDN;
 
-        public event Action DataAdded;
 
-        public ThemPhieuMuon()
+        public event Action _onDataAdded;
+
+        public ThemPhieuMuon(Action onDataAdded)
         {
             InitializeComponent();
-            LoadFormData();
             _phieuMuonService = new PhieuMuonService();
+            this.cb_idThe = new System.Windows.Forms.ComboBox();
+            LoadFormData();
+            
+            _onDataAdded = onDataAdded;
         }
         private void LoadFormData()
         {
@@ -34,18 +40,40 @@ namespace DuAnOne.PL.PhieuMuon
             cb_status.Items.Add("2");
             cb_status.Items.Add("3");
             cb_status.Items.Add("4");
+
+            LoadIdTheData();
         }
 
-        public void SendData(Guid id, Guid idTaiKhoan, Guid idThe, DateTime ngayMuon, DateTime ngayTra, DateTime? ngayTraThucTe, string maPhieu, int status)
+        public void SendCurrentUserId(Guid CurrentUserId)
         {
-            _id = id;
-            txt_idtaikhoan.Text = idTaiKhoan.ToString();
-            txt_idthe.Text = idThe.ToString();
-            txt_ngaymuon.Text = ngayMuon.ToString("dd/MM/yyyy");
-            txt_ngaytra.Text = ngayTra.ToString("dd/MM/yyyy");
-            txt_ngaytrathucte.Text = ngayTraThucTe.HasValue ? ngayTraThucTe.Value.ToString("dd/MM/yyyy") : string.Empty;
-            txt_maphieu.Text = maPhieu;
-            cb_status.SelectedIndex = status - 1;
+            _idPhieuMuonDN = CurrentUserId;
+        }
+
+        private void LoadIdTheData()
+        {
+            try
+            {
+                var idTheList = _phieuMuonService.GetIdTheList();
+
+                if (idTheList == null || !idTheList.Any())
+                {
+                    MessageBox.Show("Không có dữ liệu thẻ thư viện để hiển thị.");
+                    return;
+                }
+
+                cb_idThe.DataSource = null; // Đặt DataSource thành null trước khi thiết lập lại
+                cb_idThe.DataSource = idTheList;
+                cb_idThe.DisplayMember = "MaThe"; // Thuộc tính hiển thị
+                cb_idThe.ValueMember = "Id";       // Thuộc tính giá trị
+                if (idTheList.Count > 0)
+                {
+                    cb_idThe.SelectedIndex = 0;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Lỗi khi nạp dữ liệu vào ComboBox: {ex.Message}");
+            }
         }
 
 
@@ -57,7 +85,6 @@ namespace DuAnOne.PL.PhieuMuon
                 DateTime ngayTra;
                 DateTime ngayTraThucTe;
 
-                // Kiểm tra và chuyển đổi các giá trị từ TextBox sang DateTime
                 if (!DateTime.TryParse(txt_ngaymuon.Text, out ngayMuon))
                 {
                     MessageBoxExtension.Notification("Lỗi", "Ngày mượn không hợp lệ.");
@@ -73,6 +100,12 @@ namespace DuAnOne.PL.PhieuMuon
                     MessageBoxExtension.Notification("Lỗi", "Ngày trả thực tế không hợp lệ.");
                     return;
                 }
+                if (cb_idThe.SelectedValue == null)
+                {
+                    MessageBoxExtension.Notification("Lỗi", "Chưa chọn thẻ thư viện.");
+                    return;
+                }
+
 
                 int status;
                 string statusText = cb_status.Text.Trim();
@@ -82,29 +115,26 @@ namespace DuAnOne.PL.PhieuMuon
                     return;
                 }
 
-                // Tạo đối tượng thêm phiếu mượn
                 var phieuMuonCreate = new PhieuMuonCreateVM
                 {
-                    IdTaiKhoan = Guid.Parse(txt_idtaikhoan.Text),
-                    IdThe = Guid.Parse(txt_idthe.Text),
+                    IdThe = (Guid)cb_idThe.SelectedValue, // Lấy giá trị đã chọn từ ComboBox
                     NgayMuon = ngayMuon,
                     NgayTra = ngayTra,
                     NgayTraThucTe = ngayTraThucTe,
                     MaPhieu = txt_maphieu.Text,
-                    Status = status
+                    Status = status,
+                    CreateBy = _idPhieuMuonDN
                 };
 
-                // Gọi phương thức Create của service
                 var result = _phieuMuonService.Create(phieuMuonCreate);
                 bool isSuccess = result.Equals("Thêm phiếu mượn thành công.", StringComparison.OrdinalIgnoreCase);
 
-                // Hiển thị thông báo kết quả
                 MessageBoxExtension.Notification("THÊM", result);
 
                 if (isSuccess)
                 {
                     // Nếu cần, gọi phương thức để làm mới dữ liệu trong giao diện
-                    DataAdded?.Invoke();
+                    _onDataAdded?.Invoke();
                     this.Close(); // Đóng form sau khi thêm thành công
                 }
             }

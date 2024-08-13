@@ -62,7 +62,6 @@
             tb_searchSach = new TextBox();
             dgv_sach = new DataGridView();
             tab_phieumuon = new TabPage();
-            btn_chitiet = new Button();
             button1 = new Button();
             button2 = new Button();
             button3 = new Button();
@@ -70,6 +69,12 @@
             label3 = new Label();
             textBox2 = new TextBox();
             dgv_phieumuon = new DataGridView();
+            tab_trangchu = new TabPage();
+            label4 = new Label();
+            label5 = new Label();
+            dgv_thongketaikhoan = new DataGridView();
+            dgv_thongkephieumuon = new DataGridView();
+            label6 = new Label();
             tabDuAn.SuspendLayout();
             tab_taikhoan.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgv_taikhoan).BeginInit();
@@ -81,11 +86,15 @@
             ((System.ComponentModel.ISupportInitialize)dgv_sach).BeginInit();
             tab_phieumuon.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgv_phieumuon).BeginInit();
+            tab_trangchu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgv_thongketaikhoan).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgv_thongkephieumuon).BeginInit();
             SuspendLayout();
             // 
             // tabDuAn
             // 
             tabDuAn.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            tabDuAn.Controls.Add(tab_trangchu);
             tabDuAn.Controls.Add(tab_taikhoan);
             tabDuAn.Controls.Add(tab_chuthe);
             tabDuAn.Controls.Add(tab_thethuvien);
@@ -113,6 +122,7 @@
             tab_taikhoan.TabIndex = 0;
             tab_taikhoan.Text = "Tài Khoản";
             tab_taikhoan.UseVisualStyleBackColor = true;
+            tab_taikhoan.Click += tab_taikhoan_Click;
             // 
             // btn_them
             // 
@@ -440,7 +450,6 @@
             // 
             // tab_phieumuon
             // 
-            tab_phieumuon.Controls.Add(btn_chitiet);
             tab_phieumuon.Controls.Add(button1);
             tab_phieumuon.Controls.Add(button2);
             tab_phieumuon.Controls.Add(button3);
@@ -456,16 +465,6 @@
             tab_phieumuon.Text = "Phiếu Mượn";
             tab_phieumuon.UseVisualStyleBackColor = true;
             // 
-            // btn_chitiet
-            // 
-            btn_chitiet.Location = new Point(310, 120);
-            btn_chitiet.Name = "btn_chitiet";
-            btn_chitiet.Size = new Size(159, 27);
-            btn_chitiet.TabIndex = 82;
-            btn_chitiet.Text = "Xem Chi Tiết";
-            btn_chitiet.UseVisualStyleBackColor = true;
-            btn_chitiet.Click += button4_Click;
-            // 
             // button1
             // 
             button1.Location = new Point(894, 148);
@@ -474,6 +473,7 @@
             button1.TabIndex = 78;
             button1.Text = "Thêm";
             button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click;
             // 
             // button2
             // 
@@ -529,6 +529,67 @@
             dgv_phieumuon.RowTemplate.Height = 25;
             dgv_phieumuon.Size = new Size(1297, 395);
             dgv_phieumuon.TabIndex = 77;
+            dgv_phieumuon.CellClick += dgv_phieumuon_CellClick;
+            // 
+            // tab_trangchu
+            // 
+            tab_trangchu.Controls.Add(dgv_thongkephieumuon);
+            tab_trangchu.Controls.Add(label6);
+            tab_trangchu.Controls.Add(dgv_thongketaikhoan);
+            tab_trangchu.Controls.Add(label5);
+            tab_trangchu.Controls.Add(label4);
+            tab_trangchu.Location = new Point(4, 24);
+            tab_trangchu.Name = "tab_trangchu";
+            tab_trangchu.Padding = new Padding(3);
+            tab_trangchu.Size = new Size(1356, 610);
+            tab_trangchu.TabIndex = 5;
+            tab_trangchu.Text = "Trang chủ";
+            tab_trangchu.UseVisualStyleBackColor = true;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(651, 39);
+            label4.Name = "label4";
+            label4.Size = new Size(57, 15);
+            label4.TabIndex = 0;
+            label4.Text = "Thống Kê";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(265, 144);
+            label5.Name = "label5";
+            label5.Size = new Size(111, 15);
+            label5.TabIndex = 1;
+            label5.Text = "Thống Kê Tài Khoản";
+            // 
+            // dgv_thongketaikhoan
+            // 
+            dgv_thongketaikhoan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgv_thongketaikhoan.Location = new Point(8, 175);
+            dgv_thongketaikhoan.Name = "dgv_thongketaikhoan";
+            dgv_thongketaikhoan.RowTemplate.Height = 25;
+            dgv_thongketaikhoan.Size = new Size(669, 427);
+            dgv_thongketaikhoan.TabIndex = 2;
+            // 
+            // dgv_thongkephieumuon
+            // 
+            dgv_thongkephieumuon.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgv_thongkephieumuon.Location = new Point(683, 175);
+            dgv_thongkephieumuon.Name = "dgv_thongkephieumuon";
+            dgv_thongkephieumuon.RowTemplate.Height = 25;
+            dgv_thongkephieumuon.Size = new Size(665, 427);
+            dgv_thongkephieumuon.TabIndex = 4;
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(971, 144);
+            label6.Name = "label6";
+            label6.Size = new Size(125, 15);
+            label6.TabIndex = 3;
+            label6.Text = "Thống Kê Phiếu Mượn";
             // 
             // TabForm
             // 
@@ -555,6 +616,10 @@
             tab_phieumuon.ResumeLayout(false);
             tab_phieumuon.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgv_phieumuon).EndInit();
+            tab_trangchu.ResumeLayout(false);
+            tab_trangchu.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgv_thongketaikhoan).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgv_thongkephieumuon).EndInit();
             ResumeLayout(false);
         }
 
@@ -601,6 +666,11 @@
         private Label label3;
         private TextBox textBox2;
         private DataGridView dgv_phieumuon;
-        private Button btn_chitiet;
+        private TabPage tab_trangchu;
+        private DataGridView dgv_thongkephieumuon;
+        private Label label6;
+        private DataGridView dgv_thongketaikhoan;
+        private Label label5;
+        private Label label4;
     }
 }

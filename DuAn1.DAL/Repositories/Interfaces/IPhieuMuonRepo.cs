@@ -9,5 +9,8 @@ namespace DuAnOne.DAL.Repositories.Interfaces
         bool Create(PhieuMuon entity);
         bool Update(PhieuMuon entity);
         bool Delete(Guid id);
+        List<TheThuVien> GetIdTheList();
+        List<ChuThe> GetChuTheList();
+        List<TaiKhoan> GetTaiKhoanList();
     }
 }

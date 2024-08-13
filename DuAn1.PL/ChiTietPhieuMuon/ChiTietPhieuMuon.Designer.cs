@@ -34,21 +34,21 @@
             btn_xoa = new Button();
             dgv_chitietphieumuon = new DataGridView();
             contextMenuStrip1 = new ContextMenuStrip(components);
-            textBox2 = new TextBox();
-            textBox3 = new TextBox();
+            txt_mathethuvien = new TextBox();
+            txt_maphieumuon = new TextBox();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
-            textBox1 = new TextBox();
-            textBox4 = new TextBox();
-            textBox6 = new TextBox();
+            txt_hovatenchuthe = new TextBox();
+            txt_ngaymuon = new TextBox();
+            txt_ngaytra = new TextBox();
             label4 = new Label();
             label5 = new Label();
             label6 = new Label();
             label7 = new Label();
-            textBox5 = new TextBox();
+            txt_ngaytrathucte = new TextBox();
             label8 = new Label();
-            textBox7 = new TextBox();
+            txt_trangthai = new TextBox();
             ((System.ComponentModel.ISupportInitialize)dgv_chitietphieumuon).BeginInit();
             SuspendLayout();
             // 
@@ -90,7 +90,7 @@
             dgv_chitietphieumuon.Name = "dgv_chitietphieumuon";
             dgv_chitietphieumuon.RowHeadersWidth = 51;
             dgv_chitietphieumuon.RowTemplate.Height = 25;
-            dgv_chitietphieumuon.Size = new Size(1335, 251);
+            dgv_chitietphieumuon.Size = new Size(1335, 357);
             dgv_chitietphieumuon.TabIndex = 56;
             // 
             // contextMenuStrip1
@@ -98,22 +98,22 @@
             contextMenuStrip1.Name = "contextMenuStrip1";
             contextMenuStrip1.Size = new Size(61, 4);
             // 
-            // textBox2
+            // txt_mathethuvien
             // 
-            textBox2.Location = new Point(104, 146);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(246, 23);
-            textBox2.TabIndex = 63;
-            textBox2.Text = "Mã Thẻ Thư Viện";
-            textBox2.TextChanged += textBox2_TextChanged;
+            txt_mathethuvien.Location = new Point(104, 146);
+            txt_mathethuvien.Name = "txt_mathethuvien";
+            txt_mathethuvien.Size = new Size(246, 23);
+            txt_mathethuvien.TabIndex = 63;
+            txt_mathethuvien.Text = "Mã Thẻ Thư Viện";
+            txt_mathethuvien.TextChanged += textBox2_TextChanged;
             // 
-            // textBox3
+            // txt_maphieumuon
             // 
-            textBox3.Location = new Point(104, 99);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(246, 23);
-            textBox3.TabIndex = 64;
-            textBox3.Text = "Mã Phiếu Mượn";
+            txt_maphieumuon.Location = new Point(104, 99);
+            txt_maphieumuon.Name = "txt_maphieumuon";
+            txt_maphieumuon.Size = new Size(246, 23);
+            txt_maphieumuon.TabIndex = 64;
+            txt_maphieumuon.Text = "Mã Phiếu Mượn";
             // 
             // label1
             // 
@@ -145,27 +145,27 @@
             label3.TabIndex = 67;
             label3.Text = "Chi Tiết Phiếu Mượn";
             // 
-            // textBox1
+            // txt_hovatenchuthe
             // 
-            textBox1.Location = new Point(575, 146);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(246, 23);
-            textBox1.TabIndex = 68;
-            textBox1.Text = "Họ và Tên Chủ Thẻ";
+            txt_hovatenchuthe.Location = new Point(575, 146);
+            txt_hovatenchuthe.Name = "txt_hovatenchuthe";
+            txt_hovatenchuthe.Size = new Size(246, 23);
+            txt_hovatenchuthe.TabIndex = 68;
+            txt_hovatenchuthe.Text = "Họ và Tên Chủ Thẻ";
             // 
-            // textBox4
+            // txt_ngaymuon
             // 
-            textBox4.Location = new Point(82, 238);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(233, 23);
-            textBox4.TabIndex = 69;
+            txt_ngaymuon.Location = new Point(82, 238);
+            txt_ngaymuon.Name = "txt_ngaymuon";
+            txt_ngaymuon.Size = new Size(233, 23);
+            txt_ngaymuon.TabIndex = 69;
             // 
-            // textBox6
+            // txt_ngaytra
             // 
-            textBox6.Location = new Point(400, 238);
-            textBox6.Name = "textBox6";
-            textBox6.Size = new Size(233, 23);
-            textBox6.TabIndex = 71;
+            txt_ngaytra.Location = new Point(400, 238);
+            txt_ngaytra.Name = "txt_ngaytra";
+            txt_ngaytra.Size = new Size(233, 23);
+            txt_ngaytra.TabIndex = 71;
             // 
             // label4
             // 
@@ -208,12 +208,12 @@
             label7.TabIndex = 76;
             label7.Text = "Ngày Trả Thực Tế";
             // 
-            // textBox5
+            // txt_ngaytrathucte
             // 
-            textBox5.Location = new Point(752, 241);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(233, 23);
-            textBox5.TabIndex = 75;
+            txt_ngaytrathucte.Location = new Point(752, 241);
+            txt_ngaytrathucte.Name = "txt_ngaytrathucte";
+            txt_ngaytrathucte.Size = new Size(233, 23);
+            txt_ngaytrathucte.TabIndex = 75;
             // 
             // label8
             // 
@@ -225,12 +225,12 @@
             label8.TabIndex = 78;
             label8.Text = "Trạng Thái";
             // 
-            // textBox7
+            // txt_trangthai
             // 
-            textBox7.Location = new Point(575, 99);
-            textBox7.Name = "textBox7";
-            textBox7.Size = new Size(246, 23);
-            textBox7.TabIndex = 77;
+            txt_trangthai.Location = new Point(575, 99);
+            txt_trangthai.Name = "txt_trangthai";
+            txt_trangthai.Size = new Size(246, 23);
+            txt_trangthai.TabIndex = 77;
             // 
             // ChiTietPhieuMuon
             // 
@@ -238,20 +238,20 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1359, 651);
             Controls.Add(label8);
-            Controls.Add(textBox7);
+            Controls.Add(txt_trangthai);
             Controls.Add(label7);
-            Controls.Add(textBox5);
+            Controls.Add(txt_ngaytrathucte);
             Controls.Add(label6);
             Controls.Add(label5);
             Controls.Add(label4);
-            Controls.Add(textBox6);
-            Controls.Add(textBox4);
-            Controls.Add(textBox1);
+            Controls.Add(txt_ngaytra);
+            Controls.Add(txt_ngaymuon);
+            Controls.Add(txt_hovatenchuthe);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
-            Controls.Add(textBox3);
-            Controls.Add(textBox2);
+            Controls.Add(txt_maphieumuon);
+            Controls.Add(txt_mathethuvien);
             Controls.Add(btn_them);
             Controls.Add(btn_sua);
             Controls.Add(btn_xoa);
@@ -270,20 +270,20 @@
         private Button btn_xoa;
         private DataGridView dgv_chitietphieumuon;
         private ContextMenuStrip contextMenuStrip1;
-        private TextBox textBox2;
-        private TextBox textBox3;
+        private TextBox txt_mathethuvien;
+        private TextBox txt_maphieumuon;
         private Label label1;
         private Label label2;
         private Label label3;
-        private TextBox textBox1;
-        private TextBox textBox4;
-        private TextBox textBox6;
+        private TextBox txt_hovatenchuthe;
+        private TextBox txt_ngaymuon;
+        private TextBox txt_ngaytra;
         private Label label4;
         private Label label5;
         private Label label6;
         private Label label7;
-        private TextBox textBox5;
+        private TextBox txt_ngaytrathucte;
         private Label label8;
-        private TextBox textBox7;
+        private TextBox txt_trangthai;
     }
 }
