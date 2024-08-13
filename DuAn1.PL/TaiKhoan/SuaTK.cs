@@ -1,7 +1,11 @@
 ﻿using DuAnOne.BUS.Implement;
 using DuAnOne.BUS.Interface;
+using DuAnOne.BUS.Utils.Status;
+using DuAnOne.BUS.Utils.Validation;
 using DuAnOne.BUS.ViewModel.TaiKhoans;
 using DuAnOne.PL.Extensions;
+using System.Security.Cryptography;
+using DuAnOne.BUS.Utils.StatusExtensions;
 
 namespace DuAn1.PL
 {
@@ -23,13 +27,15 @@ namespace DuAn1.PL
 
         private void LoadFormData()
         {
-            cbx_chucvu.Items.Add("Nhân Viên");
-            cbx_chucvu.Items.Add("Quản Lý");
-            cbx_chucvu.Items.Add("Admin");
+            cbx_chucvu.Items.Clear();
+            cbx_chucvu.Items.Add("1");
+            cbx_chucvu.Items.Add("2");
+            cbx_chucvu.Items.Add("3");
 
-            cbx_status.Items.Add("1");
-            cbx_status.Items.Add("2");
-            cbx_status.Items.Add("3");
+            cbx_status.Items.Clear();
+            cbx_status.Items.Add(StatusEnum.HoatDong.GetStatusName());
+            cbx_status.Items.Add(StatusEnum.KhongHoatDong.GetStatusName());
+            cbx_status.Items.Add(StatusEnum.BiKhoa.GetStatusName());
 
         }
 

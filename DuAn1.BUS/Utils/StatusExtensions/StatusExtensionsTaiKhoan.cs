@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DuAnOne.BUS.Utils
+namespace DuAnOne.BUS.Utils.StatusExtensions
 {
-    public static class StatusExtensions
+    public static class StatusExtensionsTaiKhoan
     {
         public static string GetStatusName(this StatusEnum status)
         {

@@ -5,7 +5,7 @@ using DuAnOne.BUS.Utils.Validation;
 using DuAnOne.BUS.ViewModel.TaiKhoans;
 using DuAnOne.PL.Extensions;
 using System.Security.Cryptography;
-using DuAnOne.BUS.Utils;
+using DuAnOne.BUS.Utils.StatusExtensions;
 
 namespace DuAnOne.PL.TaiKhoan
 {
