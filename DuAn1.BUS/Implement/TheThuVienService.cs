@@ -67,5 +67,10 @@ namespace DuAnOne.BUS.Implement
             List<TheThuVien> entities = _repo.GetAll();
             return entities.Select(e => TheThuVienMapping.MapEntityToVM(e)).ToList();   
         }
+
+        public List<TheThuVien> GetIdTheList()
+        {
+            return _repo.GetAll(); // Lấy danh sách thẻ thư viện từ repository
+        }
     }
 }

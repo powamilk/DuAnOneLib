@@ -9,5 +9,6 @@ namespace DuAnOne.BUS.Interface
         string Create(SachCreateVM createVM);
         string Update(SachUpdateVM updateVM);
         bool Delete(Guid id);
+        string GetMaSachById(Guid id);
     }
 }

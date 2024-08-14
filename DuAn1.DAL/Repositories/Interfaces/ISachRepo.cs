@@ -10,5 +10,6 @@ namespace DuAnOne.DAL.Repositories.Interfaces
         bool Update(Sach entity);
         string Delete(Guid id);
         List<Sach> GetAll();
+        string GetMaSachById(Guid id);
     }
 }

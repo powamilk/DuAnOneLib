@@ -95,5 +95,15 @@ namespace DuAnOne.DAL.Repositories.Implement
         {
             return _appDbContext.Saches.AsQueryable().AsNoTracking().ToList();
         }
+
+        public string GetMaSachById(Guid id)
+        {
+            var ms = _appDbContext.Saches.FirstOrDefault(s => s.Id == id);
+            if (ms != null)
+            {
+                return $"{ms.MaSach} - {ms.TenSach}";
+            }
+            return "Không xác định";
+        }
     }
 }

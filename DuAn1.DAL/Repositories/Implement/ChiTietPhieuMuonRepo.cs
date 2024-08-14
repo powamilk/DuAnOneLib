@@ -12,10 +12,25 @@ namespace DuAnOne.DAL.Repositories.Implement
             _context = context;
         }
 
-        public void Add(ChiTietPhieuMuon chiTiet)
+        public List<ChiTietPhieuMuon> GetList(Guid idPhieuMuon)
         {
-            _context.ChiTietPhieuMuons.Add(chiTiet);
-            _context.SaveChanges();
+            // Trả về danh sách tất cả các ChuThe
+            return _context.ChiTietPhieuMuons.Where(ctpm => ctpm.IdPhieuMuon == idPhieuMuon).ToList();    
+        }
+        public bool Add(ChiTietPhieuMuon chiTiet)
+        {
+            chiTiet.CreateTime = DateTime.Now;
+            try
+            {
+                _context.ChiTietPhieuMuons.Add(chiTiet);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Thêm thẻ thư viện thất bại\nLỗi: " + ex.Message);
+                return false;
+            }
         }
 
         public void Update(ChiTietPhieuMuon chiTiet)

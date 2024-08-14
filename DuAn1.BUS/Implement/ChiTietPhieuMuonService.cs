@@ -1,6 +1,7 @@
 ﻿using DuAnOne.BUS.Interface;
 using DuAnOne.BUS.Utils;
 using DuAnOne.BUS.ViewModel.ChiTietPhieuMuon;
+using DuAnOne.BUS.ViewModel.ChuThes;
 using DuAnOne.DAL.Entities;
 using DuAnOne.DAL.Repositories.Interfaces;
 using System;
@@ -74,6 +75,13 @@ namespace DuAnOne.BUS.Implement
         {
             var chiTietPhieuMuons = _repo.GetByIdPhieuMuon(idPhieuMuon);
             return chiTietPhieuMuons.Select(ChiTietPhieuMuonMapping.MapEntityToVM).ToList();
+        }
+
+        public List<ChiTietPhieuMuonVM> GetList(Guid idPhieuMuon)
+        {
+            List<ChiTietPhieuMuon> entities = _repo.GetList(idPhieuMuon);
+            List<ChiTietPhieuMuonVM> vms = entities.Select(e => ChiTietPhieuMuonMapping.MapEntityToVM(e)).ToList();
+            return vms;
         }
 
     }

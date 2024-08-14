@@ -96,5 +96,7 @@ namespace DuAnOne.DAL.Repositories.Implement
         {
             return _appDbContext.TheThuViens.AsQueryable().AsNoTracking().ToList();
         }
+
+
     }
 }

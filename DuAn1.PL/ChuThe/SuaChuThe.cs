@@ -28,21 +28,21 @@ namespace DuAnOne.PL.ChuThe
 
         private void LoadFormData()
         {
-            cb_gioitinh.Items.Add("Nam");
-            cb_gioitinh.Items.Add("Nữ");
+            cb_gioitinh.Items.Add("1");
+            cb_gioitinh.Items.Add("2");
 
-            cb_loaibandoc.Items.Add("Học Sinh");
-            cb_loaibandoc.Items.Add("Sinh Viên");
+            cb_loaibandoc.Items.Add("1");
+            cb_loaibandoc.Items.Add("2");
 
-            cb_loaithe.Items.Add("Thường");
-            cb_loaithe.Items.Add("Plus");
-            cb_loaithe.Items.Add("VVIP");
+            cb_loaithe.Items.Add("1");
+            cb_loaithe.Items.Add("2");
+            cb_loaithe.Items.Add("3");
 
-            cb_status.Items.Add("Hoạt động");
-            cb_status.Items.Add("Ngừng hoạt động");
+            cb_status.Items.Add("1");
+            cb_status.Items.Add("2");
 
-            cb_quoctich.Items.Add("Việt Nam");
-            cb_quoctich.Items.Add("Ngoại quốc");
+            cb_quoctich.Items.Add("1");
+            cb_quoctich.Items.Add("2");
         }
 
         public void SendDataToChuThe(Guid id,string cccd, string hoVaTen, int loaiThe, string diaChi, int gioiTinh, string ngheNghiep, int quocTich, int loaiBanDoc, string email, string noiLamViec, int status )

@@ -83,7 +83,7 @@ namespace DuAnOne.BUS.Implement
 
         public List<IdTheData> GetIdTheList()
         {
-            var entities = _theThuVienRepo.GetAll(); // Giả sử GetAll() trả về danh sách TheThuVien
+            var entities = _theThuVienRepo.GetAll(); 
             return entities.Select(e => new IdTheData
             {
                 Id = e.Id,

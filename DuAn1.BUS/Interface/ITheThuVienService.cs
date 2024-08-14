@@ -11,5 +11,7 @@ namespace DuAnOne.BUS.Interface
         string Update(TheThuVienUpdateVM updateVM);
         bool Delete(Guid id);
         List<TheThuVienVM> GetAll();
+
+        List<TheThuVien> GetIdTheList();
     }
 }

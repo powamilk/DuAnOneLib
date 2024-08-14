@@ -609,11 +609,11 @@ namespace DuAnOne.PL
             {
                 dgv_thethuvien.Rows.Add(
                     (_theThuViens.IndexOf(ttv) + 1),
-                      ttv.NgayCap,
-                      ttv.NgayHetHan,
-                      ttv.MaThe,
-                      ttv.Status
-                    );
+                    ttv.NgayCap.ToString("dd/MM/yyyy"), 
+                    ttv.NgayHetHan.ToString("dd/MM/yyyy"), 
+                    ttv.MaThe,
+                    ttv.Status
+                );
             }
         }
         #endregion
@@ -972,7 +972,7 @@ namespace DuAnOne.PL
         {
             var form = new ThemPhieuMuon(LoadGridDataPhieuMuon);
             this.Enabled = false;
-            form.SendCurrentUserId(CurrentUserId);
+            form.SendCurrentUserId(CurrentUserId); // Đảm bảo gọi đúng phương thức này
             form.Show();
             form.FormClosed += (s, e) => this.Enabled = true;
 
@@ -995,7 +995,6 @@ namespace DuAnOne.PL
         {
             dgv_phieumuon.Columns.Clear();
             dgv_phieumuon.Columns.Add("clm1", "STT");
-            dgv_phieumuon.Columns.Add("clm3", "Id Thẻ");
             dgv_phieumuon.Columns.Add("clm4", "Ngày Mượn");
             dgv_phieumuon.Columns.Add("clm5", "Ngày Trả");
             dgv_phieumuon.Columns.Add("clm6", "Ngày Trả Thực Tế");
@@ -1012,10 +1011,9 @@ namespace DuAnOne.PL
             {
                 dgv_phieumuon.Rows.Add(
                     (_phieuMuons.IndexOf(pm) + 1),
-                    pm.IdThe,
-                    pm.NgayMuon,
-                    pm.NgayTra,
-                    pm.NgayTraThucTe,
+                    pm.NgayMuon.ToString("dd/MM/yyyy"),
+                    pm.NgayTra.ToString("dd/MM/yyyy"),
+                    pm.NgayTraThucTe.HasValue ? pm.NgayTraThucTe.Value.ToString("dd/MM/yyyy") : string.Empty,
                     pm.MaPhieu,
                     pm.Status,
                     pm.CreateTime

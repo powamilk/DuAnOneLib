@@ -17,6 +17,11 @@ namespace DuAnOne.BUS.Implement
             _repo = new SachRepo(new AppDbContext());
         }
 
+        public string GetMaSachById(Guid id)
+        {
+            return _repo.GetMaSachById(id);
+        }
+
         public SachVM GetById(Guid id)
         {
             Sach entity = _repo.GetById(id);

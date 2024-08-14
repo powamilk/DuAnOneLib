@@ -1,5 +1,6 @@
 ﻿using DuAnOne.BUS.Implement;
 using DuAnOne.BUS.Interface;
+using DuAnOne.BUS.ViewModel.ChiTietPhieuMuon;
 using DuAnOne.DAL.Entities;
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ namespace DuAnOne.PL.ChiTietPhieuMuon
 {
     public partial class ChiTietPhieuMuonForm : Form
     {
+        List<ChiTietPhieuMuonVM> _chiTietPhieuMuons;
         private readonly IChiTietPhieuMuonService _chiTietPhieuMuonService;
         private readonly ISachService _sachService;
         private readonly Guid _idPhieuMuon;
@@ -39,6 +41,7 @@ namespace DuAnOne.PL.ChiTietPhieuMuon
             _idTheThuVien = idTheThuVien;
             LoadFormData();
             LoadChiTietPhieuMuon();
+            LoadGridDataPhieuMuon();
         }
 
        
@@ -48,10 +51,27 @@ namespace DuAnOne.PL.ChiTietPhieuMuon
             dgv_chitietphieumuon.Columns.Clear();
             dgv_chitietphieumuon.Columns.Add("Column1", "STT");
             dgv_chitietphieumuon.Columns.Add("Column2", "Mã Sách");
-            dgv_chitietphieumuon.Columns.Add("Column3", "Tên Sách");
             dgv_chitietphieumuon.Columns.Add("Column4", "Số Lượng Mượn");
             dgv_chitietphieumuon.Columns.Add("Column5", "Ghi chú");
             dgv_chitietphieumuon.Columns.Add("Column6", "Trạng Thái");
+        }
+
+        private void LoadGridDataPhieuMuon()
+        {
+            dgv_chitietphieumuon.Rows.Clear();
+            _chiTietPhieuMuons = _chiTietPhieuMuonService.GetList(_idPhieuMuon);
+            
+
+            foreach (var ctpm in _chiTietPhieuMuons)
+            {
+                dgv_chitietphieumuon.Rows.Add(
+                    (_chiTietPhieuMuons.IndexOf(ctpm) + 1),
+                       _sachService.GetMaSachById(ctpm.IdSach),
+                       ctpm.SoLuongMuon,
+                       ctpm.GhiChu,
+                       ctpm.Status
+                    );
+            }
         }
 
         private void LoadChiTietPhieuMuon()
@@ -135,30 +155,95 @@ namespace DuAnOne.PL.ChiTietPhieuMuon
 
         private void btn_them_Click(object sender, EventArgs e)
         {
+            var themChiTietPhieuMuonForm = new ThemChiTietPhieuMuon(_chiTietPhieuMuonService, _sachService, _idPhieuMuon);
 
+            // Đăng ký sự kiện FormClosed để làm mới dữ liệu khi form ThemChiTietPhieuMuon đóng lại
+            themChiTietPhieuMuonForm.FormClosed += (s, args) =>
+            {
+                // Cập nhật lại DataGridView sau khi form ThemChiTietPhieuMuon đóng
+                LoadChiTietPhieuMuon();
+            };
+
+            // Hiển thị form ThemChiTietPhieuMuon dưới dạng hộp thoại
+            themChiTietPhieuMuonForm.ShowDialog();
         }
 
-        //private void btn_xoa_Click(object sender, EventArgs e)
-        //{
-        //    if (_selectedIdPhieuMuon == Guid.Empty || _selectedIdSach == Guid.Empty)
-        //    {
-        //        MessageBox.Show("Chưa chọn chi tiết phiếu mượn để xóa.");
-        //        return;
-        //    }
+        private void btn_xoa_Click(object sender, EventArgs e)
+        {
+            if (dgv_chitietphieumuon.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn một chi tiết phiếu mượn để xóa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
-        //    if (MessageBox.Show("Bạn có chắc chắn muốn xóa chi tiết phiếu mượn này?", "Xác Nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-        //    {
-        //        var ketQua = _chiTietPhieuMuonService.Delete(_selectedIdPhieuMuon, _selectedIdSach);
-        //        string thongBao = ketQua ? "Xóa thành công" : "Xóa thất bại";
-        //        MessageBox.Show(thongBao, "Thông Báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            // Lấy dòng được chọn
+            var selectedRow = dgv_chitietphieumuon.SelectedRows[0];
+            var selectedIndex = selectedRow.Index;
 
-        //        LoadChiTietPhieuMuon();
-        //    }
-        //}
+            if (selectedIndex < 0 || selectedIndex >= _chiTietPhieuMuons.Count)
+            {
+                MessageBox.Show("Chi tiết phiếu mượn không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Lấy thông tin IdPhieuMuon và IdSach từ chi tiết phiếu mượn đã chọn
+            var selectedChiTiet = _chiTietPhieuMuons[selectedIndex];
+            var idSach = selectedChiTiet.IdSach;
+
+            // Hỏi người dùng xác nhận việc xóa
+            var confirmResult = MessageBox.Show("Bạn có chắc chắn muốn xóa chi tiết phiếu mượn này?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (confirmResult == DialogResult.Yes)
+            {
+                try
+                {
+                    // Gọi service để xóa chi tiết phiếu mượn
+                    _chiTietPhieuMuonService.Delete(_idPhieuMuon, idSach);
+                    MessageBox.Show("Xóa chi tiết phiếu mượn thành công.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    // Cập nhật lại DataGridView sau khi xóa
+                    LoadGridDataPhieuMuon();
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Xóa chi tiết phiếu mượn thất bại. Lỗi: {ex.Message}", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
 
         private void btn_sua_Click(object sender, EventArgs e)
         {
+            if (dgv_chitietphieumuon.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Vui lòng chọn một chi tiết phiếu mượn để sửa.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            // Lấy dòng được chọn
+            var selectedRow = dgv_chitietphieumuon.SelectedRows[0];
+            var selectedIndex = selectedRow.Index;
+
+            if (selectedIndex < 0 || selectedIndex >= _chiTietPhieuMuons.Count)
+            {
+                MessageBox.Show("Chi tiết phiếu mượn không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Lấy thông tin IdPhieuMuon và IdSach từ chi tiết phiếu mượn đã chọn
+            var selectedChiTiet = _chiTietPhieuMuons[selectedIndex];
+            var idSach = selectedChiTiet.IdSach;
+
+            // Mở form Sửa Chi Tiết Phiếu Mượn
+            var suaChiTietPhieuMuonForm = new SuaChiTietPhieuMuon(_chiTietPhieuMuonService, _sachService, _idPhieuMuon, idSach);
+
+            // Đăng ký sự kiện FormClosed để làm mới dữ liệu khi form SuaChiTietPhieuMuon đóng lại
+            suaChiTietPhieuMuonForm.FormClosed += (s, args) =>
+            {
+                // Cập nhật lại DataGridView sau khi form SuaChiTietPhieuMuon đóng
+                LoadGridDataPhieuMuon();
+            };
+
+            // Hiển thị form SuaChiTietPhieuMuon dưới dạng hộp thoại
+            suaChiTietPhieuMuonForm.ShowDialog();
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)

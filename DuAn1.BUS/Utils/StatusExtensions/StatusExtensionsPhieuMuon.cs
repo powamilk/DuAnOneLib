@@ -6,7 +6,18 @@ using System.Threading.Tasks;
 
 namespace DuAnOne.BUS.Utils.StatusExtensions
 {
-    internal class StatusExtensionsPhieuMuon
+    public static class StatusExtensionsPhieuMuon
     {
+        public static string GetStatusName(int status)
+        {
+            return status switch
+            {
+                1 => "1 - Đang mượn",
+                2 => "2 - Đã trả",
+                3 => "3 - Quá hạn",
+                4 => "4 - Đã trả quá hạn",
+                _ => "Không xác định"
+            };
+        }
     }
 }

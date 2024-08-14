@@ -20,6 +20,7 @@ namespace DuAnOne.PL.TheThuVien
     {
         List<TheThuVienVM> _theThuViens;
         ITheThuVienService _theThuVienService;
+        IChuTheService _chuTheService;
 
         public event Action _onDataAdded;
 
@@ -27,9 +28,23 @@ namespace DuAnOne.PL.TheThuVien
         {
             InitializeComponent();
             _theThuVienService = new TheThuVienService();
+            _chuTheService = new ChuTheService();
             _theThuViens = _theThuVienService.GetList();
-            _onDataAdded = onDataAdded; 
+            _onDataAdded = onDataAdded;
             LoadFormData();
+            LoadChuTheData();
+        }
+
+        private void LoadChuTheData()
+        {
+            var chuThes = _chuTheService.GetAll();
+            cb_chuthe.DisplayMember = "DisplayText";
+            cb_chuthe.ValueMember = "Id";
+            cb_chuthe.DataSource = chuThes.Select(ct => new
+            {
+                Id = ct.Id,
+                DisplayText = $"{ct.Cccd} - {ct.HoVaTen}"
+            }).ToList();
         }
 
         private void LoadFormData()
@@ -45,12 +60,12 @@ namespace DuAnOne.PL.TheThuVien
             if (MessageBox.Show("Bạn có chắc chắn muốn thêm thẻ thư viện này không?", "Xác Nhận", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
                 DateTime ngayCap, ngayHetHan;
-                if (!DateTime.TryParse(txt_ngaycap.Text, out ngayCap))
+                if (!DateTime.TryParseExact(txt_ngaycap.Text, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out ngayCap))
                 {
                     MessageBox.Show("Ngày cấp không hợp lệ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
                 }
-                if (!DateTime.TryParse(txt_ngayhethan.Text, out ngayHetHan))
+                if (!DateTime.TryParseExact(txt_ngayhethan.Text, "dd/MM/yyyy", null, System.Globalization.DateTimeStyles.None, out ngayHetHan))
                 {
                     MessageBox.Show("Ngày hết hạn không hợp lệ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     return;
@@ -68,9 +83,17 @@ namespace DuAnOne.PL.TheThuVien
                     return;
                 }
 
+                Guid idChuThe = (Guid)cb_chuthe.SelectedValue;
+                if (idChuThe == Guid.Empty)
+                {
+                    MessageBox.Show("Bạn chưa chọn Chủ Thẻ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
                 // Tạo ViewModel từ dữ liệu nhập vào
                 var ttvCreate = new TheThuVienCreateVM
                 {
+                    IdChuThe = idChuThe,
                     NgayCap = ngayCap,
                     NgayHetHan = ngayHetHan,
                     MaThe = txt_mathe.Text,
@@ -78,7 +101,7 @@ namespace DuAnOne.PL.TheThuVien
                 };
 
                 var validResult = TheThuVienValidation.ValidateCreateVM(ttvCreate);
-                if(string.IsNullOrEmpty(validResult))
+                if (string.IsNullOrEmpty(validResult))
                 {
                     var result = _theThuVienService.Create(ttvCreate);
                     bool isSuccess = result.Equals("Tạo thẻ thư viện thành công.", StringComparison.OrdinalIgnoreCase);
@@ -89,7 +112,7 @@ namespace DuAnOne.PL.TheThuVien
                         _onDataAdded?.Invoke();
                     }
                     this.Close();
-                }      
+                }
                 else
                 {
                     MessageBoxExtension.Notification("THÊM", validResult);

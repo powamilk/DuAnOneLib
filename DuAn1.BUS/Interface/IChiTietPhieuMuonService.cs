@@ -15,5 +15,7 @@ namespace DuAnOne.BUS.Interface
         void Delete(Guid idPhieuMuon, Guid idSach);
         ChiTietPhieuMuonVM GetById(Guid idPhieuMuon, Guid idSach);
         List<ChiTietPhieuMuonVM> GetByIdPhieuMuon(Guid idPhieuMuon);
+
+        List<ChiTietPhieuMuonVM> GetList(Guid idPhieuMuon);
     }
 }

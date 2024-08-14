@@ -20,6 +20,7 @@ namespace DuAnOne.PL.ChiTietPhieuMuon
         private readonly ISachService _sachService;
         private readonly Guid _idPhieuMuon;
         private readonly Guid _idSach;
+
         public SuaChiTietPhieuMuon(IChiTietPhieuMuonService chiTietPhieuMuonService, ISachService sachService, Guid idPhieuMuon, Guid idSach)
         {
             InitializeComponent();
@@ -27,11 +28,15 @@ namespace DuAnOne.PL.ChiTietPhieuMuon
             _sachService = sachService;
             _idPhieuMuon = idPhieuMuon;
             _idSach = idSach;
+
+            // Load data when the form is loaded
+            this.Load += SuaChiTietPhieuMuon_Load;
         }
 
         private void SuaChiTietPhieuMuon_Load(object sender, EventArgs e)
         {
             LoadSachComboBox();
+            LoadStatusComboBox();
             LoadChiTietPhieuMuon();
         }
 
@@ -42,6 +47,18 @@ namespace DuAnOne.PL.ChiTietPhieuMuon
             cb_sach.DisplayMember = "TenSach";
             cb_sach.ValueMember = "Id";
         }
+
+        private void LoadStatusComboBox()
+        {
+            cb_status.Items.Clear();
+            cb_status.Items.Add(new { Text = "Đang mượn", Value = 1 });
+            cb_status.Items.Add(new { Text = "Đã trả", Value = 2 });
+            cb_status.Items.Add(new { Text = "Quá hạn", Value = 3 });
+            cb_status.Items.Add(new { Text = "Đã trả quá hạn", Value = 4 });
+            cb_status.DisplayMember = "Text";
+            cb_status.ValueMember = "Value";
+        }
+
         private void LoadChiTietPhieuMuon()
         {
             var chiTiet = _chiTietPhieuMuonService.GetById(_idPhieuMuon, _idSach);
@@ -50,16 +67,31 @@ namespace DuAnOne.PL.ChiTietPhieuMuon
                 cb_sach.SelectedValue = chiTiet.IdSach;
                 txt_soluong.Text = chiTiet.SoLuongMuon.ToString();
                 txt_ghichu.Text = chiTiet.GhiChu;
-                cb_status.SelectedIndex = cb_status.Items.IndexOf(chiTiet.Status == 1 ? "Hoạt động" : "Ngừng hoạt động");
+                cb_status.SelectedValue = chiTiet.Status;
+            }
+            else
+            {
+                MessageBox.Show("Không tìm thấy chi tiết phiếu mượn.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btn_xacnhan_Click(object sender, EventArgs e)
         {
-            var selectedSachId = (Guid)cb_sach.SelectedValue;
-            var soLuong = int.Parse(txt_soluong.Text);
+            if (!int.TryParse(txt_soluong.Text, out var soLuong))
+            {
+                MessageBox.Show("Số lượng mượn không hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             var ghiChu = txt_ghichu.Text;
-            var status = (int)((dynamic)cb_status.SelectedItem).Value;
+            if (cb_status.SelectedValue == null)
+            {
+                MessageBox.Show("Vui lòng chọn trạng thái hợp lệ.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var status = (int)cb_status.SelectedValue;
+            var selectedSachId = (Guid)cb_sach.SelectedValue;
 
             var updateVM = new ChiTietPhieuMuonUpdateVM
             {
