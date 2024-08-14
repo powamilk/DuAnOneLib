@@ -50,13 +50,17 @@ namespace DuAnOne.PL.ChiTietPhieuMuon
 
         private void LoadStatusComboBox()
         {
-            cb_status.Items.Clear();
-            cb_status.Items.Add(new { Text = "Đang mượn", Value = 1 });
-            cb_status.Items.Add(new { Text = "Đã trả", Value = 2 });
-            cb_status.Items.Add(new { Text = "Quá hạn", Value = 3 });
-            cb_status.Items.Add(new { Text = "Đã trả quá hạn", Value = 4 });
+            var statuses = new[]
+            {
+                new { Text = "Đang mượn", Value = 1 },
+                new { Text = "Đã trả", Value = 2 },
+                new { Text = "Quá hạn", Value = 3 },
+                new { Text = "Đã trả quá hạn", Value = 4 }
+            };
+
             cb_status.DisplayMember = "Text";
             cb_status.ValueMember = "Value";
+            cb_status.DataSource = statuses;
         }
 
         private void LoadChiTietPhieuMuon()
@@ -67,7 +71,7 @@ namespace DuAnOne.PL.ChiTietPhieuMuon
                 cb_sach.SelectedValue = chiTiet.IdSach;
                 txt_soluong.Text = chiTiet.SoLuongMuon.ToString();
                 txt_ghichu.Text = chiTiet.GhiChu;
-                cb_status.SelectedValue = chiTiet.Status;
+                cb_status.SelectedValue = chiTiet.Status; // Ensure this matches the Value of one of the items in the ComboBox
             }
             else
             {
@@ -90,7 +94,7 @@ namespace DuAnOne.PL.ChiTietPhieuMuon
                 return;
             }
 
-            var status = (int)cb_status.SelectedValue;
+            var status = (int)cb_status.SelectedValue; // Now the SelectedValue will be an integer
             var selectedSachId = (Guid)cb_sach.SelectedValue;
 
             var updateVM = new ChiTietPhieuMuonUpdateVM

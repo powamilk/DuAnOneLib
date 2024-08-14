@@ -60,17 +60,16 @@ namespace DuAnOne.PL.ChiTietPhieuMuon
         {
             dgv_chitietphieumuon.Rows.Clear();
             _chiTietPhieuMuons = _chiTietPhieuMuonService.GetList(_idPhieuMuon);
-            
 
             foreach (var ctpm in _chiTietPhieuMuons)
             {
                 dgv_chitietphieumuon.Rows.Add(
                     (_chiTietPhieuMuons.IndexOf(ctpm) + 1),
-                       _sachService.GetMaSachById(ctpm.IdSach),
-                       ctpm.SoLuongMuon,
-                       ctpm.GhiChu,
-                       ctpm.Status
-                    );
+                    _sachService.GetMaSachById(ctpm.IdSach),
+                    ctpm.SoLuongMuon,
+                    ctpm.GhiChu,
+                    GetStatusName(ctpm.Status) // Convert status int to string
+                );
             }
         }
 
@@ -116,21 +115,15 @@ namespace DuAnOne.PL.ChiTietPhieuMuon
 
         private string GetStatusName(int status)
         {
-            switch (status)
+            return status switch
             {
-                case 1:
-                    return "Đang mượn";
-                case 2:
-                    return "Đã trả";
-                case 3:
-                    return "Quá hạn";
-                case 4:
-                    return "Đã trả quá hạn";
-                case 5:
-                    return "Đang yêu cầu";
-                default:
-                    return "Không xác định";
-            }
+                1 => "Đang mượn",
+                2 => "Đã trả",
+                3 => "Quá hạn",
+                4 => "Đã trả quá hạn",
+                5 => "Đang yêu cầu",
+                _ => "Không xác định"
+            };
         }
 
 
