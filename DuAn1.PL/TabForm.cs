@@ -144,6 +144,26 @@ namespace DuAnOne.PL
             }
         }
 
+        private void ApplyRoleBasedRestrictions()
+        {
+            if (_currentUserRole == 2) // Vai trò Nhân Viên
+            {
+                // Giới hạn quyền truy cập vào tab TaiKhoan và TrangChu
+                tabDuAn.TabPages.Remove(tab_taikhoan);
+                tabDuAn.TabPages.Remove(tab_trangchu);
+
+                MessageBox.Show("Bạn không có đủ quyền để truy cập các tab TaiKhoan và Thống Kê này.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void TabForm_Load(object sender, EventArgs e)
+        {
+            if (_currentUserRole == 1) // Chỉ admin mới có quyền load dữ liệu
+            {
+                LoadGridData(); // Gọi phương thức load dữ liệu của form
+            }
+        }
+
         #region Load Data Tài Khoản
         private void LoadData()
         {
@@ -216,7 +236,7 @@ namespace DuAnOne.PL
             txt_userdangnhap.Text = $"{maNhanVien} - {loaiTaiKhoan}";
 
             // Gọi hàm phân quyền
-
+            this.Load += TabForm_Load;
 
             LoadFormData();
                 LoadGridData();
@@ -224,7 +244,7 @@ namespace DuAnOne.PL
                 LoadThongKeTaiKhoan();
                 DisplayThongKeChuThe();
                 DisplayThongKeTheThuVien();
-            
+            ApplyRoleBasedRestrictions();
             LoadFormDataChuThe();
             LoadGridDataChuThe();
             LoadFormDataTheThuVien();
@@ -239,13 +259,7 @@ namespace DuAnOne.PL
 
         
 
-        private void TabForm_Load(object sender, EventArgs e)
-        {
-            if (_currentUserRole == 1) // Chỉ admin mới có quyền load dữ liệu
-            {
-                LoadGridData(); // Gọi phương thức load dữ liệu của form
-            }
-        }
+       
 
         public void SetUserId(Guid userId)
         {

@@ -30,6 +30,7 @@
         {
             tabDuAn = new TabControl();
             tab_trangchu = new TabPage();
+            txt_userdangnhap = new TextBox();
             dgv_thongkethethuvien = new DataGridView();
             label7 = new Label();
             dgv_thongkechuthe = new DataGridView();
@@ -78,7 +79,6 @@
             button3 = new Button();
             textBox2 = new TextBox();
             dgv_phieumuon = new DataGridView();
-            txt_userdangnhap = new TextBox();
             tabDuAn.SuspendLayout();
             tab_trangchu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgv_thongkethethuvien).BeginInit();
@@ -132,9 +132,18 @@
             tab_trangchu.Text = "Trang chủ";
             tab_trangchu.UseVisualStyleBackColor = true;
             // 
+            // txt_userdangnhap
+            // 
+            txt_userdangnhap.Location = new Point(1087, 6);
+            txt_userdangnhap.Name = "txt_userdangnhap";
+            txt_userdangnhap.ReadOnly = true;
+            txt_userdangnhap.Size = new Size(261, 23);
+            txt_userdangnhap.TabIndex = 9;
+            // 
             // dgv_thongkethethuvien
             // 
             dgv_thongkethethuvien.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgv_thongkethethuvien.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgv_thongkethethuvien.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgv_thongkethethuvien.Location = new Point(687, 268);
             dgv_thongkethethuvien.Name = "dgv_thongkethethuvien";
@@ -155,6 +164,7 @@
             // dgv_thongkechuthe
             // 
             dgv_thongkechuthe.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgv_thongkechuthe.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgv_thongkechuthe.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgv_thongkechuthe.Location = new Point(10, 268);
             dgv_thongkechuthe.Name = "dgv_thongkechuthe";
@@ -175,6 +185,7 @@
             // dgv_thongkephieumuon
             // 
             dgv_thongkephieumuon.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgv_thongkephieumuon.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgv_thongkephieumuon.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgv_thongkephieumuon.Location = new Point(685, 94);
             dgv_thongkephieumuon.Name = "dgv_thongkephieumuon";
@@ -195,6 +206,7 @@
             // dgv_thongketaikhoan
             // 
             dgv_thongketaikhoan.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dgv_thongketaikhoan.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dgv_thongketaikhoan.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dgv_thongketaikhoan.Location = new Point(10, 94);
             dgv_thongketaikhoan.Name = "dgv_thongketaikhoan";
@@ -638,14 +650,6 @@
             dgv_phieumuon.Size = new Size(1297, 395);
             dgv_phieumuon.TabIndex = 77;
             dgv_phieumuon.CellClick += dgv_phieumuon_CellClick;
-            // 
-            // txt_userdangnhap
-            // 
-            txt_userdangnhap.Location = new Point(1087, 6);
-            txt_userdangnhap.Name = "txt_userdangnhap";
-            txt_userdangnhap.ReadOnly = true;
-            txt_userdangnhap.Size = new Size(261, 23);
-            txt_userdangnhap.TabIndex = 9;
             // 
             // TabForm
             // 
